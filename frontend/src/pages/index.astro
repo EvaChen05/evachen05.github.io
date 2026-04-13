@@ -1,0 +1,95 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { projects } from '@data/projects';
+
+const introText = "I’m a UX designer who cares about how people feel when they’re trying to understand something—whether it’s a bus schedule, a health report, or a message from their family. As an HCDE student and non-native English speaker, I’m drawn to projects at the intersection of communication, emotional well-being, and information clarity. I start from everyday frustrations and emotions, then turn them into clear research insights and testable design ideas. My goal is to redesign systems so stressful, high-friction experiences become calm and understandable, especially for young adults, international students, and others who are often overlooked.";
+---
+
+<Layout title="HCDE Designer | Portfolio">
+  <div class="max-w-7xl mx-auto px-6">
+    <!-- Hero Section: Inspired by the reference image with split typography -->
+    <section class="min-h-[80vh] flex flex-col justify-center relative overflow-hidden pt-12">
+      <div class="grid grid-cols-12 gap-8 items-end mb-24">
+        <div class="col-span-12 md:col-span-7 relative">
+          <!-- Negative Space Diamond Overlay -->
+          <div class="absolute left-1/3 top-1/2 -translate-y-1/2 w-48 h-64 z-10 pointer-events-none opacity-95">
+            <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-sm">
+              <path 
+                d="M50 0 L100 50 L50 100 L0 50 Z M50 15 L85 50 L50 85 L15 50 Z" 
+                fill="#f9f9f7" 
+                fill-rule="evenodd" 
+                stroke="black" 
+                stroke-width="0.2"
+              />
+            </svg>
+          </div>
+
+          <h1 class="text-[clamp(4rem,10vw,8rem)] leading-[0.85] uppercase tracking-tighter mb-12 relative z-0">
+            Design for <br />
+            <span class="text-[#a855f7]">Emotional</span> <br />
+            Clarity.
+          </h1>
+          <div class="max-w-lg border-l border-black pl-8 mt-12">
+            <p class="text-sm md:text-base leading-relaxed text-black/80 font-medium italic">
+              {introText}
+            </p>
+          </div>
+        </div>
+        
+        <div class="hidden md:flex col-span-5 flex-col items-end gap-1 font-bold text-[clamp(2rem,6vw,4rem)] leading-none text-right tracking-[0.2em] uppercase opacity-20 select-none pointer-events-none">
+          <span>P O R T</span>
+          <span>F O L I O</span>
+          <span class="text-xs tracking-[1em] mt-8 text-black opacity-100">SELECTED WORKS / 2024-2026</span>
+        </div>
+      </div>
+
+      <!-- Scroll indicator or detail -->
+      <div class="flex justify-between items-center text-[10px] uppercase tracking-[0.5em] opacity-40 py-12">
+        <div class="flex gap-12">
+            <span>Scroll Down</span>
+            <span>Based in Seattle / WA</span>
+        </div>
+        <span>UX Researcher & Designer</span>
+      </div>
+    </section>
+
+    <!-- Project List Section -->
+    <section class="mt-32">
+      <div class="mb-24 flex flex-col md:flex-row md:items-baseline gap-4 md:gap-12">
+        <h2 class="text-4xl font-bold uppercase tracking-tight">Case Studies</h2>
+        <div class="h-[1px] flex-grow bg-black/5 hidden md:block"></div>
+        <span class="text-[10px] uppercase tracking-[0.4em] font-bold opacity-40">Portfolio Showcase v1.0</span>
+      </div>
+
+      <div class="space-y-0">
+        {projects.map((project) => (
+          <ProjectCard project={project} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Additional architectural detail section -->
+    <section class="mt-48 pb-24 grid grid-cols-1 md:grid-cols-3 gap-12 border-t border-black/5 pt-24">
+        <div>
+            <h3 class="text-xs font-bold uppercase tracking-[0.4em] mb-8">Approach</h3>
+            <p class="text-[13px] leading-loose text-black/60">
+                Human Centered Design & Engineering principles. Focusing on the intersection of technical feasibility and human emotion.
+            </p>
+        </div>
+        <div>
+            <h3 class="text-xs font-bold uppercase tracking-[0.4em] mb-8">Current</h3>
+            <p class="text-[13px] leading-loose text-black/60">
+                HCDE Student at University of Washington. Researching accessibility in multi-lingual information systems.
+            </p>
+        </div>
+        <div>
+            <h3 class="text-xs font-bold uppercase tracking-[0.4em] mb-8">Connect</h3>
+            <div class="flex flex-col gap-2 text-[13px] font-bold uppercase tracking-widest underline underline-offset-4 decoration-black/20 hover:decoration-black transition-colors">
+                <a href="mailto:example@uw.edu">Email &rarr;</a>
+                <a href="#">LinkedIn &rarr;</a>
+            </div>
+        </div>
+    </section>
+  </div>
+</Layout>

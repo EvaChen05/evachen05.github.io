@@ -1,0 +1,42 @@
+---
+import '../styles/global.css';
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="HCDE Designer Portfolio" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body class="bg-paper text-black font-sans min-h-screen flex flex-col">
+		<header class="max-w-7xl w-full mx-auto px-6 py-10">
+			<nav class="flex justify-between items-baseline">
+				<a href="/" class="text-xl font-bold tracking-[0.2em] uppercase">Name Name</a>
+				<div class="flex gap-10 text-xs font-semibold uppercase tracking-widest">
+					<a href="/work" class="hover:opacity-50 transition-opacity">Selected Work</a>
+					<a href="/about" class="hover:opacity-50 transition-opacity">About</a>
+					<a href="/resume.pdf" target="_blank" rel="noopener noreferrer" class="hover:opacity-50 transition-opacity">Resume</a>
+				</div>
+			</nav>
+		</header>
+		<main class="flex-grow">
+			<slot />
+		</main>
+		<footer class="max-w-7xl w-full mx-auto px-6 py-20 mt-20 border-t border-black/5 text-[10px] uppercase tracking-[0.3em] opacity-40">
+			<div class="flex justify-between items-center">
+				<p>&copy; {new Date().getFullYear()} HCDE STUDENT / ARCHITECTURE INSPIRED PORTFOLIO</p>
+				<p>EST. 2024</p>
+			</div>
+		</footer>
+	</body>
+</html>

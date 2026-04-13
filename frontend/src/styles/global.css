@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #f9f9f7;
+  --font-sans: "Inter", "Helvetica Neue", "Arial", sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-paper text-black antialiased selection:bg-black selection:text-white;
+    font-variant-ligatures: common-ligatures;
+  }
+
+  h1, h2, h3, h4 {
+    @apply tracking-tighter uppercase font-bold;
+  }
+}
+
+@layer utilities {
+  .vertical-text {
+    writing-mode: vertical-rl;
+  }
+  
+  .border-minimal {
+    @apply border-black/10;
+  }
+}
