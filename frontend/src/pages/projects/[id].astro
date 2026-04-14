@@ -1,0 +1,165 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { projects } from '@data/projects';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { id: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+
+// Logic for Maker's Loop content (Ideally this would come from a content collection or markdown helper,
+// but for now we will structure it specifically to restore the requested visual quality).
+const isMakersLoop = project.id === 'makers-loop';
+
+// Specific assets for makers_loop
+const makersAssets = {
+  sketches: [
+    "/images/makers_loop/图片1.jpg",
+    "/images/makers_loop/图片2.jpg",
+    "/images/makers_loop/图片3.jpg"
+  ],
+  prototype: "/images/makers_loop/图片4.png",
+  screenshots: [
+    "/images/makers_loop/2026-04-13 215944.png",
+    "/images/makers_loop/2026-04-13 220016.png"
+  ]
+};
+---
+
+<Layout title={`${project.title} | Case Study`}>
+  <div class="max-w-7xl mx-auto px-6 pt-32">
+    <!-- Breadcrumb -->
+    <div class="mb-24">
+      <a href="/" class="text-[10px] font-bold uppercase tracking-[0.4em] text-black/40 hover:text-black transition-colors mb-8 block">&larr; Back to Portfolio</a>
+      
+      <div class="grid grid-cols-12 gap-12 items-start">
+        <div class="col-span-12 md:col-span-8">
+          <h1 class="text-[clamp(3rem,8vw,6rem)] leading-[0.9] uppercase tracking-tighter mb-12">
+            {project.title}
+          </h1>
+          <p class="text-2xl md:text-3xl leading-relaxed text-black/80 max-w-3xl border-l-4 border-black pl-10 italic">
+            {project.description}
+          </p>
+        </div>
+        
+        <div class="col-span-12 md:col-span-4 space-y-16 pt-4">
+          <div>
+            <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-6 text-black/40">Role</h3>
+            <p class="text-base font-semibold uppercase tracking-widest">UX Researcher & Designer</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-6 text-black/40">Methods</h3>
+            <div class="flex flex-wrap gap-3">
+              {project.tags.map((tag) => (
+                <span class="text-[12px] uppercase tracking-widest font-bold border border-black/10 px-4 py-2 bg-black/5">{tag}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {isMakersLoop ? (
+      <div class="space-y-64 pb-64">
+        <!-- Section: Concept -->
+        <section class="grid grid-cols-12 gap-12">
+          <div class="col-span-12 md:col-span-4">
+            <h2 class="text-sm font-bold uppercase tracking-[0.4em] mb-8 sticky top-32">01 / Concept</h2>
+          </div>
+          <div class="col-span-12 md:col-span-8 space-y-16">
+            <p class="text-xl md:text-2xl leading-loose text-black/70 font-medium max-w-4xl">
+              The project is a modular pegboard system designed to serve as a material circular ecosystem for maker spaces. 
+              The concept shifts away from designing a single static object toward an adaptable system that helps users organize materials, 
+              safely store sharp scrap wood or soft fabrics, and recycle failed 3D prints.
+            </p>
+            <div class="grid grid-cols-3 gap-6">
+              {makersAssets.sketches.map((img) => (
+                <div class="aspect-square bg-black/5 overflow-hidden border border-black/5">
+                  <img src={img} alt="Sketch" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+                </div>
+              ))}
+            </div>
+            <p class="text-xs uppercase tracking-[0.3em] opacity-40">Initial Sketches & Ideation Phase</p>
+          </div>
+        </section>
+
+        <!-- Section: Goals & Prototyping -->
+        <section class="grid grid-cols-12 gap-12">
+          <div class="col-span-12 md:col-span-4">
+            <h2 class="text-sm font-bold uppercase tracking-[0.4em] mb-8 sticky top-32">02 / Goals & Methods</h2>
+          </div>
+          <div class="col-span-12 md:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-16">
+            <div class="border-t-2 border-black pt-10">
+              <h3 class="font-bold uppercase mb-6 text-lg tracking-tight">Laser Cutting</h3>
+              <p class="text-base text-black/60 leading-relaxed">Tested structural feasibility and dimensional accuracy for hanging printed elements perfectly on the frame.</p>
+            </div>
+            <div class="border-t-2 border-black pt-10">
+              <h3 class="font-bold uppercase mb-6 text-lg tracking-tight">3D Printing</h3>
+              <p class="text-base text-black/60 leading-relaxed">Printed sorting boxes to test intuitive usability and compartment interaction during usability tests.</p>
+            </div>
+            <div class="border-t-2 border-black pt-10">
+              <h3 class="font-bold uppercase mb-6 text-lg tracking-tight">Sewing</h3>
+              <p class="text-base text-black/60 leading-relaxed">Created a tough fabric bag for sharp or bulky materials to ensure user safety and adaptable storage.</p>
+            </div>
+            <div class="border-t-2 border-black pt-10">
+              <h3 class="font-bold uppercase mb-6 text-lg tracking-tight">Usability Testing</h3>
+              <p class="text-base text-black/60 leading-relaxed">Conducted qualitative tests with a small-scale system to observe full-journey interactions and friction points.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section: High-Fidelity Implementation -->
+        <section class="grid grid-cols-12 gap-12">
+          <div class="col-span-12 md:col-span-4">
+            <h2 class="text-sm font-bold uppercase tracking-[0.4em] mb-8 sticky top-32">03 / Implementation</h2>
+          </div>
+          <div class="col-span-12 md:col-span-8 space-y-16">
+            <div class="w-full aspect-[16/10] bg-black/5 border border-black/5 overflow-hidden">
+                <img src={makersAssets.prototype} alt="High-fidelity Prototype" class="w-full h-full object-cover" />
+            </div>
+            <p class="text-xl md:text-2xl leading-loose text-black/70 max-w-4xl">
+              We implemented a high-fidelity physical prototype that successfully combined three different fabrication techniques, blending rigid structures with soft materials. 
+              The core is a laser-cut pegboard aligned with <strong>standard IKEA dimensions</strong>, allowing users to mix custom parts with widely available standard accessories.
+            </p>
+          </div>
+        </section>
+
+        <!-- Section: Evaluation -->
+        <section class="grid grid-cols-12 gap-12 border-t border-black/10 pt-32">
+          <div class="col-span-12 md:col-span-4">
+            <h2 class="text-sm font-bold uppercase tracking-[0.4em] mb-8 sticky top-32">04 / Evaluation</h2>
+          </div>
+          <div class="col-span-12 md:col-span-8 space-y-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                {makersAssets.screenshots.map((img) => (
+                  <div class="aspect-video bg-black/5 overflow-hidden border border-black/5">
+                    <img src={img} alt="Usability Test Screenshot" class="w-full h-full object-cover" />
+                  </div>
+                ))}
+            </div>
+            <p class="text-base leading-relaxed text-black/60 max-w-4xl">
+              We evaluated the effectiveness through qualitative usability tests and physical fit-checks, observing participants interact with the modular compartments and soft storage solutions.
+            </p>
+            <div class="pt-16">
+                <a href="https://www.youtube.com/watch?v=re0Miv5hyfY" target="_blank" class="inline-block px-16 py-8 bg-black text-white text-sm uppercase tracking-[0.3em] font-bold hover:bg-black/80 transition-all">
+                    Watch Presentation Video &rarr;
+                </a>
+            </div>
+          </div>
+        </section>
+      </div>
+    ) : (
+      <!-- Default Template for other projects -->
+      <section class="max-w-4xl mx-auto mb-48">
+        <h2 class="text-2xl font-bold uppercase tracking-tight mb-12 border-b border-black pb-4">Project Overview</h2>
+        <div class="prose prose-lg text-black/70 leading-relaxed italic">
+          Content is currently being prepared for this project. Please check back later.
+        </div>
+      </section>
+    )}
+  </div>
+</Layout>

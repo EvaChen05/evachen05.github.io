@@ -24,11 +24,11 @@
     ],
   "portsAttributes": {
     "12233": {
-      "label": "Custom Forward Port",
+      "label": "Astro Portfolio Dev Server",
       "onAutoForward": "notify"
     }
   },
 
-  "postCreateCommand": "npm install -g @google/gemini-cli",
+  "postCreateCommand": "npm install -g @google/gemini-cli && cd frontend && npm install",
   "remoteUser": "root"
 }

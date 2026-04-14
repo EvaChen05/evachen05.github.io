@@ -8,6 +8,13 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: "makers-loop",
+    title: "Makers Loop",
+    description: "A collaborative platform for makers and designers to share and iterate on physical prototypes.",
+    thumbnail: "/images/makers_loop/图片4.png",
+    tags: ["Product Design", "Prototyping", "UX Design"]
+  },
+  {
     id: "project-1",
     title: "Example Project 1",
     description: "A description of the first example project.",

@@ -11,27 +11,27 @@ const { project } = Astro.props;
 <div class="group relative border-t border-black/5 pt-12 pb-24">
   <div class="flex flex-col md:flex-row gap-12">
     <div class="md:w-1/4">
-      <span class="text-[10px] font-bold uppercase tracking-[0.4em] text-black/40 mb-4 block">Selected Works</span>
+      <span class="text-[12px] font-bold uppercase tracking-[0.4em] text-black/40 mb-4 block">Selected Works</span>
       <div class="flex flex-wrap gap-2">
         {project.tags.map((tag) => (
-          <span class="text-[9px] uppercase tracking-widest font-semibold border border-black/20 px-2 py-0.5">{tag}</span>
+          <span class="text-[11px] uppercase tracking-widest font-semibold border border-black/20 px-3 py-1">{tag}</span>
         ))}
       </div>
     </div>
     
     <div class="md:w-1/2">
-      <h3 class="text-3xl font-bold uppercase tracking-tight mb-6 group-hover:italic transition-all duration-300">
+      <h3 class="text-4xl font-bold uppercase tracking-tight mb-6 group-hover:italic transition-all duration-300">
         <a href={`/projects/${project.id}`}>
           {project.title}
         </a>
       </h3>
-      <p class="text-sm leading-relaxed text-black/60 max-w-md">
+      <p class="text-lg leading-relaxed text-black/60 max-w-xl">
         {project.description}
       </p>
     </div>
 
     <div class="md:w-1/4 flex items-end justify-end">
-        <a href={`/projects/${project.id}`} class="text-[10px] font-bold uppercase tracking-widest border-b border-black pb-1 hover:pb-2 transition-all">
+        <a href={`/projects/${project.id}`} class="text-[12px] font-bold uppercase tracking-widest border-b-2 border-black pb-1 hover:pb-2 transition-all">
             View Case Study &rarr;
         </a>
     </div>
