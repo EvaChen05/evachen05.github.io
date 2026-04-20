@@ -6,6 +6,10 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
   body {
     @apply bg-paper text-black antialiased selection:bg-black selection:text-white;
     font-variant-ligatures: common-ligatures;

@@ -8,6 +8,20 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: "remind-me",
+    title: "RemindME",
+    description: "An intelligent travel-time reminder system that automates departure calculations by integrating Google Calendar and Maps APIs.",
+    thumbnail: "/images/remindme/demo.gif",
+    tags: ["Full-stack", "API Integration", "Productivity Tool"]
+  },
+  {
+    id: "the-bridge",
+    title: "The Bridge",
+    description: "A communication platform bridging the emotional gap between college students and their parents through low-pressure interactions.",
+    thumbnail: "/images/the_bridge/03 high.png",
+    tags: ["UX Research", "UI Design", "Case Study"]
+  },
+  {
     id: "makers-loop",
     title: "Makers Loop",
     description: "A collaborative platform for makers and designers to share and iterate on physical prototypes.",
