@@ -8,9 +8,10 @@ import Layout from '../layouts/Layout.astro';
     <!-- About Hero Section -->
     <section class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32">
       <div class="md:col-span-8">
-        <h1 class="text-7xl md:text-8xl font-bold uppercase tracking-tighter mb-12">
-          I design for <br />
-          <span class="text-[#66ccff]">Human Connection</span>.
+        <h1 class="text-[clamp(4rem,10vw,8rem)] leading-[0.85] font-bold uppercase tracking-tighter mb-12">
+          Design where <br />
+          <span class="text-[#66ccff]">People & Systems</span> <br />
+          meet.
         </h1>
       </div>
       <div class="md:col-span-4 flex flex-col justify-end">
@@ -27,8 +28,7 @@ import Layout from '../layouts/Layout.astro';
       <!-- Left Column: Image or Secondary Info -->
       <div class="md:col-span-5 space-y-12">
         <div class="aspect-[4/5] bg-black/5 flex items-center justify-center border border-black/5 overflow-hidden">
-            <!-- You can add your profile picture here -->
-            <span class="text-[10px] uppercase tracking-[0.5em] opacity-20">Profile Image Placeholder</span>
+            <img src="/images/about_me/Eva.jpg" alt="Eva Chen" class="w-full h-full object-cover" />
         </div>
         
         <div class="space-y-8">
@@ -69,16 +69,36 @@ import Layout from '../layouts/Layout.astro';
           </div>
 
           <div class="mt-20 pt-10 border-t border-black/5">
-            <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-10">Experience & Education</h3>
+            <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-10">Education</h3>
             <div class="space-y-12">
                 <div class="flex justify-between items-start group">
                     <div>
                         <h4 class="text-2xl font-bold uppercase italic group-hover:not-italic transition-all">University of Washington</h4>
-                        <p class="text-black/60 uppercase tracking-widest text-sm mt-1">MS in Human Centered Design & Engineering</p>
+                        <p class="text-black/60 uppercase tracking-widest text-sm mt-1">BS in Human Centered Design & Engineering</p>
                     </div>
-                    <span class="font-bold opacity-20">2024 - Present</span>
+                    <span class="font-bold opacity-20">2023 - 2027</span>
                 </div>
-                <!-- Add more entries as needed -->
+            </div>
+          </div>
+
+          <div class="mt-20 pt-10 border-t border-black/5">
+            <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-10">Experience</h3>
+            <div class="space-y-16">
+                <!-- Internship Entry -->
+                <div class="flex flex-col md:flex-row justify-between items-start group gap-4">
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="text-2xl font-bold uppercase italic group-hover:not-italic transition-all">AIHelp</h4>
+                            <p class="text-black/60 uppercase tracking-widest text-sm mt-1 font-bold">Product Engineer Intern</p>
+                        </div>
+                        <ul class="text-base text-black/60 space-y-3 max-w-xl">
+                            <li class="leading-relaxed border-l border-black/10 pl-4">Analyzed competitor products and user sentiment in overseas markets through secondary research to identify potential expansion opportunities.</li>
+                            <li class="leading-relaxed border-l border-black/10 pl-4">Conducted in-depth interviews and synthesized qualitative data using affinity diagrams to transform user pain points into specific functional requirements.</li>
+                            <li class="leading-relaxed border-l border-black/10 pl-4">Presented high-fidelity prototypes and strategic product proposals to senior leadership, securing buy-in for 3 core system features.</li>
+                        </ul>
+                    </div>
+                    <span class="font-bold opacity-20 shrink-0">Jun 2025 - Sep 2025</span>
+                </div>
             </div>
           </div>
         </div>
