@@ -9,6 +9,7 @@ const __dirname = path.dirname(__filename);
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://evachen05.github.io',
   server: {
     port: 12233,
     host: true
