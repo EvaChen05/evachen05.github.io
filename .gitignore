@@ -26,5 +26,5 @@ pnpm-debug.log*
 
 # Temporary/Extracted data
 /tmp/
-raw-portfolio/the_bridge/extracted/
+raw-portfolio/
 container-vscode/
