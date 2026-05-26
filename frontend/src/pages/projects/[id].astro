@@ -22,11 +22,8 @@ const glassAssets = {
   logo: "/images/museum_of_glass/logo.png",
   palette: "/images/museum_of_glass/palette.png",
   typography: "/images/museum_of_glass/typography.png",
-  artifacts: [
-    "/images/museum_of_glass/artifact_vivian.png",
-    "/images/museum_of_glass/artifact_exploration.png",
-    "/images/museum_of_glass/artifact_eva.png"
-  ]
+  digitalArtifact: "/images/museum_of_glass/artifact_eva.png",
+  physicalArtifact: "/images/museum_of_glass/physical_artifact.png"
 };
 
 // Assets for Makers Loop
@@ -471,24 +468,34 @@ const remindmeAssets = {
           </div>
         </section>
 
-        <!-- Digital Artifacts -->
+        <!-- Digital Artifact -->
         <section class="space-y-32">
           <div class="max-w-5xl mx-auto">
-            <h2 class="text-4xl font-bold uppercase tracking-tighter mb-16">02 / Digital Artifacts</h2>
-            <div class="grid grid-cols-1 gap-32">
-              {glassAssets.artifacts.map((img, index) => (
-                <div class="space-y-8">
-                  <div class="bg-white border border-black/5 p-4 md:p-12 shadow-md">
-                    <div class="aspect-video bg-black/[0.02] flex items-center justify-center border border-dashed border-black/10">
-                      <img src={img} alt={`Artifact Exploration ${index + 1}`} class="w-full h-auto" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-                      <span class="hidden text-black/20 font-bold uppercase tracking-widest text-xs">[ Artifact Exploration {index + 1} ]</span>
-                    </div>
-                  </div>
-                  <p class="text-xs uppercase tracking-widest opacity-40 font-bold text-center">
-                    {index === 0 ? "Vivian: Current Mobile Screen Analysis" : index === 1 ? "Artifact Exploration & Layout Mapping" : "Eva: Artifact Exploration & Design Direction"}
-                  </p>
+            <h2 class="text-4xl font-bold uppercase tracking-tighter mb-16">02 / Digital Artifact</h2>
+            <div class="space-y-8">
+              <div class="bg-white border border-black/5 p-4 md:p-12 shadow-md">
+                <div class="aspect-video bg-black/[0.02] flex items-center justify-center border border-dashed border-black/10">
+                  <img src={glassAssets.digitalArtifact} alt="Eva: Artifact Exploration & Design Direction" class="w-full h-auto" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+                  <span class="hidden text-black/20 font-bold uppercase tracking-widest text-xs">[ Eva: Digital Artifact Image ]</span>
                 </div>
-              ))}
+              </div>
+              <p class="text-xs uppercase tracking-widest opacity-40 font-bold text-center">Eva: Artifact Exploration & Design Direction</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Physical Artifact -->
+        <section class="space-y-32">
+          <div class="max-w-5xl mx-auto">
+            <h2 class="text-4xl font-bold uppercase tracking-tighter mb-16">03 / Physical Artifact</h2>
+            <div class="space-y-8">
+              <div class="bg-white border border-black/5 p-4 md:p-12 shadow-md">
+                <div class="aspect-video bg-black/[0.02] flex items-center justify-center border border-dashed border-black/10">
+                  <img src={glassAssets.physicalArtifact} alt="Physical Artifact Design" class="w-full h-auto" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+                  <span class="hidden text-black/20 font-bold uppercase tracking-widest text-xs">[ Physical Artifact Image ]</span>
+                </div>
+              </div>
+              <p class="text-xs uppercase tracking-widest opacity-40 font-bold text-center">Physical manifestation and material exploration</p>
             </div>
           </div>
         </section>
