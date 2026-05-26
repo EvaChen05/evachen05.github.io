@@ -29,6 +29,13 @@ export const projects: Project[] = [
     tags: ["Full-stack", "API Integration", "Productivity Tool"]
   },
   {
+    id: "museum-of-glass",
+    title: "Museum of Glass",
+    description: "A comprehensive branding and digital artifact exploration for the Museum of Glass, focusing on typography, color systems, and modern web interfaces.",
+    thumbnail: "/images/museum_of_glass/hero.png",
+    tags: ["Branding", "UI/UX Design", "Case Study"]
+  },
+  {
     id: "project-1",
     title: "Example Project 1",
     description: "A description of the first example project.",
