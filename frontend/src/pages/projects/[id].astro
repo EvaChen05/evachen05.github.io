@@ -18,12 +18,13 @@ const isMuseumOfGlass = project.id === 'museum-of-glass';
 
 // Assets for Museum of Glass
 const glassAssets = {
-  hero: "/images/museum_of_glass/hero.png",
+  hero: "/images/museum_of_glass/image.png",
   logo: "/images/museum_of_glass/logo.png",
-  palette: "/images/museum_of_glass/palette.png",
+  palette: "/images/museum_of_glass/image.png",
   typography: "/images/museum_of_glass/typography.png",
-  digitalArtifact: "/images/museum_of_glass/artifact_eva.png",
-  physicalArtifact: "/images/museum_of_glass/physical_artifact.png"
+  digitalArtifact: "/images/museum_of_glass/Add a heading (6).png",
+  artifactExploration: "/images/museum_of_glass/image.png",
+  physicalArtifact: "/images/museum_of_glass/image.png"
 };
 
 // Assets for Makers Loop
@@ -63,14 +64,17 @@ const remindmeAssets = {
       
       <div class="grid grid-cols-12 gap-12 items-start">
         <div class="col-span-12 md:col-span-8">
-          <h1 class="text-[clamp(3rem,8vw,6rem)] leading-[0.9] uppercase tracking-tighter mb-12">
+          <h1 
+            class="text-[clamp(3rem,8vw,6rem)] leading-[0.9] uppercase tracking-tighter mb-12"
+            style={isMuseumOfGlass ? "font-family: 'Horizon', sans-serif;" : ""}
+          >
             {project.title}
           </h1>
           <div class="relative">
             <p class="text-2xl md:text-3xl leading-relaxed text-black/80 max-w-3xl border-l-4 border-black pl-10 italic">
               {project.description}
               {isTheBridge && (
-                <a href="#prototype" class="inline-block ml-2 text-blue-600 font-bold border-b border-blue-600 hover:text-blue-800 hover:border-blue-800 transition-all">
+                <a href="#prototype" class="inline-block ml-2 text-purple-600 font-bold border-b border-purple-600 hover:text-purple-800 hover:border-purple-800 transition-all">
                   Try High-Fidelity Prototype
                 </a>
               )}
@@ -79,28 +83,85 @@ const remindmeAssets = {
         </div>
         
         <div class="col-span-12 md:col-span-4 space-y-16 pt-4">
-          <div>
-            <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-6 text-black/40">Role</h3>
-            <p class="text-base font-semibold uppercase tracking-widest">{isRemindMe ? 'Full-stack Developer & Designer' : 'UX Researcher & Designer'}</p>
-          </div>
-          <div>
-            <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-6 text-black/40">Methods</h3>
-            <div class="flex flex-wrap gap-3">
-              {project.tags.map((tag) => (
-                <span class="text-[12px] uppercase tracking-widest font-bold border border-black/10 px-4 py-2 bg-black/5">{tag}</span>
-              ))}
+          <div class="sticky top-32 space-y-16">
+            <div>
+              <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-6 text-black/40">Role</h3>
+              <p class="text-base font-semibold uppercase tracking-widest">{isRemindMe ? 'Full-stack Developer & Designer' : 'UX Researcher & Designer'}</p>
+            </div>
+            {isMuseumOfGlass && (
+              <>
+                <div>
+                  <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-6 text-black/40">Designer</h3>
+                  <p class="text-base font-semibold uppercase tracking-widest">Eva Chen</p>
+                </div>
+                <div>
+                  <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-6 text-black/40">Course</h3>
+                  <p class="text-base font-semibold uppercase tracking-widest">HCDE308</p>
+                </div>
+              </>
+            )}
+            <div>
+              <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-6 text-black/40">Methods</h3>
+              <div class="flex flex-wrap gap-x-6 gap-y-2">
+                {project.tags.map((tag) => (
+                  <span class="text-[12px] uppercase tracking-[0.2em] font-bold text-black/60">/ {tag}</span>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- Table of Contents Section -->
+    <section class="mb-32 border-t border-black/10 pt-16">
+      <div class="flex flex-col md:flex-row md:items-center gap-8 md:gap-16">
+        <h3 class="text-xs font-black uppercase tracking-[0.5em] text-black whitespace-nowrap">Jump to Section</h3>
+        <nav class="flex flex-nowrap gap-x-12 overflow-x-auto pb-4 md:pb-0 no-scrollbar">
+          {isRemindMe && (
+            <>
+              <a href="#summary" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 00 Summary</a>
+              <a href="#dashboard" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 01 Dashboard</a>
+              <a href="#technical" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 02 Technical</a>
+            </>
+          )}
+          {isTheBridge && (
+            <>
+              <a href="#summary" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 00 Summary</a>
+              <a href="#prototype-main" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 01 Prototype</a>
+              <a href="#strategy" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 02 Strategy</a>
+              <a href="#prototype" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 03 Interactive</a>
+            </>
+          )}
+          {isMakersLoop && (
+            <>
+              <a href="#concept" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 01 Concept</a>
+              <a href="#goals" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 02 Goals</a>
+              <a href="#implementation" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 03 Implementation</a>
+              <a href="#evaluation" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 04 Evaluation</a>
+            </>
+          )}
+          {isMuseumOfGlass && (
+            <>
+              <a href="#overview" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 00 Overview</a>
+              <a href="#context" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 01 Context</a>
+              <a href="#intent" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 02 Design Intent</a>
+              <a href="#identity" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 03 Identity</a>
+              <a href="#digital" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 04 Digital</a>
+              <a href="#physical" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 05 Physical</a>
+              <a href="#appendix" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 06 Appendix</a>
+            </>
+          )}
+        </nav>
+      </div>
+    </section>
+
     {isRemindMe && (
       <div class="space-y-48 pb-48">
         <!-- TL;DR SUMMARY -->
-        <section class="bg-black text-white p-12 md:p-24 -mx-6 md:mx-0">
+        <section id="summary" class="bg-black text-white p-12 md:p-24 -mx-6 md:mx-0 scroll-mt-32">
           <div class="max-w-4xl mx-auto">
-            <h2 class="text-xs font-bold uppercase tracking-[0.4em] mb-12 opacity-50 text-white/40">00 / Quick Summary</h2>
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-white">00 / Quick Summary</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
               <div>
                 <h3 class="text-xl font-bold uppercase mb-4 tracking-wide text-white">The Concept</h3>
@@ -119,7 +180,7 @@ const remindmeAssets = {
         </section>
 
         <!-- CORE RESULT: Main Dashboard Interface with ANIMATED GIF -->
-        <section class="w-full">
+        <section id="dashboard" class="w-full scroll-mt-32">
             <div class="border-y border-black/5 py-16 text-center">
                 <!-- Using demo.gif directly for animation -->
                 <img 
@@ -128,6 +189,9 @@ const remindmeAssets = {
                   class="w-full h-auto max-h-[40vh] object-contain mx-auto shadow-2xl" 
                 />
                 <p class="mt-10 text-xs uppercase tracking-[0.3em] opacity-40 font-bold">Main Dashboard Interface</p>
+                <p class="mt-6 text-base text-black/60 leading-relaxed max-w-2xl mx-auto italic">
+                  Detailed design exploration and visual analysis. This section showcases the iterative development of the interface, highlighting key features and user flow optimizations implemented to enhance the overall experience.
+                </p>
             </div>
         </section>
 
@@ -166,6 +230,9 @@ const remindmeAssets = {
                         <img src={remindmeAssets.cardExample} alt="Event Card Example" class="w-full h-auto mx-auto shadow-sm" />
                     </div>
                     <p class="text-[11px] uppercase tracking-widest opacity-40 font-bold max-w-lg mx-auto italic">Static Component Analysis: Event list with calculated departure times.</p>
+                    <p class="mt-6 text-sm text-black/50 leading-relaxed max-w-xl mx-auto">
+                      Iterative exploration of the component architecture, focusing on information density and visual hierarchy to ensure that critical data is immediately accessible to the user.
+                    </p>
                   </div>
 
                   {remindmeAssets.screenshots.map((img, index) => (
@@ -174,6 +241,9 @@ const remindmeAssets = {
                             <img src={img} alt={`RemindMe Screen ${index + 1}`} class="w-full h-auto mx-auto shadow-xl" />
                         </div>
                         <p class="text-xs uppercase tracking-widest opacity-40 font-bold">Flow State: {index === 0 ? 'Authentication' : index === 1 ? 'Dashboard' : 'Notification'}</p>
+                        <p class="mt-4 text-sm text-black/50 leading-relaxed max-w-xl mx-auto">
+                          Visual synthesis of the user journey, mapping out the transition between different states and ensuring a cohesive aesthetic across the entire application interface.
+                        </p>
                     </div>
                   ))}
                 </div>
@@ -195,9 +265,9 @@ const remindmeAssets = {
     {isTheBridge && (
       <div class="space-y-48 pb-48">
         <!-- TL;DR SUMMARY -->
-        <section class="bg-black text-white p-12 md:p-24 -mx-6 md:mx-0">
+        <section id="summary" class="bg-black text-white p-12 md:p-24 -mx-6 md:mx-0 scroll-mt-32">
           <div class="max-w-4xl mx-auto">
-            <h2 class="text-xs font-bold uppercase tracking-[0.4em] mb-12 opacity-50 text-white/40">00 / Quick Summary</h2>
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-white">00 / Quick Summary</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
               <div>
                 <h3 class="text-xl font-bold uppercase mb-6 tracking-wide text-white">The Concept</h3>
@@ -216,15 +286,18 @@ const remindmeAssets = {
         </section>
 
         <!-- Main Image -->
-        <section class="w-full">
-            <div class="bg-white border border-black/5 p-4 md:p-12 shadow-sm">
+        <section id="prototype-main" class="w-full scroll-mt-32">
+            <div class="bg-white border border-black/5 p-4 md:p-12 shadow-sm text-center">
                 <img src={bridgeAssets.highFi} alt="The Bridge High-Fi Prototype" class="w-full h-auto max-h-[90vh] object-contain mx-auto" />
                 <p class="mt-8 text-xs uppercase tracking-widest text-center opacity-30 font-bold">Final High-Fidelity Prototype Display</p>
+                <p class="mt-6 text-base text-black/60 leading-relaxed max-w-2xl mx-auto italic">
+                  The high-fidelity prototype represents the culmination of extensive user research and iterative design. It focuses on providing a low-pressure environment for emotional check-ins, utilizing soft color palettes and intuitive navigation patterns.
+                </p>
             </div>
         </section>
 
         <!-- INTERACTIVE DETAIL SECTION -->
-        <section class="max-w-5xl mx-auto border-t-2 border-black pt-20">
+        <section id="strategy" class="max-w-5xl mx-auto border-t-2 border-black pt-20 scroll-mt-32">
           <details class="group">
             <summary class="flex justify-between items-center cursor-pointer list-none py-8 px-6 border-b border-black/5 mb-16 hover:bg-black/[0.02] transition-colors rounded-lg">
               <h2 class="text-3xl font-bold uppercase tracking-tight group-hover:translate-x-2 transition-transform duration-300">Deep Dive: Process & Strategy</h2>
@@ -261,8 +334,11 @@ const remindmeAssets = {
                 <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">03 / Target Personas</h3>
                 <div class="space-y-16">
                   {bridgeAssets.personas.map((img) => (
-                    <div class="border border-black/10 bg-white p-4 md:p-12">
+                    <div class="border border-black/10 bg-white p-4 md:p-12 text-center">
                         <img src={img} alt="Full Persona Sheet" class="w-full h-auto" />
+                        <p class="mt-8 text-sm text-black/50 leading-relaxed max-w-xl mx-auto">
+                          User personas derived from qualitative interviews with college students and their parents. These profiles helped guide the design direction by highlighting the specific emotional needs and communication barriers.
+                        </p>
                     </div>
                   ))}
                 </div>
@@ -271,13 +347,19 @@ const remindmeAssets = {
               <div class="space-y-20">
                 <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">04 / Prototyping Journey</h3>
                 <div class="space-y-24">
-                  <div class="space-y-8">
+                  <div class="space-y-8 text-center">
                     <img src={bridgeAssets.lowFi} alt="Low-Fi Stage" class="w-full h-auto border border-black/5" />
                     <p class="text-xs uppercase tracking-widest opacity-40 font-bold">Stage 1: Low-Fidelity Exploration & Layout Mapping</p>
+                    <p class="mt-4 text-sm text-black/50 leading-relaxed max-w-xl mx-auto">
+                      Early-stage wireframes focused on structural layout and navigation flow, establishing the foundational architecture of the communication platform.
+                    </p>
                   </div>
-                  <div class="space-y-8">
+                  <div class="space-y-8 text-center">
                     <img src={bridgeAssets.midFi} alt="Mid-Fi Stage" class="w-full h-auto border border-black/5" />
                     <p class="text-xs uppercase tracking-widest opacity-40 font-bold">Stage 2: Mid-Fidelity Interaction Design & Visual System</p>
+                    <p class="mt-4 text-sm text-black/50 leading-relaxed max-w-xl mx-auto">
+                      Transitioning into higher fidelity, incorporating the visual system and testing interactive elements to refine the user experience.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -286,6 +368,9 @@ const remindmeAssets = {
                 <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40 mb-12 text-center">05 / The Final Solution</h3>
                 <div class="bg-white border border-black/10 p-4 md:p-12 shadow-lg text-center">
                     <img src={bridgeAssets.highFi} alt="Final High-Fi Outcome" class="w-full h-auto mx-auto" />
+                    <p class="mt-8 text-sm text-black/50 leading-relaxed max-w-xl mx-auto italic">
+                      The final design solution addresses the identified friction points by introducing specialized interaction models that prioritize emotional support.
+                    </p>
                 </div>
               </div>
               
@@ -333,9 +418,9 @@ const remindmeAssets = {
 
     {isMakersLoop && (
       <div class="space-y-64 pb-64">
-        <section class="grid grid-cols-12 gap-12">
+        <section id="concept" class="grid grid-cols-12 gap-12 scroll-mt-32">
           <div class="col-span-12 md:col-span-4">
-            <h2 class="text-sm font-bold uppercase tracking-[0.4em] mb-8 sticky top-32">01 / Concept</h2>
+            <h2 class="text-xs font-black uppercase tracking-[0.4em] mb-8 sticky top-32">01 / Concept</h2>
           </div>
           <div class="col-span-12 md:col-span-8 space-y-16">
             <p class="text-xl md:text-2xl leading-loose text-black/70 font-medium max-w-4xl text-balance">
@@ -343,17 +428,23 @@ const remindmeAssets = {
             </p>
             <div class="grid grid-cols-3 gap-6">
               {makersAssets.sketches.map((img) => (
-                <div class="aspect-square bg-black/5 overflow-hidden border border-black/5">
-                  <img src={img} alt="Sketch" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+                <div class="space-y-4">
+                  <div class="aspect-square bg-black/5 overflow-hidden border border-black/5">
+                    <img src={img} alt="Sketch" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+                  </div>
+                  <p class="text-[10px] uppercase tracking-widest opacity-40 font-bold">Conceptual Exploration</p>
                 </div>
               ))}
             </div>
+            <p class="mt-8 text-sm text-black/50 leading-relaxed max-w-2xl">
+              Early conceptual sketches and material explorations. This phase focused on understanding the constraints of the maker space and identifying opportunities for circular material flow.
+            </p>
           </div>
         </section>
 
-        <section class="grid grid-cols-12 gap-12">
+        <section id="goals" class="grid grid-cols-12 gap-12 scroll-mt-32">
           <div class="col-span-12 md:col-span-4">
-            <h2 class="text-sm font-bold uppercase tracking-[0.4em] mb-8 sticky top-32">02 / Goals & Methods</h2>
+            <h2 class="text-xs font-black uppercase tracking-[0.4em] mb-8 sticky top-32">02 / Goals & Methods</h2>
           </div>
           <div class="col-span-12 md:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-16">
             <div class="border-t-2 border-black pt-10">
@@ -375,29 +466,40 @@ const remindmeAssets = {
           </div>
         </section>
 
-        <section class="grid grid-cols-12 gap-12">
+        <section id="implementation" class="grid grid-cols-12 gap-12 scroll-mt-32">
           <div class="col-span-12 md:col-span-4">
-            <h2 class="text-sm font-bold uppercase tracking-[0.4em] mb-8 sticky top-32">03 / Implementation</h2>
+            <h2 class="text-xs font-black uppercase tracking-[0.4em] mb-8 sticky top-32">03 / Implementation</h2>
           </div>
           <div class="col-span-12 md:col-span-8 space-y-16">
-            <div class="w-full aspect-[16/10] bg-black/5 border border-black/5 overflow-hidden">
-                <img src={makersAssets.prototype} alt="High-fidelity Prototype" class="w-full h-full object-cover" />
+            <div class="space-y-8">
+              <div class="w-full aspect-[16/10] bg-black/5 border border-black/5 overflow-hidden">
+                  <img src={makersAssets.prototype} alt="High-fidelity Prototype" class="w-full h-full object-cover" />
+              </div>
+              <p class="text-sm text-black/50 leading-relaxed max-w-2xl">
+                The high-fidelity implementation of the modular pegboard system. The design emphasizes adaptability and ease of use, allowing makers to quickly reorganize their workspace based on the project at hand.
+              </p>
             </div>
           </div>
         </section>
 
-        <section class="grid grid-cols-12 gap-12 border-t border-black/10 pt-32">
+        <section id="evaluation" class="grid grid-cols-12 gap-12 border-t border-black/10 pt-32 scroll-mt-32">
           <div class="col-span-12 md:col-span-4">
-            <h2 class="text-sm font-bold uppercase tracking-[0.4em] mb-8 sticky top-32">04 / Evaluation</h2>
+            <h2 class="text-xs font-black uppercase tracking-[0.4em] mb-8 sticky top-32">04 / Evaluation</h2>
           </div>
           <div class="col-span-12 md:col-span-8 space-y-16">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 {makersAssets.screenshots.map((img) => (
-                  <div class="aspect-video bg-black/5 overflow-hidden border border-black/5">
-                    <img src={img} alt="Usability Test Screenshot" class="w-full h-full object-cover" />
+                  <div class="space-y-6">
+                    <div class="aspect-video bg-black/5 overflow-hidden border border-black/5">
+                      <img src={img} alt="Usability Test Screenshot" class="w-full h-full object-cover" />
+                    </div>
+                    <p class="text-xs text-black/40 font-medium italic">User Interaction Study</p>
                   </div>
                 ))}
             </div>
+            <p class="text-sm text-black/50 leading-relaxed max-w-2xl">
+              Documentation of the usability testing phase. Observations from these tests provided critical insights into how users interact with the system, leading to several key improvements.
+            </p>
             <div class="pt-16">
                 <a href="https://www.youtube.com/watch?v=re0Miv5hyfY" target="_blank" class="inline-block px-16 py-8 bg-black text-white text-sm uppercase tracking-[0.3em] font-bold hover:bg-black/80 transition-all">
                     Watch Presentation Video &rarr;
@@ -410,92 +512,374 @@ const remindmeAssets = {
 
     {isMuseumOfGlass && (
       <div class="space-y-48 pb-48">
-        <!-- TL;DR SUMMARY -->
-        <section class="bg-black text-white p-12 md:p-24 -mx-6 md:mx-0">
-          <div class="max-w-4xl mx-auto">
-            <h2 class="text-xs font-bold uppercase tracking-[0.4em] mb-12 opacity-50 text-white/40">00 / Overview</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
-              <div>
-                <h3 class="text-xl font-bold uppercase mb-4 tracking-wide text-white">The Project</h3>
-                <p class="text-lg text-white/80 leading-relaxed font-light text-balance">
-                  Exploring the intersection of glass blowing artistry and digital design for the Museum of Glass. This project encompasses organizational identity, color theory, and digital interface exploration.
+        <!-- 00 / INTRODUCTION -->
+        <section id="overview" class="max-w-5xl mx-auto space-y-32 scroll-mt-32 border-t border-black/5 pt-24">
+          <div class="space-y-12">
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-black">00 / Introduction</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 border-b border-black/5 pb-24">
+              <div class="md:col-span-8 space-y-8">
+                <h3 class="text-xl font-bold uppercase tracking-wide text-black">The Organization</h3>
+                <p class="text-lg text-black/70 leading-relaxed font-light">
+                  The Museum of Glass (MoG) is a premier contemporary art museum dedicated to glassmaking and glass art. Located in Tacoma, it features a live "Hot Shop" where visitors can witness the visceral, high-heat process of glass blowing. Beyond exhibition, MoG serves as a creative hub through residencies for professional artists and students, while fostering community through specialized programs for children and veterans.
                 </p>
               </div>
-              <div>
-                <h3 class="text-xl font-bold uppercase mb-4 tracking-wide text-white">Core Focus</h3>
-                <p class="text-lg text-white/80 leading-relaxed font-light text-balance">
-                  Translating the fluid, vibrant nature of glass into a structured typographic and color system that supports both physical branding and digital accessibility.
+              <div class="md:col-span-4 space-y-8 bg-black/[0.02] p-8 rounded-sm">
+                <h3 class="text-sm font-black uppercase tracking-widest text-black/40">Audience</h3>
+                <ul class="space-y-4 text-sm font-bold uppercase tracking-tight text-black/60">
+                  <li>/ Local Families & Children</li>
+                  <li>/ Art Students & Educators</li>
+                  <li>/ Global Tourists</li>
+                  <li>/ Military Veterans</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="space-y-24 border-b border-black/5 pb-24">
+              <div class="space-y-12">
+                <h3 class="text-xl font-bold uppercase tracking-wide text-black">Brand Attributes</h3>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-y-12 gap-x-8">
+                  {[
+                    "Craft-driven",
+                    "Educational",
+                    "Industrial",
+                    "Modern",
+                    "Accessible",
+                    "Dynamic"
+                  ].map((attr, index) => (
+                    <div class="group">
+                      <div class="flex items-baseline gap-4 mb-2">
+                        <span class="text-[10px] font-black text-black/20 uppercase tracking-widest">0{index + 1}</span>
+                        <span class="text-sm font-black uppercase tracking-[0.2em] text-black/80 group-hover:text-black transition-colors">{attr}</span>
+                      </div>
+                      <div class="h-px w-8 bg-black/10 group-hover:w-full transition-all duration-500"></div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div class="space-y-8 pt-8 border-t border-black/5">
+                <h3 class="text-xl font-bold uppercase tracking-wide text-black">The Challenge</h3>
+                <p class="text-lg text-black/70 leading-relaxed italic max-w-4xl">
+                  Current digital touchpoints reflect a "traditional museum" persona—static, serious, and lacking the heat and vitality of the live glassblowing process. The goal is to translate the fluid energy of molten glass into a modern, accessible identity system.
                 </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 01 / CONTEXT: COMPETITIVE LANDSCAPE -->
+        <section id="context" class="max-w-5xl mx-auto space-y-32 scroll-mt-32">
+          <div class="space-y-12">
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-black">01 / Visual Identity Context</h2>
+            
+            <div class="space-y-24">
+              <div class="space-y-16">
+                <div class="space-y-8">
+                  <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40">Competitive Landscape</h3>
+                  <p class="text-lg text-black/70 leading-relaxed font-light max-w-4xl">
+                    The Museum of Glass operates within a rich cultural ecosystem. While direct competitors include local art institutions like the <span class="font-bold text-black">Tacoma Art Museum</span>, its most significant indirect competitor is <span class="font-bold text-black">Chihuly Garden and Glass</span>. 
+                  </p>
+                </div>
+                <div class="space-y-8 pt-8 border-t border-black/5">
+                  <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40">The Distinction</h3>
+                  <p class="text-lg text-black/60 leading-relaxed max-w-4xl italic">
+                    Unlike the celebrity-focused spectacle of Chihuly, MoG emphasizes <span class="italic text-black font-medium">process</span> and <span class="italic text-black font-medium">community</span>. The identity must bridge the gap between high-end artistic excellence and approachable, hands-on education.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Competitor Analysis Cards -->
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {[
+                  {
+                    name: "Chihuly Garden & Glass",
+                    trait: "Spectacle & Celebrity",
+                    note: "High-end, dramatic, focuses on the finished masterpiece."
+                  },
+                  {
+                    name: "Local Art Museums",
+                    trait: "Traditional & Academic",
+                    note: "Clean, minimalist, but often feels static or 'quiet'."
+                  },
+                  {
+                    name: "Glass Studios",
+                    trait: "Industrial & Raw",
+                    note: "Direct, gritty, focused on the sweat and craft."
+                  }
+                ].map(item => (
+                  <div class="border border-black/5 p-8 space-y-4 hover:bg-black/[0.01] transition-colors">
+                    <h4 class="text-sm font-black uppercase tracking-widest text-black">{item.name}</h4>
+                    <p class="text-[10px] font-black uppercase tracking-widest text-black/30">{item.trait}</p>
+                    <p class="text-sm text-black/60 leading-relaxed">{item.note}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 02 / DESIGN INTENT -->
+        <section id="intent" class="max-w-5xl mx-auto space-y-32 scroll-mt-32">
+          <div class="space-y-12">
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-black">02 / Design Intent</h2>
+            
+            <div class="space-y-24">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
+                <div class="space-y-8">
+                  <h3 class="text-xl font-bold uppercase tracking-wide text-black">Strategic Direction</h3>
+                  <p class="text-lg text-black/70 leading-relaxed font-light">
+                    The design system is built to express <span class="font-bold">excitement, heat, and vitality</span>. I intend to capture the "liquid glass" phase—where fire meets craft—to create a dynamic visual language that feels alive.
+                  </p>
+                  <ul class="space-y-4">
+                    {[
+                      { label: "Vitality", desc: "Using vibrant gradients and fluid shapes." },
+                      { label: "Heat", desc: "A warm, fire-inspired color palette." },
+                      { label: "Community", desc: "Clear, bold typography for accessibility." }
+                    ].map(item => (
+                      <li class="flex items-start gap-4">
+                        <span class="text-black font-black uppercase text-xs mt-1">[{item.label}]</span>
+                        <span class="text-black/60 text-sm">{item.desc}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div class="space-y-8">
+                  <h3 class="text-xl font-bold uppercase tracking-wide text-black">Inspiration / Moodboard</h3>
+                  <div class="grid grid-cols-2 gap-4">
+                    <div class="aspect-square bg-black/[0.05] border border-black/5 flex items-center justify-center p-4 text-center">
+                      <p class="text-[10px] uppercase tracking-widest font-black opacity-30">Molten Glass & Fire</p>
+                    </div>
+                    <div class="aspect-square bg-black/[0.05] border border-black/5 flex items-center justify-center p-4 text-center">
+                      <p class="text-[10px] uppercase tracking-widest font-black opacity-30">Industrial Textures</p>
+                    </div>
+                    <div class="aspect-square bg-black/[0.05] border border-black/5 flex items-center justify-center p-4 text-center">
+                      <p class="text-[10px] uppercase tracking-widest font-black opacity-30">Modern Fluidity</p>
+                    </div>
+                    <div class="aspect-square bg-black/[0.05] border border-black/5 flex items-center justify-center p-4 text-center">
+                      <p class="text-[10px] uppercase tracking-widest font-black opacity-30">Community Vibrancy</p>
+                    </div>
+                  </div>
+                  <p class="text-xs text-black/40 italic leading-relaxed">
+                    Moodboard exploration focusing on the transition from static raw materials to dynamic, glowing artifacts.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
         <!-- Branding Section -->
-        <section class="max-w-5xl mx-auto space-y-32">
+        <section id="identity" class="max-w-5xl mx-auto space-y-32 scroll-mt-32">
           <div class="space-y-12">
-            <h2 class="text-4xl font-bold uppercase tracking-tighter">01 / Organizational Identity</h2>
-            <div class="bg-white border border-black/5 p-8 md:p-16 shadow-sm">
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-black">03 / Organizational Identity</h2>
+            <div class="bg-white border border-black/5 p-8 md:p-16 shadow-sm text-center">
               <div class="aspect-video bg-black/[0.02] flex items-center justify-center border border-dashed border-black/10">
                 <img src={glassAssets.logo} alt="Logo Directions" class="max-w-full h-auto" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
                 <span class="hidden text-black/20 font-bold uppercase tracking-widest text-xs">[ Logo Directions Image ]</span>
               </div>
               <p class="mt-8 text-xs uppercase tracking-widest text-center opacity-30 font-bold">Exploring logo variations and the "blowing glass" metaphor.</p>
+              <p class="mt-6 text-sm text-black/50 leading-relaxed max-w-xl mx-auto italic">
+                The visual identity exploration focuses on capturing the essence of the glass-blowing process. Through iterative sketching and refinement, the final logo direction bridges the gap between traditional craftsmanship and modern artistic expression.
+              </p>
             </div>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
-            <div class="space-y-8">
-              <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">Color Palette</h3>
-              <div class="bg-white border border-black/5 p-6 shadow-sm">
-                <div class="aspect-square bg-black/[0.02] flex items-center justify-center border border-dashed border-black/10">
-                  <img src={glassAssets.palette} alt="Color Palette" class="max-w-full h-auto" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-                  <span class="hidden text-black/20 font-bold uppercase tracking-widest text-xs">[ Color Palette Image ]</span>
-                </div>
-                <p class="mt-6 text-[10px] uppercase tracking-widest opacity-40 leading-relaxed font-medium">Inspired by fire, molten glass, and glass panes.</p>
+          <div class="space-y-24 text-center">
+            <!-- Color Palette Section -->
+            <div class="space-y-12">
+              <div class="space-y-4">
+                <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60">Color Palette</h3>
+                <p class="text-xs uppercase tracking-widest opacity-60 leading-relaxed font-bold">Inspired by fire, molten glass, and glass panes.</p>
               </div>
+              
+              <!-- Color Swatches Container - Centered -->
+              <div class="flex flex-wrap justify-center gap-8 md:gap-16 my-16">
+                {[
+                  { hex: "#B70E00", name: "Crimson" },
+                  { hex: "#E67E00", name: "Amber" },
+                  { hex: "#F7E7A7", name: "Parchment" },
+                  { hex: "#0030CF", name: "Cobalt" },
+                  { hex: "#B6CFB9", name: "Glass" },
+                  { hex: "#000000", name: "Obsidian" }
+                ].map((color) => (
+                  <div class="flex flex-col items-center gap-4">
+                    <div 
+                      class="w-16 h-16 md:w-24 md:h-24 rounded-full hover:scale-110 transition-transform duration-300" 
+                      style={`background-color: ${color.hex};`}
+                    ></div>
+                    <span class="text-xs uppercase tracking-widest font-black opacity-60">{color.hex}</span>
+                  </div>
+                ))}
+              </div>
+
+              <p class="text-base text-black/60 leading-relaxed max-w-2xl mx-auto font-medium">
+                A color system derived from the elemental nature of glass making—fire, light, and transparency.
+              </p>
             </div>
-            <div class="space-y-8">
-              <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">Typography</h3>
-              <div class="bg-white border border-black/5 p-6 shadow-sm">
-                <div class="aspect-square bg-black/[0.02] flex items-center justify-center border border-dashed border-black/10">
-                  <img src={glassAssets.typography} alt="Typographic Selections" class="max-w-full h-auto" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-                  <span class="hidden text-black/20 font-bold uppercase tracking-widest text-xs">[ Typography Image ]</span>
+
+            <!-- Typography Section -->
+            <div id="typography" class="space-y-24 scroll-mt-32">
+              <div class="space-y-4">
+                <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60">Typography</h3>
+                <p class="text-xs uppercase tracking-widest opacity-60 leading-relaxed font-bold text-center">Visual Language & Typographic System</p>
+              </div>
+              
+              <div class="space-y-8 max-w-none text-left">
+                <!-- Title Row -->
+                <div class="border-b border-black/5 pb-6">
+                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2">Title / Horizon / 60pt</span>
+                  <h4 style="font-family: 'Horizon', sans-serif; font-size: 60pt; line-height: 1.1;" class="uppercase text-black whitespace-nowrap">Museum of Glass</h4>
                 </div>
-                <p class="mt-6 text-[10px] uppercase tracking-widest opacity-40 leading-relaxed font-medium">Horizen for titles, Palanquin for body text.</p>
+                
+                <!-- H1 Row -->
+                <div class="border-b border-black/5 pb-6">
+                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2">H1 / Palanquin Dark / 34pt</span>
+                  <h4 style="font-family: 'Palanquin Dark', sans-serif; font-size: 34pt; line-height: 1.2;" class="text-black font-bold">Museum of Glass</h4>
+                </div>
+
+                <!-- H2 Row -->
+                <div class="border-b border-black/5 pb-6">
+                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2">H2 / Palanquin Dark / 26pt</span>
+                  <h4 style="font-family: 'Palanquin Dark', sans-serif; font-size: 26pt; line-height: 1.2;" class="text-black font-bold">Organizational Identity</h4>
+                </div>
+
+                <!-- H3 Row -->
+                <div class="border-b border-black/5 pb-6">
+                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2">H3 / Palanquin Dark / 20pt</span>
+                  <h4 style="font-family: 'Palanquin Dark', sans-serif; font-size: 20pt; line-height: 1.2;" class="text-black font-bold">Color Palette & Typography</h4>
+                </div>
+
+                <!-- Text1 Row -->
+                <div class="border-b border-black/5 pb-6">
+                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2">Text1 / Palanquin Dark / 20pt</span>
+                  <p style="font-family: 'Palanquin Dark', sans-serif; font-size: 20pt; line-height: 1.5;" class="text-black/80">
+                    Exploring the intersection of glass blowing artistry and digital design for the Museum of Glass.
+                  </p>
+                </div>
+
+                <!-- Text2 Row -->
+                <div class="pb-6">
+                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2">Text2 / Palanquin Dark / 16pt</span>
+                  <p style="font-family: 'Palanquin Dark', sans-serif; font-size: 16pt; line-height: 1.5;" class="text-black/70">
+                    Translating the fluid, vibrant nature of glass into a structured typographic and color system.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
         <!-- Digital Artifact -->
-        <section class="space-y-32">
+        <section id="digital" class="space-y-32 scroll-mt-32">
           <div class="max-w-5xl mx-auto">
-            <h2 class="text-4xl font-bold uppercase tracking-tighter mb-16">02 / Digital Artifact</h2>
-            <div class="space-y-8">
-              <div class="bg-white border border-black/5 p-4 md:p-12 shadow-md">
-                <div class="aspect-video bg-black/[0.02] flex items-center justify-center border border-dashed border-black/10">
-                  <img src={glassAssets.digitalArtifact} alt="Eva: Artifact Exploration & Design Direction" class="w-full h-auto" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-                  <span class="hidden text-black/20 font-bold uppercase tracking-widest text-xs">[ Eva: Digital Artifact Image ]</span>
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-16 text-black">04 / Digital Artifact</h2>
+            
+            <div class="space-y-24">
+              <!-- Interactive Prototype (Now Primary) -->
+              <div class="space-y-12">
+                <div class="bg-black/5 aspect-[16/10] w-full flex items-center justify-center border border-black/10 rounded-sm overflow-hidden relative group">
+                  <!-- Figma Iframe Placeholder -->
+                  <div class="absolute inset-0 flex flex-col items-center justify-center p-12 text-center space-y-6">
+                    <div class="w-16 h-16 border-2 border-black/20 rounded-full flex items-center justify-center animate-pulse">
+                      <span class="text-2xl">⚡</span>
+                    </div>
+                    <div class="space-y-2">
+                      <h4 class="text-sm font-black uppercase tracking-widest text-black">Interactive Figma Prototype</h4>
+                      <p class="text-xs text-black/40 max-w-xs mx-auto">Click to interact with the high-fidelity web experience.</p>
+                    </div>
+                    <!-- Replace the 'src' below with your actual Figma Embed URL when ready -->
+                    <iframe 
+                      style="border: 1px solid rgba(0, 0, 0, 0.1); width: 100%; height: 100%;" 
+                      src="https://www.figma.com/embed?embed_host=astra&url=https://www.figma.com/proto/YOUR_FIGMA_ID_HERE" 
+                      allowfullscreen
+                      class="absolute inset-0 w-full h-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    ></iframe>
+                  </div>
+                </div>
+                <div class="max-w-3xl">
+                  <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60 mb-6">Interactive Experience</h3>
+                  <p class="text-base text-black/70 leading-relaxed">
+                    A fully interactive digital artifact focused on enhancing the visitor experience through tactile storytelling and fluid transitions. This prototype demonstrates the seamless integration of the new brand identity into a responsive web environment.
+                  </p>
                 </div>
               </div>
-              <p class="text-xs uppercase tracking-widest opacity-40 font-bold text-center">Eva: Artifact Exploration & Design Direction</p>
             </div>
           </div>
         </section>
 
-        <!-- Physical Artifact -->
-        <section class="space-y-32">
-          <div class="max-w-5xl mx-auto">
-            <h2 class="text-4xl font-bold uppercase tracking-tighter mb-16">03 / Physical Artifact</h2>
-            <div class="space-y-8">
-              <div class="bg-white border border-black/5 p-4 md:p-12 shadow-md">
-                <div class="aspect-video bg-black/[0.02] flex items-center justify-center border border-dashed border-black/10">
-                  <img src={glassAssets.physicalArtifact} alt="Physical Artifact Design" class="w-full h-auto" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-                  <span class="hidden text-black/20 font-bold uppercase tracking-widest text-xs">[ Physical Artifact Image ]</span>
+        <!-- Appendix -->
+        <section id="appendix" class="max-w-5xl mx-auto space-y-32 scroll-mt-32 border-t border-black/5 pt-24">
+          <div class="space-y-24">
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-16 text-black">06 / Appendix</h2>
+            
+            <div class="space-y-32">
+              <!-- 01 Process & Iteration -->
+              <div class="space-y-8 border-b border-black/5 pb-16">
+                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 mb-8">01 / Process & Iteration</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div class="aspect-video bg-black/[0.03] border border-dashed border-black/10 flex items-center justify-center p-4 text-center">
+                    <p class="text-[10px] uppercase tracking-widest font-black opacity-20">[ Early Sketches ]</p>
+                  </div>
+                  <div class="aspect-video bg-black/[0.03] border border-dashed border-black/10 flex items-center justify-center p-4 text-center">
+                    <p class="text-[10px] uppercase tracking-widest font-black opacity-20">[ Logo Refinement ]</p>
+                  </div>
+                </div>
+                <p class="text-sm text-black/50 leading-relaxed italic mt-8">
+                  The evolution of the visual language, from initial gestural sketches of glassblowing tools to the final structured identity.
+                </p>
+              </div>
+
+              <!-- 02 AI Content Disclosure -->
+              <div class="space-y-8 border-b border-black/5 pb-16">
+                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 mb-8">02 / AI Content Disclosure</h3>
+                <div class="bg-black/[0.02] p-8 md:p-12 rounded-sm border border-black/5 space-y-8">
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div class="space-y-4">
+                      <p class="text-[13px] text-black/70 leading-relaxed">
+                        <span class="font-bold text-black uppercase text-[11px] block mb-1">Platform/Tools:</span>
+                        ChatGPT (GPT-4), Midjourney v6
+                      </p>
+                      <p class="text-[13px] text-black/70 leading-relaxed">
+                        <span class="font-bold text-black uppercase text-[11px] block mb-1">Usage:</span>
+                        AI was utilized to synthesize raw research notes into cohesive descriptive text and to generate moodboard imagery exploring the "molten glass" texture.
+                      </p>
+                    </div>
+                    <div class="flex items-center">
+                      <p class="text-[13px] text-black/70 leading-relaxed italic border-l-2 border-black/10 pl-8">
+                        The final design system is original—combining AI-assisted research with unique typographic choices and custom UI layouts that cannot be duplicated by automated tools alone.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <p class="text-xs uppercase tracking-widest opacity-40 font-bold text-center">Physical manifestation and material exploration</p>
+
+              <!-- 03 Acknowledgments -->
+              <div class="space-y-8 border-b border-black/5 pb-16">
+                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 mb-8">03 / Acknowledgments</h3>
+                <p class="text-[15px] text-black/70 leading-relaxed max-w-3xl">
+                  A special thank you to my teammate for their invaluable contributions to the collaborative identity design and shared vision for the Museum of Glass project.
+                </p>
+              </div>
+
+              <!-- 04 Citations & References -->
+              <div class="space-y-8">
+                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 mb-8">04 / Citations & References</h3>
+                <ul class="space-y-4 text-sm text-black/70">
+                  <li class="flex items-center gap-4">
+                    <span class="w-1.5 h-1.5 bg-black/20 rounded-full"></span>
+                    <a href="https://www.museumofglass.org/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">Museum of Glass Official Website</a>
+                  </li>
+                  <li class="flex items-center gap-4">
+                    <span class="w-1.5 h-1.5 bg-black/20 rounded-full"></span>
+                    <a href="https://www.chihulygardenandglass.com/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">Chihuly Garden and Glass - Competitive Analysis</a>
+                  </li>
+                  <li class="flex items-center gap-4">
+                    <span class="w-1.5 h-1.5 bg-black/20 rounded-full"></span>
+                    <a href="https://fonts.google.com/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">Google Fonts: Palanquin Dark</a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </section>

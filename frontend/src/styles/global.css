@@ -1,5 +1,21 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Horizon';
+  src: url('/fonts/Horizon.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Palanquin Dark';
+  src: url('/fonts/PalanquinDark-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   --color-paper: #f9f9f7;
   --font-sans: "Inter", "Helvetica Neue", "Arial", sans-serif;
