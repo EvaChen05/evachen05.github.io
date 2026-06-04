@@ -18,13 +18,15 @@ const isMuseumOfGlass = project.id === 'museum-of-glass';
 
 // Assets for Museum of Glass
 const glassAssets = {
-  hero: "/images/museum_of_glass/image.png",
-  logo: "/images/museum_of_glass/logo.png",
-  palette: "/images/museum_of_glass/image.png",
+  hero: "/images/museum_of_glass/hero-image.png",
+  logo: "/images/museum_of_glass/logo-primary.jpg",
+  palette: "/images/museum_of_glass/hero-image.png",
   typography: "/images/museum_of_glass/typography.png",
-  digitalArtifact: "/images/museum_of_glass/Add a heading (6).png",
-  artifactExploration: "/images/museum_of_glass/image.png",
-  physicalArtifact: "/images/museum_of_glass/image.png"
+  digitalArtifact: "/images/museum_of_glass/digital-artifact.png",
+  artifactExploration: "/images/museum_of_glass/hero-image.png",
+  physicalArtifact: "/images/museum_of_glass/physical_artifact.jpg",
+  logoAlt1: "/images/museum_of_glass/logo_alt_1.png",
+  logoAlt2: "/images/museum_of_glass/logo_alt_2.png"
 };
 
 // Assets for Makers Loop
@@ -147,9 +149,8 @@ const remindmeAssets = {
               <a href="#context" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 01 Context</a>
               <a href="#intent" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 02 Design Intent</a>
               <a href="#identity" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 03 Identity</a>
-              <a href="#digital" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 04 Digital</a>
-              <a href="#physical" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 05 Physical</a>
-              <a href="#appendix" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 06 Appendix</a>
+              <a href="#artifacts" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 04 Artifacts</a>
+              <a href="#appendix" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 05 Appendix</a>
             </>
           )}
         </nav>
@@ -521,7 +522,7 @@ const remindmeAssets = {
               <div class="md:col-span-8 space-y-8">
                 <h3 class="text-xl font-bold uppercase tracking-wide text-black">The Organization</h3>
                 <p class="text-lg text-black/70 leading-relaxed font-light">
-                  The Museum of Glass (MoG) is a premier contemporary art museum dedicated to glassmaking and glass art. Located in Tacoma, it features a live "Hot Shop" where visitors can witness the visceral, high-heat process of glass blowing. Beyond exhibition, MoG serves as a creative hub through residencies for professional artists and students, while fostering community through specialized programs for children and veterans.
+                  The Museum of Glass is a contemporary art museum and active glassmaking studio. It offers unique programs for both artists and visitors, including residencies for professionals and students, alongside hands-on glassmaking experiences for children and veterans. Welcoming an audience of students, tourists, and art enthusiasts, the museum is deeply craft-driven, educational, and community-oriented.
                 </p>
               </div>
               <div class="md:col-span-4 space-y-8 bg-black/[0.02] p-8 rounded-sm">
@@ -557,12 +558,6 @@ const remindmeAssets = {
                   ))}
                 </div>
               </div>
-              <div class="space-y-8 pt-8 border-t border-black/5">
-                <h3 class="text-xl font-bold uppercase tracking-wide text-black">The Challenge</h3>
-                <p class="text-lg text-black/70 leading-relaxed italic max-w-4xl">
-                  Current digital touchpoints reflect a "traditional museum" persona—static, serious, and lacking the heat and vitality of the live glassblowing process. The goal is to translate the fluid energy of molten glass into a modern, accessible identity system.
-                </p>
-              </div>
             </div>
           </div>
         </section>
@@ -572,47 +567,49 @@ const remindmeAssets = {
           <div class="space-y-12">
             <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-black">01 / Visual Identity Context</h2>
             
-            <div class="space-y-24">
-              <div class="space-y-16">
-                <div class="space-y-8">
-                  <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40">Competitive Landscape</h3>
-                  <p class="text-lg text-black/70 leading-relaxed font-light max-w-4xl">
-                    The Museum of Glass operates within a rich cultural ecosystem. While direct competitors include local art institutions like the <span class="font-bold text-black">Tacoma Art Museum</span>, its most significant indirect competitor is <span class="font-bold text-black">Chihuly Garden and Glass</span>. 
-                  </p>
-                </div>
-                <div class="space-y-8 pt-8 border-t border-black/5">
-                  <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40">The Distinction</h3>
-                  <p class="text-lg text-black/60 leading-relaxed max-w-4xl italic">
-                    Unlike the celebrity-focused spectacle of Chihuly, MoG emphasizes <span class="italic text-black font-medium">process</span> and <span class="italic text-black font-medium">community</span>. The identity must bridge the gap between high-end artistic excellence and approachable, hands-on education.
-                  </p>
+            <div class="space-y-32">
+              <!-- Competitors -->
+              <div class="space-y-12">
+                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 border-b border-black/5 pb-4">Competitors</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                  <div class="space-y-4">
+                    <h4 class="text-sm font-black uppercase tracking-widest text-black">Chihuly Garden and Glass</h4>
+                    <p class="text-sm text-black/60 leading-relaxed">
+                      As our largest indirect competitor, they offer a high-end, celebrity-driven visual spectacle. MoG contrasts this by providing a more approachable, hands-on maker experience.
+                    </p>
+                  </div>
+                  <div class="space-y-4">
+                    <h4 class="text-sm font-black uppercase tracking-widest text-black">Tacoma Art Museum & Washington State History Museum</h4>
+                    <p class="text-sm text-black/60 leading-relaxed">
+                      Located in downtown Tacoma, these institutions directly compete for the weekend time and ticket budgets of both local residents and tourists.
+                    </p>
+                  </div>
                 </div>
               </div>
 
-              <!-- Competitor Analysis Cards -->
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {[
-                  {
-                    name: "Chihuly Garden & Glass",
-                    trait: "Spectacle & Celebrity",
-                    note: "High-end, dramatic, focuses on the finished masterpiece."
-                  },
-                  {
-                    name: "Local Art Museums",
-                    trait: "Traditional & Academic",
-                    note: "Clean, minimalist, but often feels static or 'quiet'."
-                  },
-                  {
-                    name: "Glass Studios",
-                    trait: "Industrial & Raw",
-                    note: "Direct, gritty, focused on the sweat and craft."
-                  }
-                ].map(item => (
-                  <div class="border border-black/5 p-8 space-y-4 hover:bg-black/[0.01] transition-colors">
-                    <h4 class="text-sm font-black uppercase tracking-widest text-black">{item.name}</h4>
-                    <p class="text-[10px] font-black uppercase tracking-widest text-black/30">{item.trait}</p>
-                    <p class="text-sm text-black/60 leading-relaxed">{item.note}</p>
+              <!-- Complementors -->
+              <div class="space-y-12">
+                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 border-b border-black/5 pb-4">Complementors</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                  <div class="space-y-4">
+                    <h4 class="text-sm font-black uppercase tracking-widest text-black">Chihuly Bridge of Glass</h4>
+                    <p class="text-sm text-black/60 leading-relaxed">
+                      This physical walkway connects downtown Tacoma to MoG, serving as a perfect architectural guide for arriving visitors.
+                    </p>
                   </div>
-                ))}
+                  <div class="space-y-4">
+                    <h4 class="text-sm font-black uppercase tracking-widest text-black">Hotel Murano</h4>
+                    <p class="text-sm text-black/60 leading-relaxed">
+                      A boutique hotel themed around glass art that seamlessly extends the immersive MoG visitor experience.
+                    </p>
+                  </div>
+                  <div class="space-y-4">
+                    <h4 class="text-sm font-black uppercase tracking-widest text-black">Pilchuck Glass School</h4>
+                    <p class="text-sm text-black/60 leading-relaxed">
+                      Together with MoG, this institution anchors a robust ecosystem for glass art education and practice in the region.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -628,36 +625,27 @@ const remindmeAssets = {
                 <div class="space-y-8">
                   <h3 class="text-xl font-bold uppercase tracking-wide text-black">Strategic Direction</h3>
                   <p class="text-lg text-black/70 leading-relaxed font-light">
-                    The design system is built to express <span class="font-bold">excitement, heat, and vitality</span>. I intend to capture the "liquid glass" phase—where fire meets craft—to create a dynamic visual language that feels alive.
+                    The visual identity of the Museum of Glass is designed to express the fluid motion of glassmaking, a welcoming community spirit, and a modern approach to education. It is created for Pacific Northwest families, art enthusiasts, and cultural tourists.
                   </p>
-                  <ul class="space-y-4">
-                    {[
-                      { label: "Vitality", desc: "Using vibrant gradients and fluid shapes." },
-                      { label: "Heat", desc: "A warm, fire-inspired color palette." },
-                      { label: "Community", desc: "Clear, bold typography for accessibility." }
-                    ].map(item => (
-                      <li class="flex items-start gap-4">
-                        <span class="text-black font-black uppercase text-xs mt-1">[{item.label}]</span>
-                        <span class="text-black/60 text-sm">{item.desc}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <p class="text-black/60 text-sm leading-relaxed">
+                    These visuals capture the museum's blend of art, science, and community. The fluid movement and raw energy of molten glass on a blowpipe highlight its craft-driven educational purpose and the thrilling Hot Shop experience. Finally, pieces like blue glass earrings translate this intense craft into accessible, everyday human connections.
+                  </p>
                 </div>
                 
                 <div class="space-y-8">
                   <h3 class="text-xl font-bold uppercase tracking-wide text-black">Inspiration / Moodboard</h3>
                   <div class="grid grid-cols-2 gap-4">
-                    <div class="aspect-square bg-black/[0.05] border border-black/5 flex items-center justify-center p-4 text-center">
-                      <p class="text-[10px] uppercase tracking-widest font-black opacity-30">Molten Glass & Fire</p>
+                    <div class="aspect-square bg-black/[0.05] border border-black/5 overflow-hidden">
+                      <img src="/images/museum_of_glass/moodboard-1.png" alt="Molten Glass & Fire" class="w-full h-full object-cover" />
                     </div>
-                    <div class="aspect-square bg-black/[0.05] border border-black/5 flex items-center justify-center p-4 text-center">
-                      <p class="text-[10px] uppercase tracking-widest font-black opacity-30">Industrial Textures</p>
+                    <div class="aspect-square bg-black/[0.05] border border-black/5 overflow-hidden">
+                      <img src="/images/museum_of_glass/moodboard-2.png" alt="Industrial Textures" class="w-full h-full object-cover" />
                     </div>
-                    <div class="aspect-square bg-black/[0.05] border border-black/5 flex items-center justify-center p-4 text-center">
-                      <p class="text-[10px] uppercase tracking-widest font-black opacity-30">Modern Fluidity</p>
+                    <div class="aspect-square bg-black/[0.05] border border-black/5 overflow-hidden">
+                      <img src="/images/museum_of_glass/moodboard-3.png" alt="Modern Fluidity" class="w-full h-full object-cover" />
                     </div>
-                    <div class="aspect-square bg-black/[0.05] border border-black/5 flex items-center justify-center p-4 text-center">
-                      <p class="text-[10px] uppercase tracking-widest font-black opacity-30">Community Vibrancy</p>
+                    <div class="aspect-square bg-black/[0.05] border border-black/5 overflow-hidden">
+                      <img src="/images/museum_of_glass/moodboard-4.png" alt="Community Vibrancy" class="w-full h-full object-cover" />
                     </div>
                   </div>
                   <p class="text-xs text-black/40 italic leading-relaxed">
@@ -673,15 +661,16 @@ const remindmeAssets = {
         <section id="identity" class="max-w-5xl mx-auto space-y-32 scroll-mt-32">
           <div class="space-y-12">
             <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-black">03 / Organizational Identity</h2>
-            <div class="bg-white border border-black/5 p-8 md:p-16 shadow-sm text-center">
-              <div class="aspect-video bg-black/[0.02] flex items-center justify-center border border-dashed border-black/10">
-                <img src={glassAssets.logo} alt="Logo Directions" class="max-w-full h-auto" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-                <span class="hidden text-black/20 font-bold uppercase tracking-widest text-xs">[ Logo Directions Image ]</span>
+            <div class="flex flex-col md:flex-row items-center gap-16 md:gap-24 py-8">
+              <div class="w-full md:w-1/2 flex justify-center">
+                <img src="/images/museum_of_glass/logo-primary.jpg" alt="Museum of Glass Logo" class="w-full max-w-md h-auto" />
               </div>
-              <p class="mt-8 text-xs uppercase tracking-widest text-center opacity-30 font-bold">Exploring logo variations and the "blowing glass" metaphor.</p>
-              <p class="mt-6 text-sm text-black/50 leading-relaxed max-w-xl mx-auto italic">
-                The visual identity exploration focuses on capturing the essence of the glass-blowing process. Through iterative sketching and refinement, the final logo direction bridges the gap between traditional craftsmanship and modern artistic expression.
-              </p>
+              <div class="w-full md:w-1/2 space-y-6 text-left">
+                <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60">Logo Concept & Metaphor</h3>
+                <p class="text-sm md:text-base text-black/50 leading-relaxed italic">
+                  The logo represents a bulb of molten glass being inflated to create an abstract letter "G". This design reflects both the craftsmanship of glassmaking and the dynamic fluidity of the glass.
+                </p>
+              </div>
             </div>
           </div>
 
@@ -690,7 +679,6 @@ const remindmeAssets = {
             <div class="space-y-12">
               <div class="space-y-4">
                 <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60">Color Palette</h3>
-                <p class="text-xs uppercase tracking-widest opacity-60 leading-relaxed font-bold">Inspired by fire, molten glass, and glass panes.</p>
               </div>
               
               <!-- Color Swatches Container - Centered -->
@@ -713,8 +701,8 @@ const remindmeAssets = {
                 ))}
               </div>
 
-              <p class="text-base text-black/60 leading-relaxed max-w-2xl mx-auto font-medium">
-                A color system derived from the elemental nature of glass making—fire, light, and transparency.
+              <p class="text-base text-black/60 leading-relaxed max-w-4xl mx-auto font-medium">
+                We based our color palette on the physical art of glassmaking. We also needed a highly usable interface. We selected red, orange, yellow, and blue. These act as vibrant pops of color. The intense fire of the furnace inspired these choices. The glowing molten glass also inspired them. We chose white and a soft green for our layout. These serve as clean backgrounds. Inclusive design is a priority. We reserve black and white strictly for our text. This guarantees high contrast. It ensures maximum legibility across any background. The information remains clear for all users.
               </p>
             </div>
 
@@ -722,7 +710,6 @@ const remindmeAssets = {
             <div id="typography" class="space-y-24 scroll-mt-32">
               <div class="space-y-4">
                 <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60">Typography</h3>
-                <p class="text-xs uppercase tracking-widest opacity-60 leading-relaxed font-bold text-center">Visual Language & Typographic System</p>
               </div>
               
               <div class="space-y-8 max-w-none text-left">
@@ -766,42 +753,52 @@ const remindmeAssets = {
                   </p>
                 </div>
               </div>
+
+              <p class="text-base text-black/60 leading-relaxed max-w-4xl mx-auto font-medium">
+                The bold title typography embodies the substantial weight of the exhibited glassworks, contrasting with a delicate text font that captures the fragile intricacies of glass. This thoughtful pairing of varied letterforms also ensures optimal legibility.
+              </p>
             </div>
           </div>
         </section>
 
-        <!-- Digital Artifact -->
-        <section id="digital" class="space-y-32 scroll-mt-32">
-          <div class="max-w-5xl mx-auto">
-            <h2 class="text-4xl font-black uppercase tracking-tighter mb-16 text-black">04 / Digital Artifact</h2>
+        <!-- Artifacts -->
+        <section id="artifacts" class="space-y-32 scroll-mt-32">
+          <div class="max-w-[1339px] mx-auto px-4 md:px-8">
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-16 text-black">04 / Artifacts</h2>
             
-            <div class="space-y-24">
+            <div class="space-y-32">
               <!-- Interactive Prototype (Now Primary) -->
               <div class="space-y-12">
-                <div class="bg-black/5 aspect-[16/10] w-full flex items-center justify-center border border-black/10 rounded-sm overflow-hidden relative group">
-                  <!-- Figma Iframe Placeholder -->
-                  <div class="absolute inset-0 flex flex-col items-center justify-center p-12 text-center space-y-6">
-                    <div class="w-16 h-16 border-2 border-black/20 rounded-full flex items-center justify-center animate-pulse">
-                      <span class="text-2xl">⚡</span>
-                    </div>
-                    <div class="space-y-2">
-                      <h4 class="text-sm font-black uppercase tracking-widest text-black">Interactive Figma Prototype</h4>
-                      <p class="text-xs text-black/40 max-w-xs mx-auto">Click to interact with the high-fidelity web experience.</p>
-                    </div>
-                    <!-- Replace the 'src' below with your actual Figma Embed URL when ready -->
-                    <iframe 
-                      style="border: 1px solid rgba(0, 0, 0, 0.1); width: 100%; height: 100%;" 
-                      src="https://www.figma.com/embed?embed_host=astra&url=https://www.figma.com/proto/YOUR_FIGMA_ID_HERE" 
-                      allowfullscreen
-                      class="absolute inset-0 w-full h-full opacity-0 group-hover:opacity-100 transition-opacity"
-                    ></iframe>
-                  </div>
-                </div>
-                <div class="max-w-3xl">
-                  <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60 mb-6">Interactive Experience</h3>
+                <div class="max-w-[1139px] mx-auto space-y-8">
+                  <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60">Interactive Artifact</h3>
                   <p class="text-base text-black/70 leading-relaxed">
-                    A fully interactive digital artifact focused on enhancing the visitor experience through tactile storytelling and fluid transitions. This prototype demonstrates the seamless integration of the new brand identity into a responsive web environment.
+                    For my digital artifact, I developed an interactive prototype featuring the Home and Visit pages. The Home page welcomes users with fluid, dynamic visuals that reflect the creative energy of the Hot Shop. On the Visit page, I prioritized usability and clear information architecture. By utilizing high-contrast typography and a clean layout, key details like ticketing and schedules are highly accessible. This prototype successfully balances artistic expression with a human-centered digital experience.
                   </p>
+                </div>
+                <div class="w-full max-w-5xl mx-auto aspect-[1339/849] relative overflow-hidden rounded-sm border border-black/5 bg-white">
+                  <iframe 
+                    style="border: none; width: 1339px; height: 849px; transform: scale(0.765); transform-origin: top left;" 
+                    src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/t6R9HiL45xpL0IXbnaaJK7/Untitled?node-id=4-2&scaling=min-zoom&hide-ui=1" 
+                    allowfullscreen
+                    class="absolute top-0 left-0 max-md:scale-[0.5] max-sm:scale-[0.25]"
+                  ></iframe>
+                </div>
+              </div>
+
+              <!-- Physical Artifact -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-start">
+                <div class="space-y-8">
+                  <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60">Physical Artifact</h3>
+                  <p class="text-base text-black/70 leading-relaxed">
+                    This dual-purpose apron works for both museum workshops and home cooking. It features the new logo on a dark canvas, a transparent front pocket mimicking clear glass, and flowing colorful lines representing molten glass. It perfectly brings MoG’s hands-on, creative spirit into everyday life.
+                  </p>
+                </div>
+                <div class="w-3/4 ml-auto aspect-[3/4] bg-black/[0.03] overflow-hidden rounded-sm border border-black/5">
+                  <img 
+                    src={glassAssets.physicalArtifact} 
+                    alt="Museum of Glass Physical Artifact" 
+                    class="w-full h-full object-cover"
+                  />
                 </div>
               </div>
             </div>
@@ -811,60 +808,41 @@ const remindmeAssets = {
         <!-- Appendix -->
         <section id="appendix" class="max-w-5xl mx-auto space-y-32 scroll-mt-32 border-t border-black/5 pt-24">
           <div class="space-y-24">
-            <h2 class="text-4xl font-black uppercase tracking-tighter mb-16 text-black">06 / Appendix</h2>
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-16 text-black">05 / Appendix</h2>
             
-            <div class="space-y-32">
+            <div class="space-y-16">
               <!-- 01 Process & Iteration -->
-              <div class="space-y-8 border-b border-black/5 pb-16">
+              <div class="space-y-8 border-b border-black/5 pb-12">
                 <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 mb-8">01 / Process & Iteration</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div class="aspect-video bg-black/[0.03] border border-dashed border-black/10 flex items-center justify-center p-4 text-center">
-                    <p class="text-[10px] uppercase tracking-widest font-black opacity-20">[ Early Sketches ]</p>
-                  </div>
-                  <div class="aspect-video bg-black/[0.03] border border-dashed border-black/10 flex items-center justify-center p-4 text-center">
-                    <p class="text-[10px] uppercase tracking-widest font-black opacity-20">[ Logo Refinement ]</p>
-                  </div>
-                </div>
-                <p class="text-sm text-black/50 leading-relaxed italic mt-8">
-                  The evolution of the visual language, from initial gestural sketches of glassblowing tools to the final structured identity.
-                </p>
-              </div>
-
-              <!-- 02 AI Content Disclosure -->
-              <div class="space-y-8 border-b border-black/5 pb-16">
-                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 mb-8">02 / AI Content Disclosure</h3>
-                <div class="bg-black/[0.02] p-8 md:p-12 rounded-sm border border-black/5 space-y-8">
-                  <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <div class="space-y-4">
-                      <p class="text-[13px] text-black/70 leading-relaxed">
-                        <span class="font-bold text-black uppercase text-[11px] block mb-1">Platform/Tools:</span>
-                        ChatGPT (GPT-4), Midjourney v6
-                      </p>
-                      <p class="text-[13px] text-black/70 leading-relaxed">
-                        <span class="font-bold text-black uppercase text-[11px] block mb-1">Usage:</span>
-                        AI was utilized to synthesize raw research notes into cohesive descriptive text and to generate moodboard imagery exploring the "molten glass" texture.
-                      </p>
+                
+                <!-- Alternative Logos (Same height, compact, left-aligned) -->
+                <div class="flex flex-wrap gap-12 items-end">
+                  <div class="space-y-4">
+                    <div class="h-32 md:h-40 overflow-hidden rounded-sm">
+                      <img src={glassAssets.logoAlt1} alt="Alternative Logo 1" class="h-full w-auto object-contain" />
                     </div>
-                    <div class="flex items-center">
-                      <p class="text-[13px] text-black/70 leading-relaxed italic border-l-2 border-black/10 pl-8">
-                        The final design system is original—combining AI-assisted research with unique typographic choices and custom UI layouts that cannot be duplicated by automated tools alone.
-                      </p>
+                    <p class="text-[11px] uppercase tracking-[0.2em] text-black/40 font-bold italic">Alternative Logo</p>
+                  </div>
+                  <div class="space-y-4">
+                    <div class="h-32 md:h-40 overflow-hidden rounded-sm">
+                      <img src={glassAssets.logoAlt2} alt="Alternative Logo 2" class="h-full w-auto object-contain" />
                     </div>
+                    <p class="text-[11px] uppercase tracking-[0.2em] text-black/40 font-bold italic">Alternative Logo</p>
                   </div>
                 </div>
               </div>
 
-              <!-- 03 Acknowledgments -->
-              <div class="space-y-8 border-b border-black/5 pb-16">
-                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 mb-8">03 / Acknowledgments</h3>
-                <p class="text-[15px] text-black/70 leading-relaxed max-w-3xl">
-                  A special thank you to my teammate for their invaluable contributions to the collaborative identity design and shared vision for the Museum of Glass project.
+              <!-- 02 Acknowledgments -->
+              <div class="space-y-8 border-b border-black/5 pb-12">
+                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 mb-8">02 / Acknowledgments</h3>
+                <p class="text-[15px] text-black/70 leading-relaxed">
+                  A special thank you to my teammate Vivian Pearl Kenney for their invaluable contributions to the collaborative identity design and shared vision for the Museum of Glass project.
                 </p>
               </div>
 
-              <!-- 04 Citations & References -->
+              <!-- 03 Citations & References -->
               <div class="space-y-8">
-                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 mb-8">04 / Citations & References</h3>
+                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 mb-8">03 / Citations & References</h3>
                 <ul class="space-y-4 text-sm text-black/70">
                   <li class="flex items-center gap-4">
                     <span class="w-1.5 h-1.5 bg-black/20 rounded-full"></span>
@@ -877,6 +855,18 @@ const remindmeAssets = {
                   <li class="flex items-center gap-4">
                     <span class="w-1.5 h-1.5 bg-black/20 rounded-full"></span>
                     <a href="https://fonts.google.com/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">Google Fonts: Palanquin Dark</a>
+                  </li>
+                  <li class="flex items-center gap-4">
+                    <span class="w-1.5 h-1.5 bg-black/20 rounded-full"></span>
+                    <a href="https://cn.dreamstime.com/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">Dreamstime: Design Inspiration Photos</a>
+                  </li>
+                  <li class="flex items-center gap-4">
+                    <span class="w-1.5 h-1.5 bg-black/20 rounded-full"></span>
+                    <a href="https://www.researchgate.net/figure/F-L-streamlines-in-the-melt-generated-by-vertical-AMF-originated-from-bottom-heaters_fig3_268148252" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">ResearchGate: Molten Glass Fluid Dynamics Study</a>
+                  </li>
+                  <li class="flex items-center gap-4">
+                    <span class="w-1.5 h-1.5 bg-black/20 rounded-full"></span>
+                    <a href="https://museumofglassstore.org/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">Museum of Glass Store</a>
                   </li>
                 </ul>
               </div>
