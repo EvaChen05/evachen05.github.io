@@ -1,7 +1,5 @@
 export type Locale = 'en' | 'zh';
 
-export const isChinese = (pathname: string) => pathname.startsWith('/zh');
-
 export const localeText = {
   en: {
     nav: { caseStudies: 'Case Studies', about: 'About', resume: 'Resume' },

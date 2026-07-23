@@ -2,26 +2,29 @@
 import Layout from '../layouts/Layout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import { projects } from '@data/projects';
-import { isChinese, localeText } from '@data/i18n';
+import { localeText } from '@data/i18n';
 
-const locale = isChinese(Astro.url.pathname) ? 'zh' : 'en';
-const text = localeText[locale].home;
+const textEn = localeText.en.home;
+const textZh = localeText.zh.home;
 ---
 
-<Layout title={text.title}>
+<Layout titleEn={textEn.title} titleZh={textZh.title}>
   <div class="max-w-7xl mx-auto px-6">
     <!-- Hero Section -->
     <section class="min-h-[80vh] flex flex-col justify-center relative overflow-hidden pt-12">
       <div class="grid grid-cols-12 gap-8 items-end mb-24">
         <div class="col-span-12 md:col-span-7 relative">
           <h1 class="text-[clamp(4rem,10vw,8rem)] leading-[0.85] uppercase tracking-tighter mb-12 relative z-0">
-            {text.hero[0]} <br />
-            <span class="text-[#a855f7]">{text.hero[1]}</span> <br />
-            {text.hero[2]}
+            <span class="lang-en">{textEn.hero[0]}</span><span class="lang-zh">{textZh.hero[0]}</span> <br />
+            <span class="text-[#a855f7]">
+              <span class="lang-en">{textEn.hero[1]}</span><span class="lang-zh">{textZh.hero[1]}</span>
+            </span> <br />
+            <span class="lang-en">{textEn.hero[2]}</span><span class="lang-zh">{textZh.hero[2]}</span>
           </h1>
           <div class="max-w-xl border-l-4 border-black pl-10 mt-16">
             <p class="text-xl md:text-2xl leading-relaxed text-black/80 font-medium italic">
-              {text.intro}
+              <span class="lang-en-block">{textEn.intro}</span>
+              <span class="lang-zh-block">{textZh.intro}</span>
             </p>
           </div>
         </div>
@@ -30,9 +33,9 @@ const text = localeText[locale].home;
           <span>P O R T</span>
           <span>F O L I O</span>
           <div class="flex flex-col items-end gap-2 mt-8 pointer-events-auto">
-            <a href="#case-studies" class="text-[12px] tracking-[1em] text-black opacity-100 hover:opacity-70 transition-opacity">{text.caseStudies} / 2024-2026</a>
-            <!-- <a href="#visuals" class="text-[12px] tracking-[1em] text-black opacity-100 hover:opacity-70 transition-opacity">VISUALS & COMMUNITY / 2024-2026</a> -->
-            <!-- <a href="/narrative-design" class="text-[12px] tracking-[1em] text-black opacity-100 hover:opacity-70 transition-opacity">NARRATIVE DESIGN / 2024-2026</a> -->
+            <a href="#case-studies" class="text-[12px] tracking-[1em] text-black opacity-100 hover:opacity-70 transition-opacity">
+              <span class="lang-en">{textEn.caseStudies}</span><span class="lang-zh">{textZh.caseStudies}</span> / 2024-2026
+            </a>
           </div>
         </div>
       </div>
@@ -40,17 +43,20 @@ const text = localeText[locale].home;
       <!-- Scroll indicator -->
       <div class="flex justify-between items-center text-[11px] uppercase tracking-[0.5em] opacity-40 py-12">
         <div class="flex gap-12">
-            <span>{text.scrollDown}</span>
-            <span>{text.location}</span>
+            <span><span class="lang-en">{textEn.scrollDown}</span><span class="lang-zh">{textZh.scrollDown}</span></span>
+            <span><span class="lang-en">{textEn.location}</span><span class="lang-zh">{textZh.location}</span></span>
         </div>
-        <span>{text.role}</span>
+        <span><span class="lang-en">{textEn.role}</span><span class="lang-zh">{textZh.role}</span></span>
       </div>
     </section>
 
     <!-- Project List Section -->
     <section id="case-studies" class="mt-32">
       <div class="mb-24 flex flex-col md:flex-row md:items-baseline gap-4 md:gap-12">
-        <h2 class="text-5xl font-bold uppercase tracking-tight">{text.caseStudies}</h2>
+        <h2 class="text-5xl font-bold uppercase tracking-tight">
+          <span class="lang-en">{textEn.caseStudies}</span>
+          <span class="lang-zh">{textZh.caseStudies}</span>
+        </h2>
         <div class="h-[1px] flex-grow bg-black/5 hidden md:block"></div>
         <span class="text-[12px] uppercase tracking-[0.4em] font-bold opacity-40">Portfolio Showcase v1.0</span>
       </div>
@@ -59,77 +65,38 @@ const text = localeText[locale].home;
         {projects
           .filter(p => p.id !== 'project-1' && p.id !== 'project-2')
           .map((project) => (
-          <ProjectCard project={project} locale={locale} />
+          <ProjectCard project={project} />
         ))}
       </div>
     </section>
 
-    <!-- Visual and Community Section
-    <section id="visuals" class="mt-48">
-      <div class="mb-24 flex flex-col md:flex-row md:items-baseline gap-4 md:gap-12 border-b border-black/5 pb-12">
-        <h2 class="text-5xl font-bold uppercase tracking-tight">Visual and Community</h2>
-        <div class="h-[1px] flex-grow bg-black/5 hidden md:block"></div>
-        <span class="text-[12px] uppercase tracking-[0.4em] font-bold opacity-40">Photography & Creative Works</span>
-      </div>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
-        <div class="relative group overflow-hidden bg-black/5 aspect-[3/4]">
-           <img 
-             src="/images/makers_loop/2026-04-13 215944.png" 
-             alt="Creative Poster" 
-             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-           />
-           <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-500"></div>
-        </div>
-
-        <div class="flex flex-col h-full">
-          <div class="mb-16 md:mt-12">
-            <h3 class="text-xs font-bold uppercase tracking-[0.3em] mb-6 opacity-40">Concept & Narrative</h3>
-            <p class="text-2xl leading-relaxed text-black/90 font-serif italic mb-8">
-              "In this space of infinite possibilities, we are not just organizing events—we are constructing miniature narrative worlds."
-            </p>
-            <p class="text-[16px] leading-relaxed text-black/60 max-w-md">
-              This space is dedicated to sharing the philosophy behind event planning, introductions to original character (OC) world-building, or the stories behind each project. The balanced layout of text and imagery creates an experience akin to flipping through a refined design magazine.
-            </p>
-          </div>
-
-          <div class="grid grid-cols-2 gap-6 mt-auto">
-            <div class="aspect-[4/3] bg-black/5 overflow-hidden">
-               <img 
-                 src="/images/makers_loop/图片1.jpg" 
-                 alt="Event photo 1" 
-                 class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
-               />
-            </div>
-            <div class="aspect-[4/3] bg-black/5 overflow-hidden">
-               <img 
-                 src="/images/makers_loop/图片2.jpg" 
-                 alt="Event photo 2" 
-                 class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
-               />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    -->
-
     <!-- Connect section -->
     <section class="mt-48 pb-24 grid grid-cols-1 md:grid-cols-3 gap-16 border-t border-black/5 pt-24">
         <div>
-            <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-10">{text.approach}</h3>
+            <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-10">
+              <span class="lang-en">{textEn.approach}</span>
+              <span class="lang-zh">{textZh.approach}</span>
+            </h3>
             <p class="text-[16px] leading-relaxed text-black/60">
-                {text.approachDescription}
+              <span class="lang-en-block">{textEn.approachDescription}</span>
+              <span class="lang-zh-block">{textZh.approachDescription}</span>
             </p>
         </div>
         <div>
-            <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-10">{text.current}</h3>
+            <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-10">
+              <span class="lang-en">{textEn.current}</span>
+              <span class="lang-zh">{textZh.current}</span>
+            </h3>
             <p class="text-[16px] leading-relaxed text-black/60">
-                {text.currentDescription}
+              <span class="lang-en-block">{textEn.currentDescription}</span>
+              <span class="lang-zh-block">{textZh.currentDescription}</span>
             </p>
         </div>
         <div>
-            <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-10">{text.connect}</h3>
+            <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-10">
+              <span class="lang-en">{textEn.connect}</span>
+              <span class="lang-zh">{textZh.connect}</span>
+            </h3>
             <div class="flex flex-col gap-3 text-[16px] font-bold uppercase tracking-widest underline underline-offset-8 decoration-black/20 hover:decoration-black transition-colors">
                 <a href="mailto:cccyf@uw.edu">Email &rarr;</a>
                 <a href="https://www.linkedin.com/in/yifan-chen-209903386/">LinkedIn &rarr;</a>

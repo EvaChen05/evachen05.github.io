@@ -1,45 +1,72 @@
 ---
 import '../styles/global.css';
-import { isChinese, localeText } from '@data/i18n';
+import { localeText } from '@data/i18n';
 
 interface Props {
-	title: string;
+	titleEn?: string;
+	titleZh?: string;
+	title?: string;
 }
 
-const { title } = Astro.props;
-const locale = isChinese(Astro.url.pathname) ? 'zh' : 'en';
-const text = localeText[locale];
-const prefix = locale === 'zh' ? '/zh' : '';
-const alternatePath = locale === 'zh'
-	? Astro.url.pathname.replace(/^\/zh(?=\/|$)/, '') || '/'
-	: `/zh${Astro.url.pathname}`;
+const { titleEn = Astro.props.title || 'Eva Chen', titleZh = Astro.props.title || 'Eva Chen' } = Astro.props;
+const navEn = localeText.en.nav;
+const navZh = localeText.zh.nav;
+const footerEn = localeText.en.footer;
+const footerZh = localeText.zh.footer;
 ---
 
 <!doctype html>
-<html lang={locale === 'zh' ? 'zh-CN' : 'en'}>
+<html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="HCDE Designer Portfolio" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+		<title data-title-en={titleEn} data-title-zh={titleZh}>{titleEn}</title>
+		<script is:inline>
+			(function() {
+				var saved = localStorage.getItem('lang');
+				var lang;
+				if (saved) {
+					lang = saved;
+				} else {
+					var browserLang = navigator.language || 'en';
+					lang = browserLang.startsWith('zh') ? 'zh' : 'en';
+				}
+				document.documentElement.setAttribute('data-lang', lang);
+				document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+				var titleElem = document.querySelector('title');
+				if (titleElem) {
+					var t = lang === 'zh' ? titleElem.getAttribute('data-title-zh') : titleElem.getAttribute('data-title-en');
+					if (t) document.title = t;
+				}
+			})();
+		</script>
 	</head>
 	<body class="bg-paper text-black font-sans min-h-screen flex flex-col">
 		<header class="max-w-7xl w-full mx-auto px-6 py-10">
 			<nav class="flex justify-between items-baseline">
 				<div class="flex items-baseline gap-4">
-					<a href={prefix || '/'} class="text-xl font-bold tracking-[0.2em] uppercase">Eva Chen</a>
-					<a href={alternatePath} class="text-xs font-semibold tracking-widest hover:opacity-50 transition-opacity" lang={locale === 'zh' ? 'en' : 'zh-CN'}>
-						{locale === 'zh' ? 'EN' : '中文'}
-					</a>
+					<a href="/" class="text-xl font-bold tracking-[0.2em] uppercase">Eva Chen</a>
+					<button id="lang-toggle" type="button" class="text-xs font-semibold tracking-widest hover:opacity-50 transition-opacity cursor-pointer">
+						<span class="lang-en">中文</span>
+						<span class="lang-zh">EN</span>
+					</button>
 				</div>
 				<div class="flex gap-10 text-xs font-semibold uppercase tracking-widest">
-					<a href={`${prefix || ''}/#case-studies`} class="hover:opacity-50 transition-opacity">{text.nav.caseStudies}</a>
-					<!-- <a href="/#visuals" class="hover:opacity-50 transition-opacity">Visual and Community</a> -->
-					<a href={`${prefix}/about`} class="hover:opacity-50 transition-opacity">{text.nav.about}</a>
-					<a href="/resume.pdf" target="_blank" rel="noopener noreferrer" class="hover:opacity-50 transition-opacity">{text.nav.resume}</a>
-					<!-- <a href="/narrative-design" class="hover:opacity-50 transition-opacity">Narrative Design</a> -->
+					<a href="/#case-studies" class="hover:opacity-50 transition-opacity">
+						<span class="lang-en">{navEn.caseStudies}</span>
+						<span class="lang-zh">{navZh.caseStudies}</span>
+					</a>
+					<a href="/about" class="hover:opacity-50 transition-opacity">
+						<span class="lang-en">{navEn.about}</span>
+						<span class="lang-zh">{navZh.about}</span>
+					</a>
+					<a href="/resume.pdf" target="_blank" rel="noopener noreferrer" class="hover:opacity-50 transition-opacity">
+						<span class="lang-en">{navEn.resume}</span>
+						<span class="lang-zh">{navZh.resume}</span>
+					</a>
 				</div>
 			</nav>
 		</header>
@@ -48,9 +75,24 @@ const alternatePath = locale === 'zh'
 		</main>
 		<footer class="max-w-7xl w-full mx-auto px-6 py-20 mt-20 border-t border-black/5 text-[10px] uppercase tracking-[0.3em] opacity-40">
 			<div class="flex justify-between items-center">
-				<p>&copy; {new Date().getFullYear()} {text.footer}</p>
+				<p>&copy; {new Date().getFullYear()} <span class="lang-en">{footerEn}</span><span class="lang-zh">{footerZh}</span></p>
 				<p>EST. 2024</p>
 			</div>
 		</footer>
+		<script is:inline>
+			document.getElementById('lang-toggle')?.addEventListener('click', function() {
+				var html = document.documentElement;
+				var currentLang = html.getAttribute('data-lang') || 'en';
+				var newLang = currentLang === 'zh' ? 'en' : 'zh';
+				html.setAttribute('data-lang', newLang);
+				html.lang = newLang === 'zh' ? 'zh-CN' : 'en';
+				localStorage.setItem('lang', newLang);
+				var titleElem = document.querySelector('title');
+				if (titleElem) {
+					var t = newLang === 'zh' ? titleElem.getAttribute('data-title-zh') : titleElem.getAttribute('data-title-en');
+					if (t) document.title = t;
+				}
+			});
+		</script>
 	</body>
 </html>

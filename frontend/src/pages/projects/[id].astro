@@ -1,7 +1,9 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import T from '../../components/T.astro';
+import TB from '../../components/TB.astro';
 import { projects } from '@data/projects';
-import { caseStudyText, isChinese, localeText } from '@data/i18n';
+import { caseStudyText, localeText } from '@data/i18n';
 
 export function getStaticPaths() {
   return projects.map((project) => ({
@@ -11,11 +13,12 @@ export function getStaticPaths() {
 }
 
 const { project } = Astro.props;
-const locale = isChinese(Astro.url.pathname) ? 'zh' : 'en';
-const content = locale === 'zh' ? project.zh : project;
-const labels = localeText[locale].project;
-const studyText = caseStudyText[locale];
-const homePath = locale === 'zh' ? '/zh/' : '/';
+const contentEn = project;
+const contentZh = project.zh;
+const labelsEn = localeText.en.project;
+const labelsZh = localeText.zh.project;
+const studyEn = caseStudyText.en;
+const studyZh = caseStudyText.zh;
 
 const isMakersLoop = project.id === 'makers-loop';
 const isTheBridge = project.id === 'the-bridge';
@@ -64,11 +67,11 @@ const remindmeAssets = {
 };
 ---
 
-<Layout title={`${content.title} | ${labels.caseStudy}`}>
+<Layout titleEn={`${contentEn.title} | ${labelsEn.caseStudy}`} titleZh={`${contentZh.title} | ${labelsZh.caseStudy}`}>
   <div class="max-w-7xl mx-auto px-6 pt-32">
     <!-- Breadcrumb -->
     <div class="mb-24">
-      <a href={homePath} class="text-[12px] font-bold uppercase tracking-[0.4em] text-black/40 hover:text-black transition-colors mb-8 block">&larr; {labels.back}</a>
+      <a href="/" class="text-[12px] font-bold uppercase tracking-[0.4em] text-black/40 hover:text-black transition-colors mb-8 block">&larr; <T en={labelsEn.back} zh={labelsZh.back} /></a>
       
       <div class="grid grid-cols-12 gap-12 items-start">
         <div class="col-span-12 md:col-span-8">
@@ -76,14 +79,14 @@ const remindmeAssets = {
             class="text-[clamp(3rem,8vw,6rem)] leading-[0.9] uppercase tracking-tighter mb-12"
             style={isMuseumOfGlass ? "font-family: 'Horizon', sans-serif;" : ""}
           >
-            {content.title}
+            <T en={contentEn.title} zh={contentZh.title} />
           </h1>
           <div class="relative">
             <p class="text-2xl md:text-3xl leading-relaxed text-black/80 max-w-3xl border-l-4 border-black pl-10 italic">
-              {content.description}
+              <TB en={contentEn.description} zh={contentZh.description} />
               {isTheBridge && (
                 <a href="#prototype" class="inline-block ml-2 text-purple-600 font-bold border-b border-purple-600 hover:text-purple-800 hover:border-purple-800 transition-all">
-                  {studyText.common.tryPrototype}
+                  <T en={studyEn.common.tryPrototype} zh={studyZh.common.tryPrototype} />
                 </a>
               )}
             </p>
@@ -93,27 +96,36 @@ const remindmeAssets = {
         <div class="col-span-12 md:col-span-4 space-y-16 pt-4">
           <div class="sticky top-32 space-y-16">
             <div>
-              <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-6 text-black/40">{labels.role}</h3>
-              <p class="text-base font-semibold uppercase tracking-widest">{isRemindMe ? studyText.common.roles.remindMe : studyText.common.roles.standard}</p>
+              <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-6 text-black/40"><T en={labelsEn.role} zh={labelsZh.role} /></h3>
+              <p class="text-base font-semibold uppercase tracking-widest">
+                <T en={isRemindMe ? studyEn.common.roles.remindMe : studyEn.common.roles.standard} zh={isRemindMe ? studyZh.common.roles.remindMe : studyZh.common.roles.standard} />
+              </p>
             </div>
             {isMuseumOfGlass && (
               <>
                 <div>
-                  <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-6 text-black/40">{studyText.common.roles.designer}</h3>
+                  <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-6 text-black/40"><T en={studyEn.common.roles.designer} zh={studyZh.common.roles.designer} /></h3>
                   <p class="text-base font-semibold uppercase tracking-widest">Eva Chen</p>
                 </div>
                 <div>
-                  <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-6 text-black/40">{studyText.common.roles.course}</h3>
+                  <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-6 text-black/40"><T en={studyEn.common.roles.course} zh={studyZh.common.roles.course} /></h3>
                   <p class="text-base font-semibold uppercase tracking-widest">HCDE308</p>
                 </div>
               </>
             )}
             <div>
-              <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-6 text-black/40">{labels.methods}</h3>
+              <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-6 text-black/40"><T en={labelsEn.methods} zh={labelsZh.methods} /></h3>
               <div class="flex flex-wrap gap-x-6 gap-y-2">
-                {content.tags.map((tag) => (
-                  <span class="text-[12px] uppercase tracking-[0.2em] font-bold text-black/60">/ {tag}</span>
-                ))}
+                <div class="contents lang-en-block">
+                  {contentEn.tags.map((tag) => (
+                    <span class="text-[12px] uppercase tracking-[0.2em] font-bold text-black/60">/ {tag}</span>
+                  ))}
+                </div>
+                <div class="contents lang-zh-block">
+                  {contentZh.tags.map((tag) => (
+                    <span class="text-[12px] uppercase tracking-[0.2em] font-bold text-black/60">/ {tag}</span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -124,39 +136,39 @@ const remindmeAssets = {
     <!-- Table of Contents Section -->
     <section class="mb-32 border-t border-black/10 pt-16">
       <div class="flex flex-col md:flex-row md:items-center gap-8 md:gap-16">
-        <h3 class="text-xs font-black uppercase tracking-[0.5em] text-black whitespace-nowrap">{labels.jumpTo}</h3>
+        <h3 class="text-xs font-black uppercase tracking-[0.5em] text-black whitespace-nowrap"><T en={labelsEn.jumpTo} zh={labelsZh.jumpTo} /></h3>
         <nav class="flex flex-nowrap gap-x-12 overflow-x-auto pb-4 md:pb-0 no-scrollbar">
           {isRemindMe && (
             <>
-              <a href="#summary" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 00 {studyText.remindMe.toc[0]}</a>
-              <a href="#dashboard" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 01 {studyText.remindMe.toc[1]}</a>
-              <a href="#technical" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 02 {studyText.remindMe.toc[2]}</a>
+              <a href="#summary" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 00 <T en={studyEn.remindMe.toc[0]} zh={studyZh.remindMe.toc[0]} /></a>
+              <a href="#dashboard" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 01 <T en={studyEn.remindMe.toc[1]} zh={studyZh.remindMe.toc[1]} /></a>
+              <a href="#technical" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 02 <T en={studyEn.remindMe.toc[2]} zh={studyZh.remindMe.toc[2]} /></a>
             </>
           )}
           {isTheBridge && (
             <>
-              <a href="#summary" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 00 {studyText.bridge.toc[0]}</a>
-              <a href="#prototype-main" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 01 {studyText.bridge.toc[1]}</a>
-              <a href="#strategy" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 02 {studyText.bridge.toc[2]}</a>
-              <a href="#prototype" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 03 {studyText.bridge.toc[3]}</a>
+              <a href="#summary" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 00 <T en={studyEn.bridge.toc[0]} zh={studyZh.bridge.toc[0]} /></a>
+              <a href="#prototype-main" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 01 <T en={studyEn.bridge.toc[1]} zh={studyZh.bridge.toc[1]} /></a>
+              <a href="#strategy" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 02 <T en={studyEn.bridge.toc[2]} zh={studyZh.bridge.toc[2]} /></a>
+              <a href="#prototype" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 03 <T en={studyEn.bridge.toc[3]} zh={studyZh.bridge.toc[3]} /></a>
             </>
           )}
           {isMakersLoop && (
             <>
-              <a href="#concept" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 01 {studyText.makersLoop.toc[0]}</a>
-              <a href="#goals" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 02 {studyText.makersLoop.toc[1]}</a>
-              <a href="#implementation" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 03 {studyText.makersLoop.toc[2]}</a>
-              <a href="#evaluation" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 04 {studyText.makersLoop.toc[3]}</a>
+              <a href="#concept" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 01 <T en={studyEn.makersLoop.toc[0]} zh={studyZh.makersLoop.toc[0]} /></a>
+              <a href="#goals" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 02 <T en={studyEn.makersLoop.toc[1]} zh={studyZh.makersLoop.toc[1]} /></a>
+              <a href="#implementation" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 03 <T en={studyEn.makersLoop.toc[2]} zh={studyZh.makersLoop.toc[2]} /></a>
+              <a href="#evaluation" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 04 <T en={studyEn.makersLoop.toc[3]} zh={studyZh.makersLoop.toc[3]} /></a>
             </>
           )}
           {isMuseumOfGlass && (
             <>
-              <a href="#overview" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 00 {studyText.museum.toc[0]}</a>
-              <a href="#context" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 01 {studyText.museum.toc[1]}</a>
-              <a href="#intent" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 02 {studyText.museum.toc[2]}</a>
-              <a href="#identity" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 03 {studyText.museum.toc[3]}</a>
-              <a href="#artifacts" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 04 {studyText.museum.toc[4]}</a>
-              <a href="#appendix" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 05 {studyText.museum.toc[5]}</a>
+              <a href="#overview" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 00 <T en={studyEn.museum.toc[0]} zh={studyZh.museum.toc[0]} /></a>
+              <a href="#context" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 01 <T en={studyEn.museum.toc[1]} zh={studyZh.museum.toc[1]} /></a>
+              <a href="#intent" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 02 <T en={studyEn.museum.toc[2]} zh={studyZh.museum.toc[2]} /></a>
+              <a href="#identity" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 03 <T en={studyEn.museum.toc[3]} zh={studyZh.museum.toc[3]} /></a>
+              <a href="#artifacts" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 04 <T en={studyEn.museum.toc[4]} zh={studyZh.museum.toc[4]} /></a>
+              <a href="#appendix" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 05 <T en={studyEn.museum.toc[5]} zh={studyZh.museum.toc[5]} /></a>
             </>
           )}
         </nav>
@@ -168,18 +180,18 @@ const remindmeAssets = {
         <!-- TL;DR SUMMARY -->
         <section id="summary" class="bg-black text-white p-12 md:p-24 -mx-6 md:mx-0 scroll-mt-32">
           <div class="max-w-4xl mx-auto">
-            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-white">00 / {studyText.remindMe.summary[0]}</h2>
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-white">00 / <T en={studyEn.remindMe.summary[0]} zh={studyZh.remindMe.summary[0]} /></h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
               <div>
-                <h3 class="text-xl font-bold uppercase mb-4 tracking-wide text-white">{studyText.remindMe.summary[1]}</h3>
+                <h3 class="text-xl font-bold uppercase mb-4 tracking-wide text-white"><T en={studyEn.remindMe.summary[1]} zh={studyZh.remindMe.summary[1]} /></h3>
                 <p class="text-lg text-white/80 leading-relaxed font-light text-balance">
-                  {studyText.remindMe.summary[2]}
+                  <TB en={studyEn.remindMe.summary[2]} zh={studyZh.remindMe.summary[2]} />
                 </p>
               </div>
               <div>
-                <h3 class="text-xl font-bold uppercase mb-4 tracking-wide text-white">{studyText.remindMe.summary[3]}</h3>
+                <h3 class="text-xl font-bold uppercase mb-4 tracking-wide text-white"><T en={studyEn.remindMe.summary[3]} zh={studyZh.remindMe.summary[3]} /></h3>
                 <p class="text-lg text-white/80 leading-relaxed font-light text-balance">
-                  {studyText.remindMe.summary[4]}
+                  <TB en={studyEn.remindMe.summary[4]} zh={studyZh.remindMe.summary[4]} />
                 </p>
               </div>
             </div>
@@ -192,64 +204,63 @@ const remindmeAssets = {
                 <!-- Using demo.gif directly for animation -->
                 <img 
                   src={remindmeAssets.demoGif} 
-                  alt={studyText.remindMe.dashboard[0]}
+                  alt={studyEn.remindMe.dashboard[0]}
                   class="w-full h-auto max-h-[40vh] object-contain mx-auto shadow-2xl" 
                 />
-                <p class="mt-10 text-xs uppercase tracking-[0.3em] opacity-40 font-bold">{studyText.remindMe.dashboard[1]}</p>
+                <p class="mt-10 text-xs uppercase tracking-[0.3em] opacity-40 font-bold"><T en={studyEn.remindMe.dashboard[1]} zh={studyZh.remindMe.dashboard[1]} /></p>
                 <p class="mt-6 text-base text-black/60 leading-relaxed max-w-2xl mx-auto italic">
-                  {studyText.remindMe.dashboard[2]}
+                  <TB en={studyEn.remindMe.dashboard[2]} zh={studyZh.remindMe.dashboard[2]} />
                 </p>
             </div>
         </section>
-
 
         <!-- INTERACTIVE DETAIL SECTION -->
         <section class="max-w-5xl mx-auto border-t-2 border-black pt-20">
           <details class="group">
             <summary class="flex justify-between items-center cursor-pointer list-none py-8 px-6 border-b border-black/5 mb-16 hover:bg-black/[0.02] transition-colors rounded-lg">
-              <h2 class="text-3xl font-bold uppercase tracking-tight group-hover:translate-x-2 transition-transform duration-300">{studyText.remindMe.details[0]}</h2>
+              <h2 class="text-3xl font-bold uppercase tracking-tight group-hover:translate-x-2 transition-transform duration-300"><T en={studyEn.remindMe.details[0]} zh={studyZh.remindMe.details[0]} /></h2>
               <span class="text-5xl group-open:rotate-45 transition-transform duration-300 font-extralight text-black/30 group-hover:text-black">+</span>
             </summary>
             
             <div class="space-y-48 pb-32">
               <!-- Feature List -->
               <div class="space-y-16">
-                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">01 / {studyText.remindMe.details[1]}</h3>
+                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">01 / <T en={studyEn.remindMe.details[1]} zh={studyZh.remindMe.details[1]} /></h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                   <div class="space-y-6 border-l border-black pl-8">
-                    <h4 class="font-bold uppercase text-lg tracking-tight">{studyText.remindMe.details[2]}</h4>
-                    <p class="text-base text-black/70 leading-relaxed">{studyText.remindMe.details[3]}</p>
+                    <h4 class="font-bold uppercase text-lg tracking-tight"><T en={studyEn.remindMe.details[2]} zh={studyZh.remindMe.details[2]} /></h4>
+                    <p class="text-base text-black/70 leading-relaxed"><TB en={studyEn.remindMe.details[3]} zh={studyZh.remindMe.details[3]} /></p>
                   </div>
                   <div class="space-y-6 border-l border-black pl-8">
-                    <h4 class="font-bold uppercase text-lg tracking-tight">{studyText.remindMe.details[4]}</h4>
-                    <p class="text-base text-black/70 leading-relaxed">{studyText.remindMe.details[5]}</p>
+                    <h4 class="font-bold uppercase text-lg tracking-tight"><T en={studyEn.remindMe.details[4]} zh={studyZh.remindMe.details[4]} /></h4>
+                    <p class="text-base text-black/70 leading-relaxed"><TB en={studyEn.remindMe.details[5]} zh={studyZh.remindMe.details[5]} /></p>
                   </div>
                 </div>
               </div>
 
               <!-- Interface Screenshots -->
               <div class="space-y-20">
-                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">02 / {studyText.remindMe.details[6]}</h3>
+                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">02 / <T en={studyEn.remindMe.details[6]} zh={studyZh.remindMe.details[6]} /></h3>
                 <div class="grid grid-cols-1 gap-32">
                   <!-- The Card Example (Static) -->
                   <div class="space-y-8 text-center">
                     <div class="border border-black/10 bg-white p-4 md:p-8">
-                        <img src={remindmeAssets.cardExample} alt={studyText.remindMe.card[0]} class="w-full h-auto mx-auto shadow-sm" />
+                        <img src={remindmeAssets.cardExample} alt={studyEn.remindMe.card[0]} class="w-full h-auto mx-auto shadow-sm" />
                     </div>
-                    <p class="text-[11px] uppercase tracking-widest opacity-40 font-bold max-w-lg mx-auto italic">{studyText.remindMe.card[1]}</p>
+                    <p class="text-[11px] uppercase tracking-widest opacity-40 font-bold max-w-lg mx-auto italic"><T en={studyEn.remindMe.card[1]} zh={studyZh.remindMe.card[1]} /></p>
                     <p class="mt-6 text-sm text-black/50 leading-relaxed max-w-xl mx-auto">
-                      {studyText.remindMe.card[2]}
+                      <TB en={studyEn.remindMe.card[2]} zh={studyZh.remindMe.card[2]} />
                     </p>
                   </div>
 
                   {remindmeAssets.screenshots.map((img, index) => (
                     <div class="space-y-8 text-center">
                         <div class="border border-black/10 bg-white p-4 md:p-8">
-                            <img src={img} alt={studyText.remindMe.screens.alts[index]} class="w-full h-auto mx-auto shadow-xl" />
+                            <img src={img} alt={studyEn.remindMe.screens.alts[index]} class="w-full h-auto mx-auto shadow-xl" />
                         </div>
-                        <p class="text-xs uppercase tracking-widest opacity-40 font-bold">{studyText.remindMe.screens.caption} {studyText.remindMe.screens.states[index]}</p>
+                        <p class="text-xs uppercase tracking-widest opacity-40 font-bold"><T en={studyEn.remindMe.screens.caption} zh={studyZh.remindMe.screens.caption} /> <T en={studyEn.remindMe.screens.states[index]} zh={studyZh.remindMe.screens.states[index]} /></p>
                         <p class="mt-4 text-sm text-black/50 leading-relaxed max-w-xl mx-auto">
-                          {studyText.remindMe.screens.description}
+                          <TB en={studyEn.remindMe.screens.description} zh={studyZh.remindMe.screens.description} />
                         </p>
                     </div>
                   ))}
@@ -258,9 +269,9 @@ const remindmeAssets = {
 
               <!-- Video Link Section -->
               <div class="pt-32 border-t border-black/5 text-center">
-                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40 mb-12 text-black/40">03 / {studyText.remindMe.video[0]}</h3>
+                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40 mb-12 text-black/40">03 / <T en={studyEn.remindMe.video[0]} zh={studyZh.remindMe.video[0]} /></h3>
                 <a href="https://www.youtube.com/watch?v=YPWUWVT1iq8" target="_blank" class="inline-block px-16 py-8 bg-black text-white text-sm uppercase tracking-[0.3em] font-bold hover:bg-black/80 transition-all">
-                    {studyText.remindMe.video[1]}
+                    <T en={studyEn.remindMe.video[1]} zh={studyZh.remindMe.video[1]} />
                 </a>
               </div>
             </div>
@@ -274,18 +285,18 @@ const remindmeAssets = {
         <!-- TL;DR SUMMARY -->
         <section id="summary" class="bg-black text-white p-12 md:p-24 -mx-6 md:mx-0 scroll-mt-32">
           <div class="max-w-4xl mx-auto">
-            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-white">00 / {studyText.bridge.summary[0]}</h2>
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-white">00 / <T en={studyEn.bridge.summary[0]} zh={studyZh.bridge.summary[0]} /></h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
               <div>
-                <h3 class="text-xl font-bold uppercase mb-6 tracking-wide text-white">{studyText.bridge.summary[1]}</h3>
+                <h3 class="text-xl font-bold uppercase mb-6 tracking-wide text-white"><T en={studyEn.bridge.summary[1]} zh={studyZh.bridge.summary[1]} /></h3>
                 <p class="text-lg text-white/80 leading-relaxed font-light text-balance">
-                  {studyText.bridge.summary[2]}
+                  <TB en={studyEn.bridge.summary[2]} zh={studyZh.bridge.summary[2]} />
                 </p>
               </div>
               <div>
-                <h3 class="text-xl font-bold uppercase mb-6 tracking-wide text-white">{studyText.bridge.summary[3]}</h3>
+                <h3 class="text-xl font-bold uppercase mb-6 tracking-wide text-white"><T en={studyEn.bridge.summary[3]} zh={studyZh.bridge.summary[3]} /></h3>
                 <p class="text-lg text-white/80 leading-relaxed font-light text-balance">
-                  {studyText.bridge.summary[4]}
+                  <TB en={studyEn.bridge.summary[4]} zh={studyZh.bridge.summary[4]} />
                 </p>
               </div>
             </div>
@@ -295,10 +306,10 @@ const remindmeAssets = {
         <!-- Main Image -->
         <section id="prototype-main" class="w-full scroll-mt-32">
             <div class="bg-white border border-black/5 p-4 md:p-12 shadow-sm text-center">
-                <img src={bridgeAssets.highFi} alt={studyText.bridge.main[0]} class="w-full h-auto max-h-[90vh] object-contain mx-auto" />
-                <p class="mt-8 text-xs uppercase tracking-widest text-center opacity-30 font-bold">{studyText.bridge.main[1]}</p>
+                <img src={bridgeAssets.highFi} alt={studyEn.bridge.main[0]} class="w-full h-auto max-h-[90vh] object-contain mx-auto" />
+                <p class="mt-8 text-xs uppercase tracking-widest text-center opacity-30 font-bold"><T en={studyEn.bridge.main[1]} zh={studyZh.bridge.main[1]} /></p>
                 <p class="mt-6 text-base text-black/60 leading-relaxed max-w-2xl mx-auto italic">
-                  {studyText.bridge.main[2]}
+                  <TB en={studyEn.bridge.main[2]} zh={studyZh.bridge.main[2]} />
                 </p>
             </div>
         </section>
@@ -307,44 +318,44 @@ const remindmeAssets = {
         <section id="strategy" class="max-w-5xl mx-auto border-t-2 border-black pt-20 scroll-mt-32">
           <details class="group">
             <summary class="flex justify-between items-center cursor-pointer list-none py-8 px-6 border-b border-black/5 mb-16 hover:bg-black/[0.02] transition-colors rounded-lg">
-              <h2 class="text-3xl font-bold uppercase tracking-tight group-hover:translate-x-2 transition-transform duration-300">{studyText.bridge.details[0]}</h2>
+              <h2 class="text-3xl font-bold uppercase tracking-tight group-hover:translate-x-2 transition-transform duration-300"><T en={studyEn.bridge.details[0]} zh={studyZh.bridge.details[0]} /></h2>
               <span class="text-5xl group-open:rotate-45 transition-transform duration-300 font-extralight text-black/30 group-hover:text-black">+</span>
             </summary>
             
             <div class="space-y-48 pb-32">
               <div class="space-y-12">
-                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">01 / {studyText.bridge.details[1]}</h3>
+                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">01 / <T en={studyEn.bridge.details[1]} zh={studyZh.bridge.details[1]} /></h3>
                 <p class="text-2xl md:text-3xl leading-snug font-medium max-w-4xl italic">
-                  {studyText.bridge.details[2]}
+                  <TB en={studyEn.bridge.details[2]} zh={studyZh.bridge.details[2]} />
                 </p>
               </div>
 
               <div class="space-y-16">
-                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">02 / {studyText.bridge.details[3]}</h3>
+                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">02 / <T en={studyEn.bridge.details[3]} zh={studyZh.bridge.details[3]} /></h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                   <div class="space-y-6 border-l border-black/10 pl-6">
-                    <h4 class="font-bold uppercase text-lg tracking-tight">{studyText.bridge.details[4]}</h4>
-                    <p class="text-base text-black/70 leading-relaxed">{studyText.bridge.details[5]}</p>
+                    <h4 class="font-bold uppercase text-lg tracking-tight"><T en={studyEn.bridge.details[4]} zh={studyZh.bridge.details[4]} /></h4>
+                    <p class="text-base text-black/70 leading-relaxed"><TB en={studyEn.bridge.details[5]} zh={studyZh.bridge.details[5]} /></p>
                   </div>
                   <div class="space-y-6 border-l border-black/10 pl-6">
-                    <h4 class="font-bold uppercase text-lg tracking-tight">{studyText.bridge.details[6]}</h4>
-                    <p class="text-base text-black/70 leading-relaxed">{studyText.bridge.details[7]}</p>
+                    <h4 class="font-bold uppercase text-lg tracking-tight"><T en={studyEn.bridge.details[6]} zh={studyZh.bridge.details[6]} /></h4>
+                    <p class="text-base text-black/70 leading-relaxed"><TB en={studyEn.bridge.details[7]} zh={studyZh.bridge.details[7]} /></p>
                   </div>
                   <div class="space-y-6 border-l border-black/10 pl-6">
-                    <h4 class="font-bold uppercase text-lg tracking-tight">{studyText.bridge.details[8]}</h4>
-                    <p class="text-base text-black/70 leading-relaxed">{studyText.bridge.details[9]}</p>
+                    <h4 class="font-bold uppercase text-lg tracking-tight"><T en={studyEn.bridge.details[8]} zh={studyZh.bridge.details[8]} /></h4>
+                    <p class="text-base text-black/70 leading-relaxed"><TB en={studyEn.bridge.details[9]} zh={studyZh.bridge.details[9]} /></p>
                   </div>
                 </div>
               </div>
 
               <div class="space-y-20">
-                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">03 / {studyText.bridge.details[10]}</h3>
+                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">03 / <T en={studyEn.bridge.details[10]} zh={studyZh.bridge.details[10]} /></h3>
                 <div class="space-y-16">
                   {bridgeAssets.personas.map((img) => (
                     <div class="border border-black/10 bg-white p-4 md:p-12 text-center">
-                        <img src={img} alt={studyText.bridge.details[11]} class="w-full h-auto" />
+                        <img src={img} alt={studyEn.bridge.details[11]} class="w-full h-auto" />
                         <p class="mt-8 text-sm text-black/50 leading-relaxed max-w-xl mx-auto">
-                          {studyText.bridge.details[12]}
+                          <TB en={studyEn.bridge.details[12]} zh={studyZh.bridge.details[12]} />
                         </p>
                     </div>
                   ))}
@@ -352,31 +363,31 @@ const remindmeAssets = {
               </div>
 
               <div class="space-y-20">
-                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">04 / {studyText.bridge.details[13]}</h3>
+                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">04 / <T en={studyEn.bridge.details[13]} zh={studyZh.bridge.details[13]} /></h3>
                 <div class="space-y-24">
                   <div class="space-y-8 text-center">
-                    <img src={bridgeAssets.lowFi} alt={studyText.bridge.details[14]} class="w-full h-auto border border-black/5" />
-                    <p class="text-xs uppercase tracking-widest opacity-40 font-bold">{studyText.bridge.details[15]}</p>
+                    <img src={bridgeAssets.lowFi} alt={studyEn.bridge.details[14]} class="w-full h-auto border border-black/5" />
+                    <p class="text-xs uppercase tracking-widest opacity-40 font-bold"><T en={studyEn.bridge.details[15]} zh={studyZh.bridge.details[15]} /></p>
                     <p class="mt-4 text-sm text-black/50 leading-relaxed max-w-xl mx-auto">
-                      {studyText.bridge.details[16]}
+                      <TB en={studyEn.bridge.details[16]} zh={studyZh.bridge.details[16]} />
                     </p>
                   </div>
                   <div class="space-y-8 text-center">
-                    <img src={bridgeAssets.midFi} alt={studyText.bridge.details[17]} class="w-full h-auto border border-black/5" />
-                    <p class="text-xs uppercase tracking-widest opacity-40 font-bold">{studyText.bridge.details[18]}</p>
+                    <img src={bridgeAssets.midFi} alt={studyEn.bridge.details[17]} class="w-full h-auto border border-black/5" />
+                    <p class="text-xs uppercase tracking-widest opacity-40 font-bold"><T en={studyEn.bridge.details[18]} zh={studyZh.bridge.details[18]} /></p>
                     <p class="mt-4 text-sm text-black/50 leading-relaxed max-w-xl mx-auto">
-                      {studyText.bridge.details[19]}
+                      <TB en={studyEn.bridge.details[19]} zh={studyZh.bridge.details[19]} />
                     </p>
                   </div>
                 </div>
               </div>
 
               <div class="pt-32 border-t border-black/5">
-                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40 mb-12 text-center">05 / {studyText.bridge.details[20]}</h3>
+                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40 mb-12 text-center">05 / <T en={studyEn.bridge.details[20]} zh={studyZh.bridge.details[20]} /></h3>
                 <div class="bg-white border border-black/10 p-4 md:p-12 shadow-lg text-center">
-                    <img src={bridgeAssets.highFi} alt={studyText.bridge.details[21]} class="w-full h-auto mx-auto" />
+                    <img src={bridgeAssets.highFi} alt={studyEn.bridge.details[21]} class="w-full h-auto mx-auto" />
                     <p class="mt-8 text-sm text-black/50 leading-relaxed max-w-xl mx-auto italic">
-                      {studyText.bridge.details[22]}
+                      <TB en={studyEn.bridge.details[22]} zh={studyZh.bridge.details[22]} />
                     </p>
                 </div>
               </div>
@@ -384,9 +395,9 @@ const remindmeAssets = {
               <!-- Interactive Figma Prototype -->
               <div id="prototype" class="pt-48 border-t border-black/5 scroll-mt-32">
                 <div class="text-center mb-24">
-                  <h3 class="text-3xl md:text-5xl font-bold uppercase tracking-tighter mb-6">{studyText.bridge.details[23]}</h3>
+                  <h3 class="text-3xl md:text-5xl font-bold uppercase tracking-tighter mb-6"><T en={studyEn.bridge.details[23]} zh={studyZh.bridge.details[23]} /></h3>
                   <p class="text-lg text-black/60 max-w-2xl mx-auto leading-relaxed">
-                    {studyText.bridge.details[24]}
+                    <TB en={studyEn.bridge.details[24]} zh={studyZh.bridge.details[24]} />
                   </p>
                 </div>
                 
@@ -427,63 +438,63 @@ const remindmeAssets = {
       <div class="space-y-64 pb-64">
         <section id="concept" class="grid grid-cols-12 gap-12 scroll-mt-32">
           <div class="col-span-12 md:col-span-4">
-            <h2 class="text-xs font-black uppercase tracking-[0.4em] mb-8 sticky top-32">01 / {studyText.makersLoop.concept[0]}</h2>
+            <h2 class="text-xs font-black uppercase tracking-[0.4em] mb-8 sticky top-32">01 / <T en={studyEn.makersLoop.concept[0]} zh={studyZh.makersLoop.concept[0]} /></h2>
           </div>
           <div class="col-span-12 md:col-span-8 space-y-16">
             <p class="text-xl md:text-2xl leading-loose text-black/70 font-medium max-w-4xl text-balance">
-              {studyText.makersLoop.concept[1]}
+              <TB en={studyEn.makersLoop.concept[1]} zh={studyZh.makersLoop.concept[1]} />
             </p>
             <div class="grid grid-cols-3 gap-6">
               {makersAssets.sketches.map((img) => (
                 <div class="space-y-4">
                   <div class="aspect-square bg-black/5 overflow-hidden border border-black/5">
-                    <img src={img} alt={studyText.makersLoop.concept[2]} class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+                    <img src={img} alt={studyEn.makersLoop.concept[2]} class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
                   </div>
-                  <p class="text-[10px] uppercase tracking-widest opacity-40 font-bold">{studyText.makersLoop.concept[3]}</p>
+                  <p class="text-[10px] uppercase tracking-widest opacity-40 font-bold"><T en={studyEn.makersLoop.concept[3]} zh={studyZh.makersLoop.concept[3]} /></p>
                 </div>
               ))}
             </div>
             <p class="mt-8 text-sm text-black/50 leading-relaxed max-w-2xl">
-              {studyText.makersLoop.concept[4]}
+              <TB en={studyEn.makersLoop.concept[4]} zh={studyZh.makersLoop.concept[4]} />
             </p>
           </div>
         </section>
 
         <section id="goals" class="grid grid-cols-12 gap-12 scroll-mt-32">
           <div class="col-span-12 md:col-span-4">
-            <h2 class="text-xs font-black uppercase tracking-[0.4em] mb-8 sticky top-32">02 / {studyText.makersLoop.goals[0]}</h2>
+            <h2 class="text-xs font-black uppercase tracking-[0.4em] mb-8 sticky top-32">02 / <T en={studyEn.makersLoop.goals[0]} zh={studyZh.makersLoop.goals[0]} /></h2>
           </div>
           <div class="col-span-12 md:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-16">
             <div class="border-t-2 border-black pt-10">
-              <h3 class="font-bold uppercase mb-6 text-lg tracking-tight">{studyText.makersLoop.goals[1]}</h3>
-              <p class="text-base text-black/60 leading-relaxed">{studyText.makersLoop.goals[2]}</p>
+              <h3 class="font-bold uppercase mb-6 text-lg tracking-tight"><T en={studyEn.makersLoop.goals[1]} zh={studyZh.makersLoop.goals[1]} /></h3>
+              <p class="text-base text-black/60 leading-relaxed"><TB en={studyEn.makersLoop.goals[2]} zh={studyZh.makersLoop.goals[2]} /></p>
             </div>
             <div class="border-t-2 border-black pt-10">
-              <h3 class="font-bold uppercase mb-6 text-lg tracking-tight">{studyText.makersLoop.goals[3]}</h3>
-              <p class="text-base text-black/60 leading-relaxed">{studyText.makersLoop.goals[4]}</p>
+              <h3 class="font-bold uppercase mb-6 text-lg tracking-tight"><T en={studyEn.makersLoop.goals[3]} zh={studyZh.makersLoop.goals[3]} /></h3>
+              <p class="text-base text-black/60 leading-relaxed"><TB en={studyEn.makersLoop.goals[4]} zh={studyZh.makersLoop.goals[4]} /></p>
             </div>
             <div class="border-t-2 border-black pt-10">
-              <h3 class="font-bold uppercase mb-6 text-lg tracking-tight">{studyText.makersLoop.goals[5]}</h3>
-              <p class="text-base text-black/60 leading-relaxed">{studyText.makersLoop.goals[6]}</p>
+              <h3 class="font-bold uppercase mb-6 text-lg tracking-tight"><T en={studyEn.makersLoop.goals[5]} zh={studyZh.makersLoop.goals[5]} /></h3>
+              <p class="text-base text-black/60 leading-relaxed"><TB en={studyEn.makersLoop.goals[6]} zh={studyZh.makersLoop.goals[6]} /></p>
             </div>
             <div class="border-t-2 border-black pt-10">
-              <h3 class="font-bold uppercase mb-6 text-lg tracking-tight">{studyText.makersLoop.goals[7]}</h3>
-              <p class="text-base text-black/60 leading-relaxed">{studyText.makersLoop.goals[8]}</p>
+              <h3 class="font-bold uppercase mb-6 text-lg tracking-tight"><T en={studyEn.makersLoop.goals[7]} zh={studyZh.makersLoop.goals[7]} /></h3>
+              <p class="text-base text-black/60 leading-relaxed"><TB en={studyEn.makersLoop.goals[8]} zh={studyZh.makersLoop.goals[8]} /></p>
             </div>
           </div>
         </section>
 
         <section id="implementation" class="grid grid-cols-12 gap-12 scroll-mt-32">
           <div class="col-span-12 md:col-span-4">
-            <h2 class="text-xs font-black uppercase tracking-[0.4em] mb-8 sticky top-32">03 / {studyText.makersLoop.implementation[0]}</h2>
+            <h2 class="text-xs font-black uppercase tracking-[0.4em] mb-8 sticky top-32">03 / <T en={studyEn.makersLoop.implementation[0]} zh={studyZh.makersLoop.implementation[0]} /></h2>
           </div>
           <div class="col-span-12 md:col-span-8 space-y-16">
             <div class="space-y-8">
               <div class="w-full aspect-[16/10] bg-black/5 border border-black/5 overflow-hidden">
-                  <img src={makersAssets.prototype} alt={studyText.makersLoop.implementation[1]} class="w-full h-full object-cover" />
+                  <img src={makersAssets.prototype} alt={studyEn.makersLoop.implementation[1]} class="w-full h-full object-cover" />
               </div>
               <p class="text-sm text-black/50 leading-relaxed max-w-2xl">
-                {studyText.makersLoop.implementation[2]}
+                <TB en={studyEn.makersLoop.implementation[2]} zh={studyZh.makersLoop.implementation[2]} />
               </p>
             </div>
           </div>
@@ -491,25 +502,25 @@ const remindmeAssets = {
 
         <section id="evaluation" class="grid grid-cols-12 gap-12 border-t border-black/10 pt-32 scroll-mt-32">
           <div class="col-span-12 md:col-span-4">
-            <h2 class="text-xs font-black uppercase tracking-[0.4em] mb-8 sticky top-32">04 / {studyText.makersLoop.evaluation[0]}</h2>
+            <h2 class="text-xs font-black uppercase tracking-[0.4em] mb-8 sticky top-32">04 / <T en={studyEn.makersLoop.evaluation[0]} zh={studyZh.makersLoop.evaluation[0]} /></h2>
           </div>
           <div class="col-span-12 md:col-span-8 space-y-16">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 {makersAssets.screenshots.map((img) => (
                   <div class="space-y-6">
                     <div class="aspect-video bg-black/5 overflow-hidden border border-black/5">
-                      <img src={img} alt={studyText.makersLoop.evaluation[1]} class="w-full h-full object-cover" />
+                      <img src={img} alt={studyEn.makersLoop.evaluation[1]} class="w-full h-full object-cover" />
                     </div>
-                    <p class="text-xs text-black/40 font-medium italic">{studyText.makersLoop.evaluation[2]}</p>
+                    <p class="text-xs text-black/40 font-medium italic"><T en={studyEn.makersLoop.evaluation[2]} zh={studyZh.makersLoop.evaluation[2]} /></p>
                   </div>
                 ))}
             </div>
             <p class="text-sm text-black/50 leading-relaxed max-w-2xl">
-              {studyText.makersLoop.evaluation[3]}
+              <TB en={studyEn.makersLoop.evaluation[3]} zh={studyZh.makersLoop.evaluation[3]} />
             </p>
             <div class="pt-16">
                 <a href="https://www.youtube.com/watch?v=re0Miv5hyfY" target="_blank" class="inline-block px-16 py-8 bg-black text-white text-sm uppercase tracking-[0.3em] font-bold hover:bg-black/80 transition-all">
-                    {studyText.makersLoop.evaluation[4]}
+                    <T en={studyEn.makersLoop.evaluation[4]} zh={studyZh.makersLoop.evaluation[4]} />
                 </a>
             </div>
           </div>
@@ -522,35 +533,35 @@ const remindmeAssets = {
         <!-- 00 / INTRODUCTION -->
         <section id="overview" class="max-w-5xl mx-auto space-y-32 scroll-mt-32 border-t border-black/5 pt-24">
           <div class="space-y-12">
-            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-black">00 / {studyText.museum.overview[0]}</h2>
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-black">00 / <T en={studyEn.museum.overview[0]} zh={studyZh.museum.overview[0]} /></h2>
 
             <div class="grid grid-cols-1 md:grid-cols-12 gap-12 border-b border-black/5 pb-24">
               <div class="md:col-span-8 space-y-8">
-                <h3 class="text-xl font-bold uppercase tracking-wide text-black">{studyText.museum.overview[1]}</h3>
+                <h3 class="text-xl font-bold uppercase tracking-wide text-black"><T en={studyEn.museum.overview[1]} zh={studyZh.museum.overview[1]} /></h3>
                 <p class="text-lg text-black/70 leading-relaxed font-light">
-                  {studyText.museum.overview[2]}
+                  <TB en={studyEn.museum.overview[2]} zh={studyZh.museum.overview[2]} />
                 </p>
               </div>
               <div class="md:col-span-4 space-y-8 bg-black/[0.02] p-8 rounded-sm">
-                <h3 class="text-sm font-black uppercase tracking-widest text-black/40">{studyText.museum.overview[3]}</h3>
+                <h3 class="text-sm font-black uppercase tracking-widest text-black/40"><T en={studyEn.museum.overview[3]} zh={studyZh.museum.overview[3]} /></h3>
                 <ul class="space-y-4 text-sm font-bold uppercase tracking-tight text-black/60">
-                  <li>/ {studyText.museum.overview[4]}</li>
-                  <li>/ {studyText.museum.overview[5]}</li>
-                  <li>/ {studyText.museum.overview[6]}</li>
-                  <li>/ {studyText.museum.overview[7]}</li>
+                  <li>/ <T en={studyEn.museum.overview[4]} zh={studyZh.museum.overview[4]} /></li>
+                  <li>/ <T en={studyEn.museum.overview[5]} zh={studyZh.museum.overview[5]} /></li>
+                  <li>/ <T en={studyEn.museum.overview[6]} zh={studyZh.museum.overview[6]} /></li>
+                  <li>/ <T en={studyEn.museum.overview[7]} zh={studyZh.museum.overview[7]} /></li>
                 </ul>
               </div>
             </div>
 
             <div class="space-y-24 border-b border-black/5 pb-24">
               <div class="space-y-12">
-                <h3 class="text-xl font-bold uppercase tracking-wide text-black">{studyText.museum.overview[8]}</h3>
+                <h3 class="text-xl font-bold uppercase tracking-wide text-black"><T en={studyEn.museum.overview[8]} zh={studyZh.museum.overview[8]} /></h3>
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-y-12 gap-x-8">
-                  {studyText.museum.overview.slice(9).map((attr, index) => (
+                  {studyEn.museum.overview.slice(9).map((_, index) => (
                     <div class="group">
                       <div class="flex items-baseline gap-4 mb-2">
                         <span class="text-[10px] font-black text-black/20 uppercase tracking-widest">0{index + 1}</span>
-                        <span class="text-sm font-black uppercase tracking-[0.2em] text-black/80 group-hover:text-black transition-colors">{attr}</span>
+                        <span class="text-sm font-black uppercase tracking-[0.2em] text-black/80 group-hover:text-black transition-colors"><T en={studyEn.museum.overview[9 + index]} zh={studyZh.museum.overview[9 + index]} /></span>
                       </div>
                       <div class="h-px w-8 bg-black/10 group-hover:w-full transition-all duration-500"></div>
                     </div>
@@ -564,23 +575,23 @@ const remindmeAssets = {
         <!-- 01 / CONTEXT: COMPETITIVE LANDSCAPE -->
         <section id="context" class="max-w-5xl mx-auto space-y-32 scroll-mt-32">
           <div class="space-y-12">
-            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-black">01 / {studyText.museum.context[0]}</h2>
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-black">01 / <T en={studyEn.museum.context[0]} zh={studyZh.museum.context[0]} /></h2>
             
             <div class="space-y-32">
               <!-- Competitors -->
               <div class="space-y-12">
-                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 border-b border-black/5 pb-4">{studyText.museum.context[1]}</h3>
+                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 border-b border-black/5 pb-4"><T en={studyEn.museum.context[1]} zh={studyZh.museum.context[1]} /></h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                   <div class="space-y-4">
-                    <h4 class="text-sm font-black uppercase tracking-widest text-black">{studyText.museum.context[8]}</h4>
+                    <h4 class="text-sm font-black uppercase tracking-widest text-black"><T en={studyEn.museum.context[8]} zh={studyZh.museum.context[8]} /></h4>
                     <p class="text-sm text-black/60 leading-relaxed">
-                      {studyText.museum.context[2]}
+                      <TB en={studyEn.museum.context[2]} zh={studyZh.museum.context[2]} />
                     </p>
                   </div>
                   <div class="space-y-4">
-                    <h4 class="text-sm font-black uppercase tracking-widest text-black">{studyText.museum.context[9]}</h4>
+                    <h4 class="text-sm font-black uppercase tracking-widest text-black"><T en={studyEn.museum.context[9]} zh={studyZh.museum.context[9]} /></h4>
                     <p class="text-sm text-black/60 leading-relaxed">
-                      {studyText.museum.context[3]}
+                      <TB en={studyEn.museum.context[3]} zh={studyZh.museum.context[3]} />
                     </p>
                   </div>
                 </div>
@@ -588,24 +599,24 @@ const remindmeAssets = {
 
               <!-- Complementors -->
               <div class="space-y-12">
-                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 border-b border-black/5 pb-4">{studyText.museum.context[4]}</h3>
+                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 border-b border-black/5 pb-4"><T en={studyEn.museum.context[4]} zh={studyZh.museum.context[4]} /></h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                   <div class="space-y-4">
-                    <h4 class="text-sm font-black uppercase tracking-widest text-black">{studyText.museum.context[10]}</h4>
+                    <h4 class="text-sm font-black uppercase tracking-widest text-black"><T en={studyEn.museum.context[10]} zh={studyZh.museum.context[10]} /></h4>
                     <p class="text-sm text-black/60 leading-relaxed">
-                      {studyText.museum.context[5]}
+                      <TB en={studyEn.museum.context[5]} zh={studyZh.museum.context[5]} />
                     </p>
                   </div>
                   <div class="space-y-4">
-                    <h4 class="text-sm font-black uppercase tracking-widest text-black">{studyText.museum.context[11]}</h4>
+                    <h4 class="text-sm font-black uppercase tracking-widest text-black"><T en={studyEn.museum.context[11]} zh={studyZh.museum.context[11]} /></h4>
                     <p class="text-sm text-black/60 leading-relaxed">
-                      {studyText.museum.context[6]}
+                      <TB en={studyEn.museum.context[6]} zh={studyZh.museum.context[6]} />
                     </p>
                   </div>
                   <div class="space-y-4">
-                    <h4 class="text-sm font-black uppercase tracking-widest text-black">{studyText.museum.context[12]}</h4>
+                    <h4 class="text-sm font-black uppercase tracking-widest text-black"><T en={studyEn.museum.context[12]} zh={studyZh.museum.context[12]} /></h4>
                     <p class="text-sm text-black/60 leading-relaxed">
-                      {studyText.museum.context[7]}
+                      <TB en={studyEn.museum.context[7]} zh={studyZh.museum.context[7]} />
                     </p>
                   </div>
                 </div>
@@ -617,38 +628,38 @@ const remindmeAssets = {
         <!-- 02 / DESIGN INTENT -->
         <section id="intent" class="max-w-5xl mx-auto space-y-32 scroll-mt-32">
           <div class="space-y-12">
-            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-black">02 / {studyText.museum.intent[0]}</h2>
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-black">02 / <T en={studyEn.museum.intent[0]} zh={studyZh.museum.intent[0]} /></h2>
             
             <div class="space-y-24">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
                 <div class="space-y-8">
-                  <h3 class="text-xl font-bold uppercase tracking-wide text-black">{studyText.museum.intent[1]}</h3>
+                  <h3 class="text-xl font-bold uppercase tracking-wide text-black"><T en={studyEn.museum.intent[1]} zh={studyZh.museum.intent[1]} /></h3>
                   <p class="text-lg text-black/70 leading-relaxed font-light">
-                    {studyText.museum.intent[2]}
+                    <TB en={studyEn.museum.intent[2]} zh={studyZh.museum.intent[2]} />
                   </p>
                   <p class="text-black/60 text-sm leading-relaxed">
-                    {studyText.museum.intent[3]}
+                    <TB en={studyEn.museum.intent[3]} zh={studyZh.museum.intent[3]} />
                   </p>
                 </div>
                 
                 <div class="space-y-8">
-                  <h3 class="text-xl font-bold uppercase tracking-wide text-black">{studyText.museum.intent[4]}</h3>
+                  <h3 class="text-xl font-bold uppercase tracking-wide text-black"><T en={studyEn.museum.intent[4]} zh={studyZh.museum.intent[4]} /></h3>
                   <div class="grid grid-cols-2 gap-4">
                     <div class="aspect-square bg-black/[0.05] border border-black/5 overflow-hidden">
-                      <img src="/images/museum_of_glass/moodboard-1.png" alt={studyText.museum.intent[5]} class="w-full h-full object-cover" />
+                      <img src="/images/museum_of_glass/moodboard-1.png" alt={studyEn.museum.intent[5]} class="w-full h-full object-cover" />
                     </div>
                     <div class="aspect-square bg-black/[0.05] border border-black/5 overflow-hidden">
-                      <img src="/images/museum_of_glass/moodboard-2.png" alt={studyText.museum.intent[6]} class="w-full h-full object-cover" />
+                      <img src="/images/museum_of_glass/moodboard-2.png" alt={studyEn.museum.intent[6]} class="w-full h-full object-cover" />
                     </div>
                     <div class="aspect-square bg-black/[0.05] border border-black/5 overflow-hidden">
-                      <img src="/images/museum_of_glass/moodboard-3.png" alt={studyText.museum.intent[7]} class="w-full h-full object-cover" />
+                      <img src="/images/museum_of_glass/moodboard-3.png" alt={studyEn.museum.intent[7]} class="w-full h-full object-cover" />
                     </div>
                     <div class="aspect-square bg-black/[0.05] border border-black/5 overflow-hidden">
-                      <img src="/images/museum_of_glass/moodboard-4.png" alt={studyText.museum.intent[8]} class="w-full h-full object-cover" />
+                      <img src="/images/museum_of_glass/moodboard-4.png" alt={studyEn.museum.intent[8]} class="w-full h-full object-cover" />
                     </div>
                   </div>
                   <p class="text-xs text-black/40 italic leading-relaxed">
-                    {studyText.museum.intent[9]}
+                    <TB en={studyEn.museum.intent[9]} zh={studyZh.museum.intent[9]} />
                   </p>
                 </div>
               </div>
@@ -659,15 +670,15 @@ const remindmeAssets = {
         <!-- Branding Section -->
         <section id="identity" class="max-w-5xl mx-auto space-y-32 scroll-mt-32">
           <div class="space-y-12">
-            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-black">03 / {studyText.museum.identity[0]}</h2>
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-black">03 / <T en={studyEn.museum.identity[0]} zh={studyZh.museum.identity[0]} /></h2>
             <div class="flex flex-col md:flex-row items-center gap-16 md:gap-24 py-8">
               <div class="w-full md:w-1/2 flex justify-center">
-                <img src="/images/museum_of_glass/logo-primary.jpg" alt={studyText.museum.identity[1]} class="w-full max-w-md h-auto" />
+                <img src="/images/museum_of_glass/logo-primary.jpg" alt={studyEn.museum.identity[1]} class="w-full max-w-md h-auto" />
               </div>
               <div class="w-full md:w-1/2 space-y-6 text-left">
-                <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60">{studyText.museum.identity[2]}</h3>
+                <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60"><T en={studyEn.museum.identity[2]} zh={studyZh.museum.identity[2]} /></h3>
                 <p class="text-sm md:text-base text-black/50 leading-relaxed italic">
-                  {studyText.museum.identity[3]}
+                  <TB en={studyEn.museum.identity[3]} zh={studyZh.museum.identity[3]} />
                 </p>
               </div>
             </div>
@@ -677,7 +688,7 @@ const remindmeAssets = {
             <!-- Color Palette Section -->
             <div class="space-y-12">
               <div class="space-y-4">
-                <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60">{studyText.museum.identity[4]}</h3>
+                <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60"><T en={studyEn.museum.identity[4]} zh={studyZh.museum.identity[4]} /></h3>
               </div>
               
               <!-- Color Swatches Container - Centered -->
@@ -701,60 +712,60 @@ const remindmeAssets = {
               </div>
 
               <p class="text-base text-black/60 leading-relaxed max-w-4xl mx-auto font-medium">
-                {studyText.museum.identity[5]}
+                <TB en={studyEn.museum.identity[5]} zh={studyZh.museum.identity[5]} />
               </p>
             </div>
 
             <!-- Typography Section -->
             <div id="typography" class="space-y-24 scroll-mt-32">
               <div class="space-y-4">
-                <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60">{studyText.museum.identity[6]}</h3>
+                <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60"><T en={studyEn.museum.identity[6]} zh={studyZh.museum.identity[6]} /></h3>
               </div>
               
               <div class="space-y-8 max-w-none text-left">
                 <!-- Title Row -->
                 <div class="border-b border-black/5 pb-6">
-                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2">{studyText.museum.identity[7]}</span>
-                  <h4 style="font-family: 'Horizon', sans-serif; font-size: 60pt; line-height: 1.1;" class="uppercase text-black whitespace-nowrap">{content.title}</h4>
+                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2"><T en={studyEn.museum.identity[7]} zh={studyZh.museum.identity[7]} /></span>
+                  <h4 style="font-family: 'Horizon', sans-serif; font-size: 60pt; line-height: 1.1;" class="uppercase text-black whitespace-nowrap"><T en={contentEn.title} zh={contentZh.title} /></h4>
                 </div>
                 
                 <!-- H1 Row -->
                 <div class="border-b border-black/5 pb-6">
-                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2">{studyText.museum.identity[8]}</span>
-                  <h4 style="font-family: 'Palanquin Dark', sans-serif; font-size: 34pt; line-height: 1.2;" class="text-black font-bold">{content.title}</h4>
+                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2"><T en={studyEn.museum.identity[8]} zh={studyZh.museum.identity[8]} /></span>
+                  <h4 style="font-family: 'Palanquin Dark', sans-serif; font-size: 34pt; line-height: 1.2;" class="text-black font-bold"><T en={contentEn.title} zh={contentZh.title} /></h4>
                 </div>
 
                 <!-- H2 Row -->
                 <div class="border-b border-black/5 pb-6">
-                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2">{studyText.museum.identity[9]}</span>
-                  <h4 style="font-family: 'Palanquin Dark', sans-serif; font-size: 26pt; line-height: 1.2;" class="text-black font-bold">{studyText.museum.identity[10]}</h4>
+                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2"><T en={studyEn.museum.identity[9]} zh={studyZh.museum.identity[9]} /></span>
+                  <h4 style="font-family: 'Palanquin Dark', sans-serif; font-size: 26pt; line-height: 1.2;" class="text-black font-bold"><T en={studyEn.museum.identity[10]} zh={studyZh.museum.identity[10]} /></h4>
                 </div>
 
                 <!-- H3 Row -->
                 <div class="border-b border-black/5 pb-6">
-                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2">{studyText.museum.identity[11]}</span>
-                  <h4 style="font-family: 'Palanquin Dark', sans-serif; font-size: 20pt; line-height: 1.2;" class="text-black font-bold">{studyText.museum.identity[12]}</h4>
+                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2"><T en={studyEn.museum.identity[11]} zh={studyZh.museum.identity[11]} /></span>
+                  <h4 style="font-family: 'Palanquin Dark', sans-serif; font-size: 20pt; line-height: 1.2;" class="text-black font-bold"><T en={studyEn.museum.identity[12]} zh={studyZh.museum.identity[12]} /></h4>
                 </div>
 
                 <!-- Text1 Row -->
                 <div class="border-b border-black/5 pb-6">
-                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2">{studyText.museum.identity[13]}</span>
+                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2"><T en={studyEn.museum.identity[13]} zh={studyZh.museum.identity[13]} /></span>
                   <p style="font-family: 'Palanquin Dark', sans-serif; font-size: 20pt; line-height: 1.5;" class="text-black/80">
-                    {studyText.museum.identity[14]}
+                    <TB en={studyEn.museum.identity[14]} zh={studyZh.museum.identity[14]} />
                   </p>
                 </div>
 
                 <!-- Text2 Row -->
                 <div class="pb-6">
-                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2">{studyText.museum.identity[15]}</span>
+                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2"><T en={studyEn.museum.identity[15]} zh={studyZh.museum.identity[15]} /></span>
                   <p style="font-family: 'Palanquin Dark', sans-serif; font-size: 16pt; line-height: 1.5;" class="text-black/70">
-                    {studyText.museum.identity[16]}
+                    <TB en={studyEn.museum.identity[16]} zh={studyZh.museum.identity[16]} />
                   </p>
                 </div>
               </div>
 
               <p class="text-base text-black/60 leading-relaxed max-w-4xl mx-auto font-medium">
-                {studyText.museum.identity[17]}
+                <TB en={studyEn.museum.identity[17]} zh={studyZh.museum.identity[17]} />
               </p>
             </div>
           </div>
@@ -763,15 +774,15 @@ const remindmeAssets = {
         <!-- Artifacts -->
         <section id="artifacts" class="space-y-32 scroll-mt-32">
           <div class="max-w-[1339px] mx-auto px-4 md:px-8">
-            <h2 class="text-4xl font-black uppercase tracking-tighter mb-16 text-black">04 / {studyText.museum.artifacts[0]}</h2>
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-16 text-black">04 / <T en={studyEn.museum.artifacts[0]} zh={studyZh.museum.artifacts[0]} /></h2>
             
             <div class="space-y-32">
               <!-- Interactive Prototype (Now Primary) -->
               <div class="space-y-12">
                 <div class="max-w-[1139px] mx-auto space-y-8">
-                  <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60">{studyText.museum.artifacts[1]}</h3>
+                  <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60"><T en={studyEn.museum.artifacts[1]} zh={studyZh.museum.artifacts[1]} /></h3>
                   <p class="text-base text-black/70 leading-relaxed">
-                    {studyText.museum.artifacts[2]}
+                    <TB en={studyEn.museum.artifacts[2]} zh={studyZh.museum.artifacts[2]} />
                   </p>
                 </div>
                 <div class="w-full max-w-5xl mx-auto aspect-[1339/849] relative overflow-hidden rounded-sm border border-black/5 bg-white">
@@ -787,15 +798,15 @@ const remindmeAssets = {
               <!-- Physical Artifact -->
               <div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-start">
                 <div class="space-y-8">
-                  <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60">{studyText.museum.artifacts[3]}</h3>
+                  <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60"><T en={studyEn.museum.artifacts[3]} zh={studyZh.museum.artifacts[3]} /></h3>
                   <p class="text-base text-black/70 leading-relaxed">
-                    {studyText.museum.artifacts[4]}
+                    <TB en={studyEn.museum.artifacts[4]} zh={studyZh.museum.artifacts[4]} />
                   </p>
                 </div>
                 <div class="w-3/4 ml-auto aspect-[3/4] bg-black/[0.03] overflow-hidden rounded-sm border border-black/5">
                   <img 
                     src={glassAssets.physicalArtifact} 
-                    alt={studyText.museum.artifacts[5]}
+                    alt={studyEn.museum.artifacts[5]}
                     class="w-full h-full object-cover"
                   />
                 </div>
@@ -807,65 +818,65 @@ const remindmeAssets = {
         <!-- Appendix -->
         <section id="appendix" class="max-w-5xl mx-auto space-y-32 scroll-mt-32 border-t border-black/5 pt-24">
           <div class="space-y-24">
-            <h2 class="text-4xl font-black uppercase tracking-tighter mb-16 text-black">05 / {studyText.museum.appendix[0]}</h2>
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-16 text-black">05 / <T en={studyEn.museum.appendix[0]} zh={studyZh.museum.appendix[0]} /></h2>
             
             <div class="space-y-16">
               <!-- 01 Process & Iteration -->
               <div class="space-y-8 border-b border-black/5 pb-12">
-                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 mb-8">01 / {studyText.museum.appendix[1]}</h3>
+                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 mb-8">01 / <T en={studyEn.museum.appendix[1]} zh={studyZh.museum.appendix[1]} /></h3>
                 
                 <!-- Alternative Logos (Same height, compact, left-aligned) -->
                 <div class="flex flex-wrap gap-12 items-end">
                   <div class="space-y-4">
                     <div class="h-32 md:h-40 overflow-hidden rounded-sm">
-                      <img src={glassAssets.logoAlt1} alt={studyText.museum.appendix[2]} class="h-full w-auto object-contain" />
+                      <img src={glassAssets.logoAlt1} alt={studyEn.museum.appendix[2]} class="h-full w-auto object-contain" />
                     </div>
-                    <p class="text-[11px] uppercase tracking-[0.2em] text-black/40 font-bold italic">{studyText.museum.appendix[3]}</p>
+                    <p class="text-[11px] uppercase tracking-[0.2em] text-black/40 font-bold italic"><T en={studyEn.museum.appendix[3]} zh={studyZh.museum.appendix[3]} /></p>
                   </div>
                   <div class="space-y-4">
                     <div class="h-32 md:h-40 overflow-hidden rounded-sm">
-                      <img src={glassAssets.logoAlt2} alt={studyText.museum.appendix[4]} class="h-full w-auto object-contain" />
+                      <img src={glassAssets.logoAlt2} alt={studyEn.museum.appendix[4]} class="h-full w-auto object-contain" />
                     </div>
-                    <p class="text-[11px] uppercase tracking-[0.2em] text-black/40 font-bold italic">{studyText.museum.appendix[3]}</p>
+                    <p class="text-[11px] uppercase tracking-[0.2em] text-black/40 font-bold italic"><T en={studyEn.museum.appendix[3]} zh={studyZh.museum.appendix[3]} /></p>
                   </div>
                 </div>
               </div>
 
               <!-- 02 Acknowledgments -->
               <div class="space-y-8 border-b border-black/5 pb-12">
-                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 mb-8">02 / {studyText.museum.appendix[5]}</h3>
+                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 mb-8">02 / <T en={studyEn.museum.appendix[5]} zh={studyZh.museum.appendix[5]} /></h3>
                 <p class="text-[15px] text-black/70 leading-relaxed">
-                  {studyText.museum.appendix[6]}
+                  <TB en={studyEn.museum.appendix[6]} zh={studyZh.museum.appendix[6]} />
                 </p>
               </div>
 
               <!-- 03 Citations & References -->
               <div class="space-y-8">
-                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 mb-8">03 / {studyText.museum.appendix[7]}</h3>
+                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 mb-8">03 / <T en={studyEn.museum.appendix[7]} zh={studyZh.museum.appendix[7]} /></h3>
                 <ul class="space-y-4 text-sm text-black/70">
                   <li class="flex items-center gap-4">
                     <span class="w-1.5 h-1.5 bg-black/20 rounded-full"></span>
-                    <a href="https://www.museumofglass.org/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">{studyText.museum.appendix[8]}</a>
+                    <a href="https://www.museumofglass.org/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors"><T en={studyEn.museum.appendix[8]} zh={studyZh.museum.appendix[8]} /></a>
                   </li>
                   <li class="flex items-center gap-4">
                     <span class="w-1.5 h-1.5 bg-black/20 rounded-full"></span>
-                    <a href="https://www.chihulygardenandglass.com/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">{studyText.museum.appendix[9]}</a>
+                    <a href="https://www.chihulygardenandglass.com/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors"><T en={studyEn.museum.appendix[9]} zh={studyZh.museum.appendix[9]} /></a>
                   </li>
                   <li class="flex items-center gap-4">
                     <span class="w-1.5 h-1.5 bg-black/20 rounded-full"></span>
-                    <a href="https://fonts.google.com/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">{studyText.museum.appendix[10]}</a>
+                    <a href="https://fonts.google.com/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors"><T en={studyEn.museum.appendix[10]} zh={studyZh.museum.appendix[10]} /></a>
                   </li>
                   <li class="flex items-center gap-4">
                     <span class="w-1.5 h-1.5 bg-black/20 rounded-full"></span>
-                    <a href="https://cn.dreamstime.com/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">{studyText.museum.appendix[11]}</a>
+                    <a href="https://cn.dreamstime.com/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors"><T en={studyEn.museum.appendix[11]} zh={studyZh.museum.appendix[11]} /></a>
                   </li>
                   <li class="flex items-center gap-4">
                     <span class="w-1.5 h-1.5 bg-black/20 rounded-full"></span>
-                    <a href="https://www.researchgate.net/figure/F-L-streamlines-in-the-melt-generated-by-vertical-AMF-originated-from-bottom-heaters_fig3_268148252" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">{studyText.museum.appendix[12]}</a>
+                    <a href="https://www.researchgate.net/figure/F-L-streamlines-in-the-melt-generated-by-vertical-AMF-originated-from-bottom-heaters_fig3_268148252" target="_blank" class="border-b border-black/10 hover:border-black transition-colors"><T en={studyEn.museum.appendix[12]} zh={studyZh.museum.appendix[12]} /></a>
                   </li>
                   <li class="flex items-center gap-4">
                     <span class="w-1.5 h-1.5 bg-black/20 rounded-full"></span>
-                    <a href="https://museumofglassstore.org/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">{studyText.museum.appendix[13]}</a>
+                    <a href="https://museumofglassstore.org/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors"><T en={studyEn.museum.appendix[13]} zh={studyZh.museum.appendix[13]} /></a>
                   </li>
                 </ul>
               </div>
