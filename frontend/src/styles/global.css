@@ -45,11 +45,14 @@
     @apply border-black/10;
   }
 
+  /* Inline language toggle */
   .lang-zh { display: none; }
   .lang-en { display: inline; }
 
+  /* Block-level language toggle: ZH hidden by default, EN visible */
   .lang-zh-block { display: none; }
-  .lang-en-block { display: block; }
+  /* lang-en-block: visible by default — don't force display:block so
+     Tailwind's display:contents class can still work on wrapper divs */
 }
 
 html[data-lang="zh"] .lang-zh { display: inline !important; }
@@ -57,4 +60,3 @@ html[data-lang="zh"] .lang-en { display: none !important; }
 
 html[data-lang="zh"] .lang-zh-block { display: block !important; }
 html[data-lang="zh"] .lang-en-block { display: none !important; }
-

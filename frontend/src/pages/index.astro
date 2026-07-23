@@ -15,11 +15,18 @@ const textZh = localeText.zh.home;
       <div class="grid grid-cols-12 gap-8 items-end mb-24">
         <div class="col-span-12 md:col-span-7 relative">
           <h1 class="text-[clamp(4rem,10vw,8rem)] leading-[0.85] uppercase tracking-tighter mb-12 relative z-0">
-            <span class="lang-en">{textEn.hero[0]}</span><span class="lang-zh">{textZh.hero[0]}</span> <br />
-            <span class="text-[#a855f7]">
-              <span class="lang-en">{textEn.hero[1]}</span><span class="lang-zh">{textZh.hero[1]}</span>
-            </span> <br />
-            <span class="lang-en">{textEn.hero[2]}</span><span class="lang-zh">{textZh.hero[2]}</span>
+            <!-- English: DESIGN FOR / HUMAN (purple) / CONNECTION. -->
+            <span class="lang-en-block">
+              {textEn.hero[0]} <br />
+              <span class="text-[#a855f7]">{textEn.hero[1]}</span> <br />
+              {textEn.hero[2]}
+            </span>
+            <!-- Chinese: 让设计 / 成为联结 / 人与人(purple)的桥 -->
+            <span class="lang-zh-block">
+              {textZh.hero[0]} <br />
+              {textZh.hero[1]} <br />
+              <span class="text-[#a855f7]">{textZh.hero[2]}</span>{textZh.hero[3]}
+            </span>
           </h1>
           <div class="max-w-xl border-l-4 border-black pl-10 mt-16">
             <p class="text-xl md:text-2xl leading-relaxed text-black/80 font-medium italic">

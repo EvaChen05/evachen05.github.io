@@ -38,16 +38,12 @@ const textZh = localeText.zh.project;
         <span class="lang-zh">{textZh.caseStudy}</span>
       </span>
       <div class="flex flex-wrap gap-2">
-        <div class="contents lang-en-block">
-          {project.tags.map((tag) => (
-            <span class="text-[11px] uppercase tracking-widest font-semibold border border-black/20 px-3 py-1 bg-paper/50 backdrop-blur-sm group-hover:bg-white transition-colors">{tag}</span>
-          ))}
-        </div>
-        <div class="contents lang-zh-block">
-          {project.zh.tags.map((tag) => (
-            <span class="text-[11px] uppercase tracking-widest font-semibold border border-black/20 px-3 py-1 bg-paper/50 backdrop-blur-sm group-hover:bg-white transition-colors">{tag}</span>
-          ))}
-        </div>
+        {project.tags.map((tag) => (
+          <span class="lang-en text-[11px] uppercase tracking-widest font-semibold border border-black/20 px-3 py-1 bg-paper/50 backdrop-blur-sm group-hover:bg-white transition-colors">{tag}</span>
+        ))}
+        {project.zh.tags.map((tag) => (
+          <span class="lang-zh text-[11px] uppercase tracking-widest font-semibold border border-black/20 px-3 py-1 bg-paper/50 backdrop-blur-sm group-hover:bg-white transition-colors">{tag}</span>
+        ))}
       </div>
     </div>
     
