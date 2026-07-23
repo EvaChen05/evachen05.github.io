@@ -1,23 +1,26 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { isChinese, localeText } from '@data/i18n';
 
+const locale = isChinese(Astro.url.pathname) ? 'zh' : 'en';
+const text = localeText[locale].about;
 ---
 
-<Layout title="About | Eva Chen">
+<Layout title={text.title}>
   <div class="max-w-7xl mx-auto px-6 pt-32 pb-24">
     <!-- About Hero Section -->
     <section class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32">
       <div class="md:col-span-8">
         <h1 class="text-[clamp(4rem,10vw,8rem)] leading-[0.85] font-bold uppercase tracking-tighter mb-12">
-          Design where <br />
-          <span class="text-[#a855f7]">People & Systems</span> <br />
-          meet.
+          {text.heading[0]} <br />
+          <span class="text-[#a855f7]">{text.heading[1]}</span> <br />
+          {text.heading[2]}
         </h1>
       </div>
       <div class="md:col-span-4 flex flex-col justify-end">
         <div class="border-l-4 border-black pl-8 mb-4">
           <p class="text-xl italic font-medium opacity-60">
-            "Design is not just what it looks like and feels like. Design is how it works."
+            {text.quote}
           </p>
         </div>
       </div>
@@ -33,17 +36,15 @@ import Layout from '../layouts/Layout.astro';
         
         <div class="space-y-8">
             <div>
-                <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-4">Current Focus</h3>
+                <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-4">{text.focus}</h3>
                 <p class="text-lg text-black/60 leading-relaxed">
-                    Researching accessibility in multi-lingual information systems at the University of Washington.
+                    {text.focusDescription}
                 </p>
             </div>
             <div>
-                <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-4">Interests</h3>
+                <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-4">{text.interests}</h3>
                 <ul class="text-lg text-black/60 leading-relaxed space-y-2">
-                    <li>&rarr; 3D Prototyping</li>
-                    <li>&rarr; Information Clarity</li>
-                    <li>&rarr; Emotional Well-being</li>
+                    {text.interestItems.map((interest) => <li>&rarr; {interest}</li>)}
                 </ul>
             </div>
         </div>
@@ -52,29 +53,19 @@ import Layout from '../layouts/Layout.astro';
       <!-- Right Column: Main Text Content -->
       <div class="md:col-span-7">
         <div class="prose prose-xl prose-slate max-w-none">
-          <h2 class="text-3xl font-bold uppercase tracking-tight mb-8">My Journey</h2>
+          <h2 class="text-3xl font-bold uppercase tracking-tight mb-8">{text.journey}</h2>
           
           <div class="space-y-8 text-xl leading-relaxed text-black/80 font-medium">
-            <p>
-              Hi there, I’m Eva. I’m a human-centered designer, 3D prototyping enthusiast, and a firm believer that the best ideas exist off the screen. I love translating complex problems into tangible, accessible solutions—whether that means coding a new web app, designing a pop-up cafe experience, or prototyping with a 3D printer. Welcome to my workspace.
-            </p>
-            
-            <p>
-              I believe that the best design solutions often start from the most mundane frustrations. As a human-centered designer, I am passionate about taking complex problems and turning them into tangible experiences that everyone can understand and enjoy.
-            </p>
-
-            <p>
-              Whether it is through code, physical prototypes, or visual storytelling, my goal is always to create a bridge between technology and human emotion.
-            </p>
+            {text.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
           </div>
 
           <div class="mt-20 pt-10 border-t border-black/5">
-            <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-10">Education</h3>
+            <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-10">{text.education}</h3>
             <div class="space-y-12">
                 <div class="flex justify-between items-start group">
                     <div>
                         <h4 class="text-2xl font-bold uppercase italic group-hover:not-italic transition-all">University of Washington</h4>
-                        <p class="text-black/60 uppercase tracking-widest text-sm mt-1">BS in Human Centered Design & Engineering</p>
+                        <p class="text-black/60 uppercase tracking-widest text-sm mt-1">{text.degree}</p>
                     </div>
                     <span class="font-bold opacity-20">2023 - 2027</span>
                 </div>
@@ -82,19 +73,17 @@ import Layout from '../layouts/Layout.astro';
           </div>
 
           <div class="mt-20 pt-10 border-t border-black/5">
-            <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-10">Experience</h3>
+            <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-10">{text.experience}</h3>
             <div class="space-y-16">
                 <!-- Internship Entry -->
                 <div class="flex flex-col md:flex-row justify-between items-start group gap-4">
                     <div class="space-y-4">
                         <div>
                             <h4 class="text-2xl font-bold uppercase italic group-hover:not-italic transition-all">AIHelp</h4>
-                            <p class="text-black/60 uppercase tracking-widest text-sm mt-1 font-bold">Product Engineer Intern</p>
+                            <p class="text-black/60 uppercase tracking-widest text-sm mt-1 font-bold">{text.jobTitle}</p>
                         </div>
                         <ul class="text-base text-black/60 space-y-3 max-w-xl">
-                            <li class="leading-relaxed border-l border-black/10 pl-4">Analyzed competitor products and user sentiment in overseas markets through secondary research to identify potential expansion opportunities.</li>
-                            <li class="leading-relaxed border-l border-black/10 pl-4">Conducted in-depth interviews and synthesized qualitative data using affinity diagrams to transform user pain points into specific functional requirements.</li>
-                            <li class="leading-relaxed border-l border-black/10 pl-4">Presented high-fidelity prototypes and strategic product proposals to senior leadership, securing buy-in for 3 core system features.</li>
+                            {text.achievements.map((achievement) => <li class="leading-relaxed border-l border-black/10 pl-4">{achievement}</li>)}
                         </ul>
                     </div>
                     <span class="font-bold opacity-20 shrink-0">Jun 2025 - Sep 2025</span>

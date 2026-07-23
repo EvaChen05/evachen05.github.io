@@ -1,15 +1,22 @@
 ---
 import '../styles/global.css';
+import { isChinese, localeText } from '@data/i18n';
 
 interface Props {
 	title: string;
 }
 
 const { title } = Astro.props;
+const locale = isChinese(Astro.url.pathname) ? 'zh' : 'en';
+const text = localeText[locale];
+const prefix = locale === 'zh' ? '/zh' : '';
+const alternatePath = locale === 'zh'
+	? Astro.url.pathname.replace(/^\/zh(?=\/|$)/, '') || '/'
+	: `/zh${Astro.url.pathname}`;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={locale === 'zh' ? 'zh-CN' : 'en'}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="HCDE Designer Portfolio" />
@@ -21,12 +28,17 @@ const { title } = Astro.props;
 	<body class="bg-paper text-black font-sans min-h-screen flex flex-col">
 		<header class="max-w-7xl w-full mx-auto px-6 py-10">
 			<nav class="flex justify-between items-baseline">
-				<a href="/" class="text-xl font-bold tracking-[0.2em] uppercase">Eva Chen</a>
+				<div class="flex items-baseline gap-4">
+					<a href={prefix || '/'} class="text-xl font-bold tracking-[0.2em] uppercase">Eva Chen</a>
+					<a href={alternatePath} class="text-xs font-semibold tracking-widest hover:opacity-50 transition-opacity" lang={locale === 'zh' ? 'en' : 'zh-CN'}>
+						{locale === 'zh' ? 'EN' : '中文'}
+					</a>
+				</div>
 				<div class="flex gap-10 text-xs font-semibold uppercase tracking-widest">
-					<a href="/#case-studies" class="hover:opacity-50 transition-opacity">Case Studies</a>
+					<a href={`${prefix || ''}/#case-studies`} class="hover:opacity-50 transition-opacity">{text.nav.caseStudies}</a>
 					<!-- <a href="/#visuals" class="hover:opacity-50 transition-opacity">Visual and Community</a> -->
-					<a href="/about" class="hover:opacity-50 transition-opacity">About</a>
-					<a href="/resume.pdf" target="_blank" rel="noopener noreferrer" class="hover:opacity-50 transition-opacity">Resume</a>
+					<a href={`${prefix}/about`} class="hover:opacity-50 transition-opacity">{text.nav.about}</a>
+					<a href="/resume.pdf" target="_blank" rel="noopener noreferrer" class="hover:opacity-50 transition-opacity">{text.nav.resume}</a>
 					<!-- <a href="/narrative-design" class="hover:opacity-50 transition-opacity">Narrative Design</a> -->
 				</div>
 			</nav>
@@ -36,7 +48,7 @@ const { title } = Astro.props;
 		</main>
 		<footer class="max-w-7xl w-full mx-auto px-6 py-20 mt-20 border-t border-black/5 text-[10px] uppercase tracking-[0.3em] opacity-40">
 			<div class="flex justify-between items-center">
-				<p>&copy; {new Date().getFullYear()} HCDE STUDENT / ARCHITECTURE INSPIRED PORTFOLIO</p>
+				<p>&copy; {new Date().getFullYear()} {text.footer}</p>
 				<p>EST. 2024</p>
 			</div>
 		</footer>

@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { projects } from '@data/projects';
+import { caseStudyText, isChinese, localeText } from '@data/i18n';
 
 export function getStaticPaths() {
   return projects.map((project) => ({
@@ -10,6 +11,11 @@ export function getStaticPaths() {
 }
 
 const { project } = Astro.props;
+const locale = isChinese(Astro.url.pathname) ? 'zh' : 'en';
+const content = locale === 'zh' ? project.zh : project;
+const labels = localeText[locale].project;
+const studyText = caseStudyText[locale];
+const homePath = locale === 'zh' ? '/zh/' : '/';
 
 const isMakersLoop = project.id === 'makers-loop';
 const isTheBridge = project.id === 'the-bridge';
@@ -58,11 +64,11 @@ const remindmeAssets = {
 };
 ---
 
-<Layout title={`${project.title} | Case Study`}>
+<Layout title={`${content.title} | ${labels.caseStudy}`}>
   <div class="max-w-7xl mx-auto px-6 pt-32">
     <!-- Breadcrumb -->
     <div class="mb-24">
-      <a href="/" class="text-[12px] font-bold uppercase tracking-[0.4em] text-black/40 hover:text-black transition-colors mb-8 block">&larr; Back to Portfolio</a>
+      <a href={homePath} class="text-[12px] font-bold uppercase tracking-[0.4em] text-black/40 hover:text-black transition-colors mb-8 block">&larr; {labels.back}</a>
       
       <div class="grid grid-cols-12 gap-12 items-start">
         <div class="col-span-12 md:col-span-8">
@@ -70,14 +76,14 @@ const remindmeAssets = {
             class="text-[clamp(3rem,8vw,6rem)] leading-[0.9] uppercase tracking-tighter mb-12"
             style={isMuseumOfGlass ? "font-family: 'Horizon', sans-serif;" : ""}
           >
-            {project.title}
+            {content.title}
           </h1>
           <div class="relative">
             <p class="text-2xl md:text-3xl leading-relaxed text-black/80 max-w-3xl border-l-4 border-black pl-10 italic">
-              {project.description}
+              {content.description}
               {isTheBridge && (
                 <a href="#prototype" class="inline-block ml-2 text-purple-600 font-bold border-b border-purple-600 hover:text-purple-800 hover:border-purple-800 transition-all">
-                  Try High-Fidelity Prototype
+                  {studyText.common.tryPrototype}
                 </a>
               )}
             </p>
@@ -87,25 +93,25 @@ const remindmeAssets = {
         <div class="col-span-12 md:col-span-4 space-y-16 pt-4">
           <div class="sticky top-32 space-y-16">
             <div>
-              <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-6 text-black/40">Role</h3>
-              <p class="text-base font-semibold uppercase tracking-widest">{isRemindMe ? 'Full-stack Developer & Designer' : 'UX Researcher & Designer'}</p>
+              <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-6 text-black/40">{labels.role}</h3>
+              <p class="text-base font-semibold uppercase tracking-widest">{isRemindMe ? studyText.common.roles.remindMe : studyText.common.roles.standard}</p>
             </div>
             {isMuseumOfGlass && (
               <>
                 <div>
-                  <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-6 text-black/40">Designer</h3>
+                  <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-6 text-black/40">{studyText.common.roles.designer}</h3>
                   <p class="text-base font-semibold uppercase tracking-widest">Eva Chen</p>
                 </div>
                 <div>
-                  <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-6 text-black/40">Course</h3>
+                  <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-6 text-black/40">{studyText.common.roles.course}</h3>
                   <p class="text-base font-semibold uppercase tracking-widest">HCDE308</p>
                 </div>
               </>
             )}
             <div>
-              <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-6 text-black/40">Methods</h3>
+              <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-6 text-black/40">{labels.methods}</h3>
               <div class="flex flex-wrap gap-x-6 gap-y-2">
-                {project.tags.map((tag) => (
+                {content.tags.map((tag) => (
                   <span class="text-[12px] uppercase tracking-[0.2em] font-bold text-black/60">/ {tag}</span>
                 ))}
               </div>
@@ -118,39 +124,39 @@ const remindmeAssets = {
     <!-- Table of Contents Section -->
     <section class="mb-32 border-t border-black/10 pt-16">
       <div class="flex flex-col md:flex-row md:items-center gap-8 md:gap-16">
-        <h3 class="text-xs font-black uppercase tracking-[0.5em] text-black whitespace-nowrap">Jump to Section</h3>
+        <h3 class="text-xs font-black uppercase tracking-[0.5em] text-black whitespace-nowrap">{labels.jumpTo}</h3>
         <nav class="flex flex-nowrap gap-x-12 overflow-x-auto pb-4 md:pb-0 no-scrollbar">
           {isRemindMe && (
             <>
-              <a href="#summary" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 00 Summary</a>
-              <a href="#dashboard" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 01 Dashboard</a>
-              <a href="#technical" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 02 Technical</a>
+              <a href="#summary" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 00 {studyText.remindMe.toc[0]}</a>
+              <a href="#dashboard" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 01 {studyText.remindMe.toc[1]}</a>
+              <a href="#technical" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 02 {studyText.remindMe.toc[2]}</a>
             </>
           )}
           {isTheBridge && (
             <>
-              <a href="#summary" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 00 Summary</a>
-              <a href="#prototype-main" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 01 Prototype</a>
-              <a href="#strategy" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 02 Strategy</a>
-              <a href="#prototype" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 03 Interactive</a>
+              <a href="#summary" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 00 {studyText.bridge.toc[0]}</a>
+              <a href="#prototype-main" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 01 {studyText.bridge.toc[1]}</a>
+              <a href="#strategy" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 02 {studyText.bridge.toc[2]}</a>
+              <a href="#prototype" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 03 {studyText.bridge.toc[3]}</a>
             </>
           )}
           {isMakersLoop && (
             <>
-              <a href="#concept" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 01 Concept</a>
-              <a href="#goals" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 02 Goals</a>
-              <a href="#implementation" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 03 Implementation</a>
-              <a href="#evaluation" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 04 Evaluation</a>
+              <a href="#concept" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 01 {studyText.makersLoop.toc[0]}</a>
+              <a href="#goals" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 02 {studyText.makersLoop.toc[1]}</a>
+              <a href="#implementation" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 03 {studyText.makersLoop.toc[2]}</a>
+              <a href="#evaluation" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 04 {studyText.makersLoop.toc[3]}</a>
             </>
           )}
           {isMuseumOfGlass && (
             <>
-              <a href="#overview" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 00 Overview</a>
-              <a href="#context" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 01 Context</a>
-              <a href="#intent" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 02 Design Intent</a>
-              <a href="#identity" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 03 Identity</a>
-              <a href="#artifacts" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 04 Artifacts</a>
-              <a href="#appendix" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 05 Appendix</a>
+              <a href="#overview" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 00 {studyText.museum.toc[0]}</a>
+              <a href="#context" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 01 {studyText.museum.toc[1]}</a>
+              <a href="#intent" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 02 {studyText.museum.toc[2]}</a>
+              <a href="#identity" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 03 {studyText.museum.toc[3]}</a>
+              <a href="#artifacts" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 04 {studyText.museum.toc[4]}</a>
+              <a href="#appendix" class="text-[13px] uppercase tracking-[0.3em] font-black text-black/50 hover:text-black transition-all hover:translate-y-[-1px]">/ 05 {studyText.museum.toc[5]}</a>
             </>
           )}
         </nav>
@@ -162,18 +168,18 @@ const remindmeAssets = {
         <!-- TL;DR SUMMARY -->
         <section id="summary" class="bg-black text-white p-12 md:p-24 -mx-6 md:mx-0 scroll-mt-32">
           <div class="max-w-4xl mx-auto">
-            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-white">00 / Quick Summary</h2>
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-white">00 / {studyText.remindMe.summary[0]}</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
               <div>
-                <h3 class="text-xl font-bold uppercase mb-4 tracking-wide text-white">The Concept</h3>
+                <h3 class="text-xl font-bold uppercase mb-4 tracking-wide text-white">{studyText.remindMe.summary[1]}</h3>
                 <p class="text-lg text-white/80 leading-relaxed font-light text-balance">
-                  A Python Flask application that automates the calculation of departure times by bridging Google Calendar events with real-time Google Maps distance data.
+                  {studyText.remindMe.summary[2]}
                 </p>
               </div>
               <div>
-                <h3 class="text-xl font-bold uppercase mb-4 tracking-wide text-white">The Problem</h3>
+                <h3 class="text-xl font-bold uppercase mb-4 tracking-wide text-white">{studyText.remindMe.summary[3]}</h3>
                 <p class="text-lg text-white/80 leading-relaxed font-light text-balance">
-                  Users often experience "switching friction" when manually calculating travel times between back-to-back calendar events—a process that is inefficient and prone to error.
+                  {studyText.remindMe.summary[4]}
                 </p>
               </div>
             </div>
@@ -186,12 +192,12 @@ const remindmeAssets = {
                 <!-- Using demo.gif directly for animation -->
                 <img 
                   src={remindmeAssets.demoGif} 
-                  alt="RemindMe Main Dashboard Animation" 
+                  alt={studyText.remindMe.dashboard[0]}
                   class="w-full h-auto max-h-[40vh] object-contain mx-auto shadow-2xl" 
                 />
-                <p class="mt-10 text-xs uppercase tracking-[0.3em] opacity-40 font-bold">Main Dashboard Interface</p>
+                <p class="mt-10 text-xs uppercase tracking-[0.3em] opacity-40 font-bold">{studyText.remindMe.dashboard[1]}</p>
                 <p class="mt-6 text-base text-black/60 leading-relaxed max-w-2xl mx-auto italic">
-                  Detailed design exploration and visual analysis. This section showcases the iterative development of the interface, highlighting key features and user flow optimizations implemented to enhance the overall experience.
+                  {studyText.remindMe.dashboard[2]}
                 </p>
             </div>
         </section>
@@ -201,49 +207,49 @@ const remindmeAssets = {
         <section class="max-w-5xl mx-auto border-t-2 border-black pt-20">
           <details class="group">
             <summary class="flex justify-between items-center cursor-pointer list-none py-8 px-6 border-b border-black/5 mb-16 hover:bg-black/[0.02] transition-colors rounded-lg">
-              <h2 class="text-3xl font-bold uppercase tracking-tight group-hover:translate-x-2 transition-transform duration-300">Technical Process & Features</h2>
+              <h2 class="text-3xl font-bold uppercase tracking-tight group-hover:translate-x-2 transition-transform duration-300">{studyText.remindMe.details[0]}</h2>
               <span class="text-5xl group-open:rotate-45 transition-transform duration-300 font-extralight text-black/30 group-hover:text-black">+</span>
             </summary>
             
             <div class="space-y-48 pb-32">
               <!-- Feature List -->
               <div class="space-y-16">
-                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">01 / Core Features</h3>
+                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">01 / {studyText.remindMe.details[1]}</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                   <div class="space-y-6 border-l border-black pl-8">
-                    <h4 class="font-bold uppercase text-lg tracking-tight">Google Calendar Sync</h4>
-                    <p class="text-base text-black/70 leading-relaxed">Automatic retrieval of upcoming events using OAuth 2.0. Extracting event names, start times, and locations seamlessly.</p>
+                    <h4 class="font-bold uppercase text-lg tracking-tight">{studyText.remindMe.details[2]}</h4>
+                    <p class="text-base text-black/70 leading-relaxed">{studyText.remindMe.details[3]}</p>
                   </div>
                   <div class="space-y-6 border-l border-black pl-8">
-                    <h4 class="font-bold uppercase text-lg tracking-tight">Maps Integration</h4>
-                    <p class="text-base text-black/70 leading-relaxed">Leveraging the Google Maps Distance Matrix API to calculate travel durations based on real-world geolocation and traffic.</p>
+                    <h4 class="font-bold uppercase text-lg tracking-tight">{studyText.remindMe.details[4]}</h4>
+                    <p class="text-base text-black/70 leading-relaxed">{studyText.remindMe.details[5]}</p>
                   </div>
                 </div>
               </div>
 
               <!-- Interface Screenshots -->
               <div class="space-y-20">
-                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">02 / Design Details</h3>
+                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">02 / {studyText.remindMe.details[6]}</h3>
                 <div class="grid grid-cols-1 gap-32">
                   <!-- The Card Example (Static) -->
                   <div class="space-y-8 text-center">
                     <div class="border border-black/10 bg-white p-4 md:p-8">
-                        <img src={remindmeAssets.cardExample} alt="Event Card Example" class="w-full h-auto mx-auto shadow-sm" />
+                        <img src={remindmeAssets.cardExample} alt={studyText.remindMe.card[0]} class="w-full h-auto mx-auto shadow-sm" />
                     </div>
-                    <p class="text-[11px] uppercase tracking-widest opacity-40 font-bold max-w-lg mx-auto italic">Static Component Analysis: Event list with calculated departure times.</p>
+                    <p class="text-[11px] uppercase tracking-widest opacity-40 font-bold max-w-lg mx-auto italic">{studyText.remindMe.card[1]}</p>
                     <p class="mt-6 text-sm text-black/50 leading-relaxed max-w-xl mx-auto">
-                      Iterative exploration of the component architecture, focusing on information density and visual hierarchy to ensure that critical data is immediately accessible to the user.
+                      {studyText.remindMe.card[2]}
                     </p>
                   </div>
 
                   {remindmeAssets.screenshots.map((img, index) => (
                     <div class="space-y-8 text-center">
                         <div class="border border-black/10 bg-white p-4 md:p-8">
-                            <img src={img} alt={`RemindMe Screen ${index + 1}`} class="w-full h-auto mx-auto shadow-xl" />
+                            <img src={img} alt={studyText.remindMe.screens.alts[index]} class="w-full h-auto mx-auto shadow-xl" />
                         </div>
-                        <p class="text-xs uppercase tracking-widest opacity-40 font-bold">Flow State: {index === 0 ? 'Authentication' : index === 1 ? 'Dashboard' : 'Notification'}</p>
+                        <p class="text-xs uppercase tracking-widest opacity-40 font-bold">{studyText.remindMe.screens.caption} {studyText.remindMe.screens.states[index]}</p>
                         <p class="mt-4 text-sm text-black/50 leading-relaxed max-w-xl mx-auto">
-                          Visual synthesis of the user journey, mapping out the transition between different states and ensuring a cohesive aesthetic across the entire application interface.
+                          {studyText.remindMe.screens.description}
                         </p>
                     </div>
                   ))}
@@ -252,9 +258,9 @@ const remindmeAssets = {
 
               <!-- Video Link Section -->
               <div class="pt-32 border-t border-black/5 text-center">
-                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40 mb-12 text-black/40">03 / Watch in Action</h3>
+                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40 mb-12 text-black/40">03 / {studyText.remindMe.video[0]}</h3>
                 <a href="https://www.youtube.com/watch?v=YPWUWVT1iq8" target="_blank" class="inline-block px-16 py-8 bg-black text-white text-sm uppercase tracking-[0.3em] font-bold hover:bg-black/80 transition-all">
-                    View Demo Video &rarr;
+                    {studyText.remindMe.video[1]}
                 </a>
               </div>
             </div>
@@ -268,18 +274,18 @@ const remindmeAssets = {
         <!-- TL;DR SUMMARY -->
         <section id="summary" class="bg-black text-white p-12 md:p-24 -mx-6 md:mx-0 scroll-mt-32">
           <div class="max-w-4xl mx-auto">
-            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-white">00 / Quick Summary</h2>
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-white">00 / {studyText.bridge.summary[0]}</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
               <div>
-                <h3 class="text-xl font-bold uppercase mb-6 tracking-wide text-white">The Concept</h3>
+                <h3 class="text-xl font-bold uppercase mb-6 tracking-wide text-white">{studyText.bridge.summary[1]}</h3>
                 <p class="text-lg text-white/80 leading-relaxed font-light text-balance">
-                  A communication tool designed for college students and their parents to bridge emotional distance and reduce unintended pressure through "low-friction" check-ins.
+                  {studyText.bridge.summary[2]}
                 </p>
               </div>
               <div>
-                <h3 class="text-xl font-bold uppercase mb-6 tracking-wide text-white">Key Insight</h3>
+                <h3 class="text-xl font-bold uppercase mb-6 tracking-wide text-white">{studyText.bridge.summary[3]}</h3>
                 <p class="text-lg text-white/80 leading-relaxed font-light text-balance">
-                  Parents and students share the same goal of connection, but mismatched communication styles (advice vs. emotional support) often lead to perceived pressure and silence.
+                  {studyText.bridge.summary[4]}
                 </p>
               </div>
             </div>
@@ -289,10 +295,10 @@ const remindmeAssets = {
         <!-- Main Image -->
         <section id="prototype-main" class="w-full scroll-mt-32">
             <div class="bg-white border border-black/5 p-4 md:p-12 shadow-sm text-center">
-                <img src={bridgeAssets.highFi} alt="The Bridge High-Fi Prototype" class="w-full h-auto max-h-[90vh] object-contain mx-auto" />
-                <p class="mt-8 text-xs uppercase tracking-widest text-center opacity-30 font-bold">Final High-Fidelity Prototype Display</p>
+                <img src={bridgeAssets.highFi} alt={studyText.bridge.main[0]} class="w-full h-auto max-h-[90vh] object-contain mx-auto" />
+                <p class="mt-8 text-xs uppercase tracking-widest text-center opacity-30 font-bold">{studyText.bridge.main[1]}</p>
                 <p class="mt-6 text-base text-black/60 leading-relaxed max-w-2xl mx-auto italic">
-                  The high-fidelity prototype represents the culmination of extensive user research and iterative design. It focuses on providing a low-pressure environment for emotional check-ins, utilizing soft color palettes and intuitive navigation patterns.
+                  {studyText.bridge.main[2]}
                 </p>
             </div>
         </section>
@@ -301,44 +307,44 @@ const remindmeAssets = {
         <section id="strategy" class="max-w-5xl mx-auto border-t-2 border-black pt-20 scroll-mt-32">
           <details class="group">
             <summary class="flex justify-between items-center cursor-pointer list-none py-8 px-6 border-b border-black/5 mb-16 hover:bg-black/[0.02] transition-colors rounded-lg">
-              <h2 class="text-3xl font-bold uppercase tracking-tight group-hover:translate-x-2 transition-transform duration-300">Deep Dive: Process & Strategy</h2>
+              <h2 class="text-3xl font-bold uppercase tracking-tight group-hover:translate-x-2 transition-transform duration-300">{studyText.bridge.details[0]}</h2>
               <span class="text-5xl group-open:rotate-45 transition-transform duration-300 font-extralight text-black/30 group-hover:text-black">+</span>
             </summary>
             
             <div class="space-y-48 pb-32">
               <div class="space-y-12">
-                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">01 / Problem Statement</h3>
+                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">01 / {studyText.bridge.details[1]}</h3>
                 <p class="text-2xl md:text-3xl leading-snug font-medium max-w-4xl italic">
-                  "How can we help college students and their parents create a peaceful, friendly space to talk and improve the overall family atmosphere?"
+                  {studyText.bridge.details[2]}
                 </p>
               </div>
 
               <div class="space-y-16">
-                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">02 / Research Findings</h3>
+                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">02 / {studyText.bridge.details[3]}</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                   <div class="space-y-6 border-l border-black/10 pl-6">
-                    <h4 class="font-bold uppercase text-lg tracking-tight">Respect Gap</h4>
-                    <p class="text-base text-black/70 leading-relaxed">Parents show respect through financial/academic support; students want to be listened to.</p>
+                    <h4 class="font-bold uppercase text-lg tracking-tight">{studyText.bridge.details[4]}</h4>
+                    <p class="text-base text-black/70 leading-relaxed">{studyText.bridge.details[5]}</p>
                   </div>
                   <div class="space-y-6 border-l border-black/10 pl-6">
-                    <h4 class="font-bold uppercase text-lg tracking-tight">Fear of Initiation</h4>
-                    <p class="text-base text-black/70 leading-relaxed">Both sides want to reconnect after conflict but avoid starting conversations due to fear of friction.</p>
+                    <h4 class="font-bold uppercase text-lg tracking-tight">{studyText.bridge.details[6]}</h4>
+                    <p class="text-base text-black/70 leading-relaxed">{studyText.bridge.details[7]}</p>
                   </div>
                   <div class="space-y-6 border-l border-black/10 pl-6">
-                    <h4 class="font-bold uppercase text-lg tracking-tight">Invisible Needs</h4>
-                    <p class="text-base text-black/70 leading-relaxed">Parents love through advice, students avoid escalation; both keep emotional needs hidden.</p>
+                    <h4 class="font-bold uppercase text-lg tracking-tight">{studyText.bridge.details[8]}</h4>
+                    <p class="text-base text-black/70 leading-relaxed">{studyText.bridge.details[9]}</p>
                   </div>
                 </div>
               </div>
 
               <div class="space-y-20">
-                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">03 / Target Personas</h3>
+                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">03 / {studyText.bridge.details[10]}</h3>
                 <div class="space-y-16">
                   {bridgeAssets.personas.map((img) => (
                     <div class="border border-black/10 bg-white p-4 md:p-12 text-center">
-                        <img src={img} alt="Full Persona Sheet" class="w-full h-auto" />
+                        <img src={img} alt={studyText.bridge.details[11]} class="w-full h-auto" />
                         <p class="mt-8 text-sm text-black/50 leading-relaxed max-w-xl mx-auto">
-                          User personas derived from qualitative interviews with college students and their parents. These profiles helped guide the design direction by highlighting the specific emotional needs and communication barriers.
+                          {studyText.bridge.details[12]}
                         </p>
                     </div>
                   ))}
@@ -346,31 +352,31 @@ const remindmeAssets = {
               </div>
 
               <div class="space-y-20">
-                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">04 / Prototyping Journey</h3>
+                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40">04 / {studyText.bridge.details[13]}</h3>
                 <div class="space-y-24">
                   <div class="space-y-8 text-center">
-                    <img src={bridgeAssets.lowFi} alt="Low-Fi Stage" class="w-full h-auto border border-black/5" />
-                    <p class="text-xs uppercase tracking-widest opacity-40 font-bold">Stage 1: Low-Fidelity Exploration & Layout Mapping</p>
+                    <img src={bridgeAssets.lowFi} alt={studyText.bridge.details[14]} class="w-full h-auto border border-black/5" />
+                    <p class="text-xs uppercase tracking-widest opacity-40 font-bold">{studyText.bridge.details[15]}</p>
                     <p class="mt-4 text-sm text-black/50 leading-relaxed max-w-xl mx-auto">
-                      Early-stage wireframes focused on structural layout and navigation flow, establishing the foundational architecture of the communication platform.
+                      {studyText.bridge.details[16]}
                     </p>
                   </div>
                   <div class="space-y-8 text-center">
-                    <img src={bridgeAssets.midFi} alt="Mid-Fi Stage" class="w-full h-auto border border-black/5" />
-                    <p class="text-xs uppercase tracking-widest opacity-40 font-bold">Stage 2: Mid-Fidelity Interaction Design & Visual System</p>
+                    <img src={bridgeAssets.midFi} alt={studyText.bridge.details[17]} class="w-full h-auto border border-black/5" />
+                    <p class="text-xs uppercase tracking-widest opacity-40 font-bold">{studyText.bridge.details[18]}</p>
                     <p class="mt-4 text-sm text-black/50 leading-relaxed max-w-xl mx-auto">
-                      Transitioning into higher fidelity, incorporating the visual system and testing interactive elements to refine the user experience.
+                      {studyText.bridge.details[19]}
                     </p>
                   </div>
                 </div>
               </div>
 
               <div class="pt-32 border-t border-black/5">
-                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40 mb-12 text-center">05 / The Final Solution</h3>
+                <h3 class="text-xs font-bold uppercase tracking-[0.4em] text-black/40 mb-12 text-center">05 / {studyText.bridge.details[20]}</h3>
                 <div class="bg-white border border-black/10 p-4 md:p-12 shadow-lg text-center">
-                    <img src={bridgeAssets.highFi} alt="Final High-Fi Outcome" class="w-full h-auto mx-auto" />
+                    <img src={bridgeAssets.highFi} alt={studyText.bridge.details[21]} class="w-full h-auto mx-auto" />
                     <p class="mt-8 text-sm text-black/50 leading-relaxed max-w-xl mx-auto italic">
-                      The final design solution addresses the identified friction points by introducing specialized interaction models that prioritize emotional support.
+                      {studyText.bridge.details[22]}
                     </p>
                 </div>
               </div>
@@ -378,9 +384,9 @@ const remindmeAssets = {
               <!-- Interactive Figma Prototype -->
               <div id="prototype" class="pt-48 border-t border-black/5 scroll-mt-32">
                 <div class="text-center mb-24">
-                  <h3 class="text-3xl md:text-5xl font-bold uppercase tracking-tighter mb-6">Interactive Prototype</h3>
+                  <h3 class="text-3xl md:text-5xl font-bold uppercase tracking-tighter mb-6">{studyText.bridge.details[23]}</h3>
                   <p class="text-lg text-black/60 max-w-2xl mx-auto leading-relaxed">
-                    Test the high-fidelity flow directly in this mobile simulator. It captures the transition logic and micro-interactions of the final application.
+                    {studyText.bridge.details[24]}
                   </p>
                 </div>
                 
@@ -421,63 +427,63 @@ const remindmeAssets = {
       <div class="space-y-64 pb-64">
         <section id="concept" class="grid grid-cols-12 gap-12 scroll-mt-32">
           <div class="col-span-12 md:col-span-4">
-            <h2 class="text-xs font-black uppercase tracking-[0.4em] mb-8 sticky top-32">01 / Concept</h2>
+            <h2 class="text-xs font-black uppercase tracking-[0.4em] mb-8 sticky top-32">01 / {studyText.makersLoop.concept[0]}</h2>
           </div>
           <div class="col-span-12 md:col-span-8 space-y-16">
             <p class="text-xl md:text-2xl leading-loose text-black/70 font-medium max-w-4xl text-balance">
-              The project is a modular pegboard system designed to serve as a material circular ecosystem for maker spaces. 
+              {studyText.makersLoop.concept[1]}
             </p>
             <div class="grid grid-cols-3 gap-6">
               {makersAssets.sketches.map((img) => (
                 <div class="space-y-4">
                   <div class="aspect-square bg-black/5 overflow-hidden border border-black/5">
-                    <img src={img} alt="Sketch" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+                    <img src={img} alt={studyText.makersLoop.concept[2]} class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
                   </div>
-                  <p class="text-[10px] uppercase tracking-widest opacity-40 font-bold">Conceptual Exploration</p>
+                  <p class="text-[10px] uppercase tracking-widest opacity-40 font-bold">{studyText.makersLoop.concept[3]}</p>
                 </div>
               ))}
             </div>
             <p class="mt-8 text-sm text-black/50 leading-relaxed max-w-2xl">
-              Early conceptual sketches and material explorations. This phase focused on understanding the constraints of the maker space and identifying opportunities for circular material flow.
+              {studyText.makersLoop.concept[4]}
             </p>
           </div>
         </section>
 
         <section id="goals" class="grid grid-cols-12 gap-12 scroll-mt-32">
           <div class="col-span-12 md:col-span-4">
-            <h2 class="text-xs font-black uppercase tracking-[0.4em] mb-8 sticky top-32">02 / Goals & Methods</h2>
+            <h2 class="text-xs font-black uppercase tracking-[0.4em] mb-8 sticky top-32">02 / {studyText.makersLoop.goals[0]}</h2>
           </div>
           <div class="col-span-12 md:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-16">
             <div class="border-t-2 border-black pt-10">
-              <h3 class="font-bold uppercase mb-6 text-lg tracking-tight">Laser Cutting</h3>
-              <p class="text-base text-black/60 leading-relaxed">Tested structural feasibility and dimensional accuracy for hanging printed elements perfectly on the frame.</p>
+              <h3 class="font-bold uppercase mb-6 text-lg tracking-tight">{studyText.makersLoop.goals[1]}</h3>
+              <p class="text-base text-black/60 leading-relaxed">{studyText.makersLoop.goals[2]}</p>
             </div>
             <div class="border-t-2 border-black pt-10">
-              <h3 class="font-bold uppercase mb-6 text-lg tracking-tight">3D Printing</h3>
-              <p class="text-base text-black/60 leading-relaxed">Printed sorting boxes to test intuitive usability and compartment interaction during usability tests.</p>
+              <h3 class="font-bold uppercase mb-6 text-lg tracking-tight">{studyText.makersLoop.goals[3]}</h3>
+              <p class="text-base text-black/60 leading-relaxed">{studyText.makersLoop.goals[4]}</p>
             </div>
             <div class="border-t-2 border-black pt-10">
-              <h3 class="font-bold uppercase mb-6 text-lg tracking-tight">Sewing</h3>
-              <p class="text-base text-black/60 leading-relaxed">Created a tough fabric bag for sharp or bulky materials to ensure user safety and adaptable storage.</p>
+              <h3 class="font-bold uppercase mb-6 text-lg tracking-tight">{studyText.makersLoop.goals[5]}</h3>
+              <p class="text-base text-black/60 leading-relaxed">{studyText.makersLoop.goals[6]}</p>
             </div>
             <div class="border-t-2 border-black pt-10">
-              <h3 class="font-bold uppercase mb-6 text-lg tracking-tight">Usability Testing</h3>
-              <p class="text-base text-black/60 leading-relaxed">Conducted qualitative tests with a small-scale system to observe full-journey interactions and friction points.</p>
+              <h3 class="font-bold uppercase mb-6 text-lg tracking-tight">{studyText.makersLoop.goals[7]}</h3>
+              <p class="text-base text-black/60 leading-relaxed">{studyText.makersLoop.goals[8]}</p>
             </div>
           </div>
         </section>
 
         <section id="implementation" class="grid grid-cols-12 gap-12 scroll-mt-32">
           <div class="col-span-12 md:col-span-4">
-            <h2 class="text-xs font-black uppercase tracking-[0.4em] mb-8 sticky top-32">03 / Implementation</h2>
+            <h2 class="text-xs font-black uppercase tracking-[0.4em] mb-8 sticky top-32">03 / {studyText.makersLoop.implementation[0]}</h2>
           </div>
           <div class="col-span-12 md:col-span-8 space-y-16">
             <div class="space-y-8">
               <div class="w-full aspect-[16/10] bg-black/5 border border-black/5 overflow-hidden">
-                  <img src={makersAssets.prototype} alt="High-fidelity Prototype" class="w-full h-full object-cover" />
+                  <img src={makersAssets.prototype} alt={studyText.makersLoop.implementation[1]} class="w-full h-full object-cover" />
               </div>
               <p class="text-sm text-black/50 leading-relaxed max-w-2xl">
-                The high-fidelity implementation of the modular pegboard system. The design emphasizes adaptability and ease of use, allowing makers to quickly reorganize their workspace based on the project at hand.
+                {studyText.makersLoop.implementation[2]}
               </p>
             </div>
           </div>
@@ -485,25 +491,25 @@ const remindmeAssets = {
 
         <section id="evaluation" class="grid grid-cols-12 gap-12 border-t border-black/10 pt-32 scroll-mt-32">
           <div class="col-span-12 md:col-span-4">
-            <h2 class="text-xs font-black uppercase tracking-[0.4em] mb-8 sticky top-32">04 / Evaluation</h2>
+            <h2 class="text-xs font-black uppercase tracking-[0.4em] mb-8 sticky top-32">04 / {studyText.makersLoop.evaluation[0]}</h2>
           </div>
           <div class="col-span-12 md:col-span-8 space-y-16">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 {makersAssets.screenshots.map((img) => (
                   <div class="space-y-6">
                     <div class="aspect-video bg-black/5 overflow-hidden border border-black/5">
-                      <img src={img} alt="Usability Test Screenshot" class="w-full h-full object-cover" />
+                      <img src={img} alt={studyText.makersLoop.evaluation[1]} class="w-full h-full object-cover" />
                     </div>
-                    <p class="text-xs text-black/40 font-medium italic">User Interaction Study</p>
+                    <p class="text-xs text-black/40 font-medium italic">{studyText.makersLoop.evaluation[2]}</p>
                   </div>
                 ))}
             </div>
             <p class="text-sm text-black/50 leading-relaxed max-w-2xl">
-              Documentation of the usability testing phase. Observations from these tests provided critical insights into how users interact with the system, leading to several key improvements.
+              {studyText.makersLoop.evaluation[3]}
             </p>
             <div class="pt-16">
                 <a href="https://www.youtube.com/watch?v=re0Miv5hyfY" target="_blank" class="inline-block px-16 py-8 bg-black text-white text-sm uppercase tracking-[0.3em] font-bold hover:bg-black/80 transition-all">
-                    Watch Presentation Video &rarr;
+                    {studyText.makersLoop.evaluation[4]}
                 </a>
             </div>
           </div>
@@ -516,38 +522,31 @@ const remindmeAssets = {
         <!-- 00 / INTRODUCTION -->
         <section id="overview" class="max-w-5xl mx-auto space-y-32 scroll-mt-32 border-t border-black/5 pt-24">
           <div class="space-y-12">
-            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-black">00 / Introduction</h2>
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-black">00 / {studyText.museum.overview[0]}</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-12 gap-12 border-b border-black/5 pb-24">
               <div class="md:col-span-8 space-y-8">
-                <h3 class="text-xl font-bold uppercase tracking-wide text-black">The Organization</h3>
+                <h3 class="text-xl font-bold uppercase tracking-wide text-black">{studyText.museum.overview[1]}</h3>
                 <p class="text-lg text-black/70 leading-relaxed font-light">
-                  The Museum of Glass is a contemporary art museum and active glassmaking studio. It offers unique programs for both artists and visitors, including residencies for professionals and students, alongside hands-on glassmaking experiences for children and veterans. Welcoming an audience of students, tourists, and art enthusiasts, the museum is deeply craft-driven, educational, and community-oriented.
+                  {studyText.museum.overview[2]}
                 </p>
               </div>
               <div class="md:col-span-4 space-y-8 bg-black/[0.02] p-8 rounded-sm">
-                <h3 class="text-sm font-black uppercase tracking-widest text-black/40">Audience</h3>
+                <h3 class="text-sm font-black uppercase tracking-widest text-black/40">{studyText.museum.overview[3]}</h3>
                 <ul class="space-y-4 text-sm font-bold uppercase tracking-tight text-black/60">
-                  <li>/ Local Families & Children</li>
-                  <li>/ Art Students & Educators</li>
-                  <li>/ Global Tourists</li>
-                  <li>/ Military Veterans</li>
+                  <li>/ {studyText.museum.overview[4]}</li>
+                  <li>/ {studyText.museum.overview[5]}</li>
+                  <li>/ {studyText.museum.overview[6]}</li>
+                  <li>/ {studyText.museum.overview[7]}</li>
                 </ul>
               </div>
             </div>
 
             <div class="space-y-24 border-b border-black/5 pb-24">
               <div class="space-y-12">
-                <h3 class="text-xl font-bold uppercase tracking-wide text-black">Brand Attributes</h3>
+                <h3 class="text-xl font-bold uppercase tracking-wide text-black">{studyText.museum.overview[8]}</h3>
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-y-12 gap-x-8">
-                  {[
-                    "Craft-driven",
-                    "Educational",
-                    "Industrial",
-                    "Modern",
-                    "Accessible",
-                    "Dynamic"
-                  ].map((attr, index) => (
+                  {studyText.museum.overview.slice(9).map((attr, index) => (
                     <div class="group">
                       <div class="flex items-baseline gap-4 mb-2">
                         <span class="text-[10px] font-black text-black/20 uppercase tracking-widest">0{index + 1}</span>
@@ -565,23 +564,23 @@ const remindmeAssets = {
         <!-- 01 / CONTEXT: COMPETITIVE LANDSCAPE -->
         <section id="context" class="max-w-5xl mx-auto space-y-32 scroll-mt-32">
           <div class="space-y-12">
-            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-black">01 / Visual Identity Context</h2>
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-black">01 / {studyText.museum.context[0]}</h2>
             
             <div class="space-y-32">
               <!-- Competitors -->
               <div class="space-y-12">
-                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 border-b border-black/5 pb-4">Competitors</h3>
+                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 border-b border-black/5 pb-4">{studyText.museum.context[1]}</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                   <div class="space-y-4">
-                    <h4 class="text-sm font-black uppercase tracking-widest text-black">Chihuly Garden and Glass</h4>
+                    <h4 class="text-sm font-black uppercase tracking-widest text-black">{studyText.museum.context[8]}</h4>
                     <p class="text-sm text-black/60 leading-relaxed">
-                      As our largest indirect competitor, they offer a high-end, celebrity-driven visual spectacle. MoG contrasts this by providing a more approachable, hands-on maker experience.
+                      {studyText.museum.context[2]}
                     </p>
                   </div>
                   <div class="space-y-4">
-                    <h4 class="text-sm font-black uppercase tracking-widest text-black">Tacoma Art Museum & Washington State History Museum</h4>
+                    <h4 class="text-sm font-black uppercase tracking-widest text-black">{studyText.museum.context[9]}</h4>
                     <p class="text-sm text-black/60 leading-relaxed">
-                      Located in downtown Tacoma, these institutions directly compete for the weekend time and ticket budgets of both local residents and tourists.
+                      {studyText.museum.context[3]}
                     </p>
                   </div>
                 </div>
@@ -589,24 +588,24 @@ const remindmeAssets = {
 
               <!-- Complementors -->
               <div class="space-y-12">
-                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 border-b border-black/5 pb-4">Complementors</h3>
+                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 border-b border-black/5 pb-4">{studyText.museum.context[4]}</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                   <div class="space-y-4">
-                    <h4 class="text-sm font-black uppercase tracking-widest text-black">Chihuly Bridge of Glass</h4>
+                    <h4 class="text-sm font-black uppercase tracking-widest text-black">{studyText.museum.context[10]}</h4>
                     <p class="text-sm text-black/60 leading-relaxed">
-                      This physical walkway connects downtown Tacoma to MoG, serving as a perfect architectural guide for arriving visitors.
+                      {studyText.museum.context[5]}
                     </p>
                   </div>
                   <div class="space-y-4">
-                    <h4 class="text-sm font-black uppercase tracking-widest text-black">Hotel Murano</h4>
+                    <h4 class="text-sm font-black uppercase tracking-widest text-black">{studyText.museum.context[11]}</h4>
                     <p class="text-sm text-black/60 leading-relaxed">
-                      A boutique hotel themed around glass art that seamlessly extends the immersive MoG visitor experience.
+                      {studyText.museum.context[6]}
                     </p>
                   </div>
                   <div class="space-y-4">
-                    <h4 class="text-sm font-black uppercase tracking-widest text-black">Pilchuck Glass School</h4>
+                    <h4 class="text-sm font-black uppercase tracking-widest text-black">{studyText.museum.context[12]}</h4>
                     <p class="text-sm text-black/60 leading-relaxed">
-                      Together with MoG, this institution anchors a robust ecosystem for glass art education and practice in the region.
+                      {studyText.museum.context[7]}
                     </p>
                   </div>
                 </div>
@@ -618,38 +617,38 @@ const remindmeAssets = {
         <!-- 02 / DESIGN INTENT -->
         <section id="intent" class="max-w-5xl mx-auto space-y-32 scroll-mt-32">
           <div class="space-y-12">
-            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-black">02 / Design Intent</h2>
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-black">02 / {studyText.museum.intent[0]}</h2>
             
             <div class="space-y-24">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
                 <div class="space-y-8">
-                  <h3 class="text-xl font-bold uppercase tracking-wide text-black">Strategic Direction</h3>
+                  <h3 class="text-xl font-bold uppercase tracking-wide text-black">{studyText.museum.intent[1]}</h3>
                   <p class="text-lg text-black/70 leading-relaxed font-light">
-                    The visual identity of the Museum of Glass is designed to express the fluid motion of glassmaking, a welcoming community spirit, and a modern approach to education. It is created for Pacific Northwest families, art enthusiasts, and cultural tourists.
+                    {studyText.museum.intent[2]}
                   </p>
                   <p class="text-black/60 text-sm leading-relaxed">
-                    These visuals capture the museum's blend of art, science, and community. The fluid movement and raw energy of molten glass on a blowpipe highlight its craft-driven educational purpose and the thrilling Hot Shop experience. Finally, pieces like blue glass earrings translate this intense craft into accessible, everyday human connections.
+                    {studyText.museum.intent[3]}
                   </p>
                 </div>
                 
                 <div class="space-y-8">
-                  <h3 class="text-xl font-bold uppercase tracking-wide text-black">Inspiration / Moodboard</h3>
+                  <h3 class="text-xl font-bold uppercase tracking-wide text-black">{studyText.museum.intent[4]}</h3>
                   <div class="grid grid-cols-2 gap-4">
                     <div class="aspect-square bg-black/[0.05] border border-black/5 overflow-hidden">
-                      <img src="/images/museum_of_glass/moodboard-1.png" alt="Molten Glass & Fire" class="w-full h-full object-cover" />
+                      <img src="/images/museum_of_glass/moodboard-1.png" alt={studyText.museum.intent[5]} class="w-full h-full object-cover" />
                     </div>
                     <div class="aspect-square bg-black/[0.05] border border-black/5 overflow-hidden">
-                      <img src="/images/museum_of_glass/moodboard-2.png" alt="Industrial Textures" class="w-full h-full object-cover" />
+                      <img src="/images/museum_of_glass/moodboard-2.png" alt={studyText.museum.intent[6]} class="w-full h-full object-cover" />
                     </div>
                     <div class="aspect-square bg-black/[0.05] border border-black/5 overflow-hidden">
-                      <img src="/images/museum_of_glass/moodboard-3.png" alt="Modern Fluidity" class="w-full h-full object-cover" />
+                      <img src="/images/museum_of_glass/moodboard-3.png" alt={studyText.museum.intent[7]} class="w-full h-full object-cover" />
                     </div>
                     <div class="aspect-square bg-black/[0.05] border border-black/5 overflow-hidden">
-                      <img src="/images/museum_of_glass/moodboard-4.png" alt="Community Vibrancy" class="w-full h-full object-cover" />
+                      <img src="/images/museum_of_glass/moodboard-4.png" alt={studyText.museum.intent[8]} class="w-full h-full object-cover" />
                     </div>
                   </div>
                   <p class="text-xs text-black/40 italic leading-relaxed">
-                    Moodboard exploration focusing on the transition from static raw materials to dynamic, glowing artifacts.
+                    {studyText.museum.intent[9]}
                   </p>
                 </div>
               </div>
@@ -660,15 +659,15 @@ const remindmeAssets = {
         <!-- Branding Section -->
         <section id="identity" class="max-w-5xl mx-auto space-y-32 scroll-mt-32">
           <div class="space-y-12">
-            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-black">03 / Organizational Identity</h2>
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-12 text-black">03 / {studyText.museum.identity[0]}</h2>
             <div class="flex flex-col md:flex-row items-center gap-16 md:gap-24 py-8">
               <div class="w-full md:w-1/2 flex justify-center">
-                <img src="/images/museum_of_glass/logo-primary.jpg" alt="Museum of Glass Logo" class="w-full max-w-md h-auto" />
+                <img src="/images/museum_of_glass/logo-primary.jpg" alt={studyText.museum.identity[1]} class="w-full max-w-md h-auto" />
               </div>
               <div class="w-full md:w-1/2 space-y-6 text-left">
-                <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60">Logo Concept & Metaphor</h3>
+                <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60">{studyText.museum.identity[2]}</h3>
                 <p class="text-sm md:text-base text-black/50 leading-relaxed italic">
-                  The logo represents a bulb of molten glass being inflated to create an abstract letter "G". This design reflects both the craftsmanship of glassmaking and the dynamic fluidity of the glass.
+                  {studyText.museum.identity[3]}
                 </p>
               </div>
             </div>
@@ -678,7 +677,7 @@ const remindmeAssets = {
             <!-- Color Palette Section -->
             <div class="space-y-12">
               <div class="space-y-4">
-                <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60">Color Palette</h3>
+                <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60">{studyText.museum.identity[4]}</h3>
               </div>
               
               <!-- Color Swatches Container - Centered -->
@@ -702,60 +701,60 @@ const remindmeAssets = {
               </div>
 
               <p class="text-base text-black/60 leading-relaxed max-w-4xl mx-auto font-medium">
-                We based our color palette on the physical art of glassmaking. We also needed a highly usable interface. We selected red, orange, yellow, and blue. These act as vibrant pops of color. The intense fire of the furnace inspired these choices. The glowing molten glass also inspired them. We chose white and a soft green for our layout. These serve as clean backgrounds. Inclusive design is a priority. We reserve black and white strictly for our text. This guarantees high contrast. It ensures maximum legibility across any background. The information remains clear for all users.
+                {studyText.museum.identity[5]}
               </p>
             </div>
 
             <!-- Typography Section -->
             <div id="typography" class="space-y-24 scroll-mt-32">
               <div class="space-y-4">
-                <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60">Typography</h3>
+                <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60">{studyText.museum.identity[6]}</h3>
               </div>
               
               <div class="space-y-8 max-w-none text-left">
                 <!-- Title Row -->
                 <div class="border-b border-black/5 pb-6">
-                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2">Title / Horizon / 60pt</span>
-                  <h4 style="font-family: 'Horizon', sans-serif; font-size: 60pt; line-height: 1.1;" class="uppercase text-black whitespace-nowrap">Museum of Glass</h4>
+                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2">{studyText.museum.identity[7]}</span>
+                  <h4 style="font-family: 'Horizon', sans-serif; font-size: 60pt; line-height: 1.1;" class="uppercase text-black whitespace-nowrap">{content.title}</h4>
                 </div>
                 
                 <!-- H1 Row -->
                 <div class="border-b border-black/5 pb-6">
-                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2">H1 / Palanquin Dark / 34pt</span>
-                  <h4 style="font-family: 'Palanquin Dark', sans-serif; font-size: 34pt; line-height: 1.2;" class="text-black font-bold">Museum of Glass</h4>
+                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2">{studyText.museum.identity[8]}</span>
+                  <h4 style="font-family: 'Palanquin Dark', sans-serif; font-size: 34pt; line-height: 1.2;" class="text-black font-bold">{content.title}</h4>
                 </div>
 
                 <!-- H2 Row -->
                 <div class="border-b border-black/5 pb-6">
-                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2">H2 / Palanquin Dark / 26pt</span>
-                  <h4 style="font-family: 'Palanquin Dark', sans-serif; font-size: 26pt; line-height: 1.2;" class="text-black font-bold">Organizational Identity</h4>
+                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2">{studyText.museum.identity[9]}</span>
+                  <h4 style="font-family: 'Palanquin Dark', sans-serif; font-size: 26pt; line-height: 1.2;" class="text-black font-bold">{studyText.museum.identity[10]}</h4>
                 </div>
 
                 <!-- H3 Row -->
                 <div class="border-b border-black/5 pb-6">
-                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2">H3 / Palanquin Dark / 20pt</span>
-                  <h4 style="font-family: 'Palanquin Dark', sans-serif; font-size: 20pt; line-height: 1.2;" class="text-black font-bold">Color Palette & Typography</h4>
+                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2">{studyText.museum.identity[11]}</span>
+                  <h4 style="font-family: 'Palanquin Dark', sans-serif; font-size: 20pt; line-height: 1.2;" class="text-black font-bold">{studyText.museum.identity[12]}</h4>
                 </div>
 
                 <!-- Text1 Row -->
                 <div class="border-b border-black/5 pb-6">
-                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2">Text1 / Palanquin Dark / 20pt</span>
+                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2">{studyText.museum.identity[13]}</span>
                   <p style="font-family: 'Palanquin Dark', sans-serif; font-size: 20pt; line-height: 1.5;" class="text-black/80">
-                    Exploring the intersection of glass blowing artistry and digital design for the Museum of Glass.
+                    {studyText.museum.identity[14]}
                   </p>
                 </div>
 
                 <!-- Text2 Row -->
                 <div class="pb-6">
-                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2">Text2 / Palanquin Dark / 16pt</span>
+                  <span class="text-xs uppercase tracking-widest font-black opacity-50 block mb-2">{studyText.museum.identity[15]}</span>
                   <p style="font-family: 'Palanquin Dark', sans-serif; font-size: 16pt; line-height: 1.5;" class="text-black/70">
-                    Translating the fluid, vibrant nature of glass into a structured typographic and color system.
+                    {studyText.museum.identity[16]}
                   </p>
                 </div>
               </div>
 
               <p class="text-base text-black/60 leading-relaxed max-w-4xl mx-auto font-medium">
-                The bold title typography embodies the substantial weight of the exhibited glassworks, contrasting with a delicate text font that captures the fragile intricacies of glass. This thoughtful pairing of varied letterforms also ensures optimal legibility.
+                {studyText.museum.identity[17]}
               </p>
             </div>
           </div>
@@ -764,15 +763,15 @@ const remindmeAssets = {
         <!-- Artifacts -->
         <section id="artifacts" class="space-y-32 scroll-mt-32">
           <div class="max-w-[1339px] mx-auto px-4 md:px-8">
-            <h2 class="text-4xl font-black uppercase tracking-tighter mb-16 text-black">04 / Artifacts</h2>
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-16 text-black">04 / {studyText.museum.artifacts[0]}</h2>
             
             <div class="space-y-32">
               <!-- Interactive Prototype (Now Primary) -->
               <div class="space-y-12">
                 <div class="max-w-[1139px] mx-auto space-y-8">
-                  <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60">Interactive Artifact</h3>
+                  <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60">{studyText.museum.artifacts[1]}</h3>
                   <p class="text-base text-black/70 leading-relaxed">
-                    For my digital artifact, I developed an interactive prototype featuring the Home and Visit pages. The Home page welcomes users with fluid, dynamic visuals that reflect the creative energy of the Hot Shop. On the Visit page, I prioritized usability and clear information architecture. By utilizing high-contrast typography and a clean layout, key details like ticketing and schedules are highly accessible. This prototype successfully balances artistic expression with a human-centered digital experience.
+                    {studyText.museum.artifacts[2]}
                   </p>
                 </div>
                 <div class="w-full max-w-5xl mx-auto aspect-[1339/849] relative overflow-hidden rounded-sm border border-black/5 bg-white">
@@ -788,15 +787,15 @@ const remindmeAssets = {
               <!-- Physical Artifact -->
               <div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-start">
                 <div class="space-y-8">
-                  <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60">Physical Artifact</h3>
+                  <h3 class="text-sm font-black uppercase tracking-[0.4em] text-black/60">{studyText.museum.artifacts[3]}</h3>
                   <p class="text-base text-black/70 leading-relaxed">
-                    This dual-purpose apron works for both museum workshops and home cooking. It features the new logo on a dark canvas, a transparent front pocket mimicking clear glass, and flowing colorful lines representing molten glass. It perfectly brings MoG’s hands-on, creative spirit into everyday life.
+                    {studyText.museum.artifacts[4]}
                   </p>
                 </div>
                 <div class="w-3/4 ml-auto aspect-[3/4] bg-black/[0.03] overflow-hidden rounded-sm border border-black/5">
                   <img 
                     src={glassAssets.physicalArtifact} 
-                    alt="Museum of Glass Physical Artifact" 
+                    alt={studyText.museum.artifacts[5]}
                     class="w-full h-full object-cover"
                   />
                 </div>
@@ -808,65 +807,65 @@ const remindmeAssets = {
         <!-- Appendix -->
         <section id="appendix" class="max-w-5xl mx-auto space-y-32 scroll-mt-32 border-t border-black/5 pt-24">
           <div class="space-y-24">
-            <h2 class="text-4xl font-black uppercase tracking-tighter mb-16 text-black">05 / Appendix</h2>
+            <h2 class="text-4xl font-black uppercase tracking-tighter mb-16 text-black">05 / {studyText.museum.appendix[0]}</h2>
             
             <div class="space-y-16">
               <!-- 01 Process & Iteration -->
               <div class="space-y-8 border-b border-black/5 pb-12">
-                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 mb-8">01 / Process & Iteration</h3>
+                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 mb-8">01 / {studyText.museum.appendix[1]}</h3>
                 
                 <!-- Alternative Logos (Same height, compact, left-aligned) -->
                 <div class="flex flex-wrap gap-12 items-end">
                   <div class="space-y-4">
                     <div class="h-32 md:h-40 overflow-hidden rounded-sm">
-                      <img src={glassAssets.logoAlt1} alt="Alternative Logo 1" class="h-full w-auto object-contain" />
+                      <img src={glassAssets.logoAlt1} alt={studyText.museum.appendix[2]} class="h-full w-auto object-contain" />
                     </div>
-                    <p class="text-[11px] uppercase tracking-[0.2em] text-black/40 font-bold italic">Alternative Logo</p>
+                    <p class="text-[11px] uppercase tracking-[0.2em] text-black/40 font-bold italic">{studyText.museum.appendix[3]}</p>
                   </div>
                   <div class="space-y-4">
                     <div class="h-32 md:h-40 overflow-hidden rounded-sm">
-                      <img src={glassAssets.logoAlt2} alt="Alternative Logo 2" class="h-full w-auto object-contain" />
+                      <img src={glassAssets.logoAlt2} alt={studyText.museum.appendix[4]} class="h-full w-auto object-contain" />
                     </div>
-                    <p class="text-[11px] uppercase tracking-[0.2em] text-black/40 font-bold italic">Alternative Logo</p>
+                    <p class="text-[11px] uppercase tracking-[0.2em] text-black/40 font-bold italic">{studyText.museum.appendix[3]}</p>
                   </div>
                 </div>
               </div>
 
               <!-- 02 Acknowledgments -->
               <div class="space-y-8 border-b border-black/5 pb-12">
-                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 mb-8">02 / Acknowledgments</h3>
+                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 mb-8">02 / {studyText.museum.appendix[5]}</h3>
                 <p class="text-[15px] text-black/70 leading-relaxed">
-                  A special thank you to my teammate Vivian Pearl Kenney for their invaluable contributions to the collaborative identity design and shared vision for the Museum of Glass project.
+                  {studyText.museum.appendix[6]}
                 </p>
               </div>
 
               <!-- 03 Citations & References -->
               <div class="space-y-8">
-                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 mb-8">03 / Citations & References</h3>
+                <h3 class="text-xs font-black uppercase tracking-[0.4em] text-black/40 mb-8">03 / {studyText.museum.appendix[7]}</h3>
                 <ul class="space-y-4 text-sm text-black/70">
                   <li class="flex items-center gap-4">
                     <span class="w-1.5 h-1.5 bg-black/20 rounded-full"></span>
-                    <a href="https://www.museumofglass.org/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">Museum of Glass Official Website</a>
+                    <a href="https://www.museumofglass.org/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">{studyText.museum.appendix[8]}</a>
                   </li>
                   <li class="flex items-center gap-4">
                     <span class="w-1.5 h-1.5 bg-black/20 rounded-full"></span>
-                    <a href="https://www.chihulygardenandglass.com/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">Chihuly Garden and Glass - Competitive Analysis</a>
+                    <a href="https://www.chihulygardenandglass.com/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">{studyText.museum.appendix[9]}</a>
                   </li>
                   <li class="flex items-center gap-4">
                     <span class="w-1.5 h-1.5 bg-black/20 rounded-full"></span>
-                    <a href="https://fonts.google.com/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">Google Fonts: Palanquin Dark</a>
+                    <a href="https://fonts.google.com/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">{studyText.museum.appendix[10]}</a>
                   </li>
                   <li class="flex items-center gap-4">
                     <span class="w-1.5 h-1.5 bg-black/20 rounded-full"></span>
-                    <a href="https://cn.dreamstime.com/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">Dreamstime: Design Inspiration Photos</a>
+                    <a href="https://cn.dreamstime.com/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">{studyText.museum.appendix[11]}</a>
                   </li>
                   <li class="flex items-center gap-4">
                     <span class="w-1.5 h-1.5 bg-black/20 rounded-full"></span>
-                    <a href="https://www.researchgate.net/figure/F-L-streamlines-in-the-melt-generated-by-vertical-AMF-originated-from-bottom-heaters_fig3_268148252" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">ResearchGate: Molten Glass Fluid Dynamics Study</a>
+                    <a href="https://www.researchgate.net/figure/F-L-streamlines-in-the-melt-generated-by-vertical-AMF-originated-from-bottom-heaters_fig3_268148252" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">{studyText.museum.appendix[12]}</a>
                   </li>
                   <li class="flex items-center gap-4">
                     <span class="w-1.5 h-1.5 bg-black/20 rounded-full"></span>
-                    <a href="https://museumofglassstore.org/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">Museum of Glass Store</a>
+                    <a href="https://museumofglassstore.org/" target="_blank" class="border-b border-black/10 hover:border-black transition-colors">{studyText.museum.appendix[13]}</a>
                   </li>
                 </ul>
               </div>
