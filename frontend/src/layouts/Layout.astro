@@ -27,16 +27,17 @@ const alternatePath = locale === 'zh'
 	</head>
 	<body class="bg-paper text-black font-sans min-h-screen flex flex-col">
 		<header class="max-w-7xl w-full mx-auto px-6 py-10">
-			<nav class="flex justify-between items-baseline">
+			<nav class="flex flex-wrap justify-between items-baseline gap-6">
 				<div class="flex items-baseline gap-4">
 					<a href={prefix || '/'} class="text-xl font-bold tracking-[0.2em] uppercase">Eva Chen</a>
 					<a href={alternatePath} class="text-xs font-semibold tracking-widest hover:opacity-50 transition-opacity" lang={locale === 'zh' ? 'en' : 'zh-CN'}>
 						{locale === 'zh' ? 'EN' : '中文'}
 					</a>
 				</div>
-				<div class="flex gap-10 text-xs font-semibold uppercase tracking-widest">
+				<div class="flex flex-wrap gap-x-6 gap-y-4 md:gap-x-10 text-xs font-semibold uppercase tracking-widest">
 					<a href={`${prefix || ''}/#case-studies`} class="hover:opacity-50 transition-opacity">{text.nav.caseStudies}</a>
 					<!-- <a href="/#visuals" class="hover:opacity-50 transition-opacity">Visual and Community</a> -->
+					<a href="/projects/maid-cafe" class="hover:opacity-50 transition-opacity">{text.nav.maidCafe}</a>
 					<a href={`${prefix}/about`} class="hover:opacity-50 transition-opacity">{text.nav.about}</a>
 					<a href="/resume.pdf" target="_blank" rel="noopener noreferrer" class="hover:opacity-50 transition-opacity">{text.nav.resume}</a>
 					<!-- <a href="/narrative-design" class="hover:opacity-50 transition-opacity">Narrative Design</a> -->

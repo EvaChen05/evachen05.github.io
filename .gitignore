@@ -28,3 +28,6 @@ pnpm-debug.log*
 /tmp/
 raw-portfolio/
 container-vscode/
+
+# Generated standalone Maid Cafe application
+/frontend/public/projects/maid-cafe/

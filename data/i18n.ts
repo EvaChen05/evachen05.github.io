@@ -4,7 +4,7 @@ export const isChinese = (pathname: string) => pathname.startsWith('/zh');
 
 export const localeText = {
   en: {
-    nav: { caseStudies: 'Case Studies', about: 'About', resume: 'Resume' },
+    nav: { caseStudies: 'Case Studies', about: 'About', resume: 'Resume', maidCafe: 'Maid Cafe' },
     footer: 'HCDE Student / Architecture Inspired Portfolio',
     home: {
       title: 'HCDE Designer | Portfolio',
@@ -47,7 +47,7 @@ export const localeText = {
     project: { caseStudy: 'Case Study', view: 'View Case Study', back: 'Back to Portfolio', role: 'Role', methods: 'Methods', jumpTo: 'Jump to Section' },
   },
   zh: {
-    nav: { caseStudies: '案例研究', about: '关于', resume: '简历' },
+    nav: { caseStudies: '案例研究', about: '关于', resume: '简历', maidCafe: 'Maid Cafe' },
     footer: 'HCDE 学生 / 建筑灵感作品集',
     home: {
       title: 'HCDE 设计师 | 作品集',

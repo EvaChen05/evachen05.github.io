@@ -1,0 +1,3 @@
+[submodule "apps/maid-cafe"]
+	path = apps/maid-cafe
+	url = https://github.com/EvaChen05/maid_cafe.git

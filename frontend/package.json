@@ -9,7 +9,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "build:maid-cafe": "node ../scripts/build-maid-cafe.mjs",
+    "prebuild": "npm run build:maid-cafe",
+    "predev": "npm run build:maid-cafe"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.2",
