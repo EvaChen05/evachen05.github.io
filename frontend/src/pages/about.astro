@@ -1,26 +1,29 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { isChinese, localeText } from '@data/i18n';
+import { localeText } from '@data/i18n';
 
-const locale = isChinese(Astro.url.pathname) ? 'zh' : 'en';
-const text = localeText[locale].about;
+const textEn = localeText.en.about;
+const textZh = localeText.zh.about;
 ---
 
-<Layout title={text.title}>
+<Layout titleEn={textEn.title} titleZh={textZh.title}>
   <div class="max-w-7xl mx-auto px-6 pt-32 pb-24">
     <!-- About Hero Section -->
     <section class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32">
       <div class="md:col-span-8">
         <h1 class="text-[clamp(4rem,10vw,8rem)] leading-[0.85] font-bold uppercase tracking-tighter mb-12">
-          {text.heading[0]} <br />
-          <span class="text-[#a855f7]">{text.heading[1]}</span> <br />
-          {text.heading[2]}
+          <span class="lang-en">{textEn.heading[0]}</span><span class="lang-zh">{textZh.heading[0]}</span> <br />
+          <span class="text-[#a855f7]">
+            <span class="lang-en">{textEn.heading[1]}</span><span class="lang-zh">{textZh.heading[1]}</span>
+          </span> <br />
+          <span class="lang-en">{textEn.heading[2]}</span><span class="lang-zh">{textZh.heading[2]}</span>
         </h1>
       </div>
       <div class="md:col-span-4 flex flex-col justify-end">
         <div class="border-l-4 border-black pl-8 mb-4">
           <p class="text-xl italic font-medium opacity-60">
-            {text.quote}
+            <span class="lang-en-block">{textEn.quote}</span>
+            <span class="lang-zh-block">{textZh.quote}</span>
           </p>
         </div>
       </div>
@@ -36,15 +39,27 @@ const text = localeText[locale].about;
         
         <div class="space-y-8">
             <div>
-                <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-4">{text.focus}</h3>
+                <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-4">
+                  <span class="lang-en">{textEn.focus}</span>
+                  <span class="lang-zh">{textZh.focus}</span>
+                </h3>
                 <p class="text-lg text-black/60 leading-relaxed">
-                    {text.focusDescription}
+                    <span class="lang-en-block">{textEn.focusDescription}</span>
+                    <span class="lang-zh-block">{textZh.focusDescription}</span>
                 </p>
             </div>
             <div>
-                <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-4">{text.interests}</h3>
+                <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-4">
+                  <span class="lang-en">{textEn.interests}</span>
+                  <span class="lang-zh">{textZh.interests}</span>
+                </h3>
                 <ul class="text-lg text-black/60 leading-relaxed space-y-2">
-                    {text.interestItems.map((interest) => <li>&rarr; {interest}</li>)}
+                    <div class="contents lang-en-block">
+                      {textEn.interestItems.map((interest) => <li>&rarr; {interest}</li>)}
+                    </div>
+                    <div class="contents lang-zh-block">
+                      {textZh.interestItems.map((interest) => <li>&rarr; {interest}</li>)}
+                    </div>
                 </ul>
             </div>
         </div>
@@ -53,19 +68,33 @@ const text = localeText[locale].about;
       <!-- Right Column: Main Text Content -->
       <div class="md:col-span-7">
         <div class="prose prose-xl prose-slate max-w-none">
-          <h2 class="text-3xl font-bold uppercase tracking-tight mb-8">{text.journey}</h2>
+          <h2 class="text-3xl font-bold uppercase tracking-tight mb-8">
+            <span class="lang-en">{textEn.journey}</span>
+            <span class="lang-zh">{textZh.journey}</span>
+          </h2>
           
           <div class="space-y-8 text-xl leading-relaxed text-black/80 font-medium">
-            {text.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+            <div class="contents lang-en-block">
+              {textEn.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+            </div>
+            <div class="contents lang-zh-block">
+              {textZh.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+            </div>
           </div>
 
           <div class="mt-20 pt-10 border-t border-black/5">
-            <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-10">{text.education}</h3>
+            <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-10">
+              <span class="lang-en">{textEn.education}</span>
+              <span class="lang-zh">{textZh.education}</span>
+            </h3>
             <div class="space-y-12">
                 <div class="flex justify-between items-start group">
                     <div>
                         <h4 class="text-2xl font-bold uppercase italic group-hover:not-italic transition-all">University of Washington</h4>
-                        <p class="text-black/60 uppercase tracking-widest text-sm mt-1">{text.degree}</p>
+                        <p class="text-black/60 uppercase tracking-widest text-sm mt-1">
+                          <span class="lang-en">{textEn.degree}</span>
+                          <span class="lang-zh">{textZh.degree}</span>
+                        </p>
                     </div>
                     <span class="font-bold opacity-20">2023 - 2027</span>
                 </div>
@@ -73,17 +102,28 @@ const text = localeText[locale].about;
           </div>
 
           <div class="mt-20 pt-10 border-t border-black/5">
-            <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-10">{text.experience}</h3>
+            <h3 class="text-sm font-bold uppercase tracking-[0.4em] mb-10">
+              <span class="lang-en">{textEn.experience}</span>
+              <span class="lang-zh">{textZh.experience}</span>
+            </h3>
             <div class="space-y-16">
                 <!-- Internship Entry -->
                 <div class="flex flex-col md:flex-row justify-between items-start group gap-4">
                     <div class="space-y-4">
                         <div>
                             <h4 class="text-2xl font-bold uppercase italic group-hover:not-italic transition-all">AIHelp</h4>
-                            <p class="text-black/60 uppercase tracking-widest text-sm mt-1 font-bold">{text.jobTitle}</p>
+                            <p class="text-black/60 uppercase tracking-widest text-sm mt-1 font-bold">
+                              <span class="lang-en">{textEn.jobTitle}</span>
+                              <span class="lang-zh">{textZh.jobTitle}</span>
+                            </p>
                         </div>
                         <ul class="text-base text-black/60 space-y-3 max-w-xl">
-                            {text.achievements.map((achievement) => <li class="leading-relaxed border-l border-black/10 pl-4">{achievement}</li>)}
+                            <div class="contents lang-en-block">
+                              {textEn.achievements.map((achievement) => <li class="leading-relaxed border-l border-black/10 pl-4">{achievement}</li>)}
+                            </div>
+                            <div class="contents lang-zh-block">
+                              {textZh.achievements.map((achievement) => <li class="leading-relaxed border-l border-black/10 pl-4">{achievement}</li>)}
+                            </div>
                         </ul>
                     </div>
                     <span class="font-bold opacity-20 shrink-0">Jun 2025 - Sep 2025</span>
