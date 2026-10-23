@@ -79,7 +79,11 @@ automatically. `scripts/build-maid-cafe.mjs` passes the deployment base path to
 Vite without modifying the submodule source. It copies static assets to
 `frontend/public/projects/maid-cafe/`, and the Astro route renders the built
 HTML independently of the portfolio layout. GitHub Pages checks out the pinned
-submodule commit and includes the app in the same deployment.
+submodule commit and includes the app in the same deployment. Because Maid Cafe
+is private, add the `MAID_CAFE_READ_TOKEN` Actions secret to the portfolio
+repository: use a fine-grained GitHub token scoped to `EvaChen05/maid_cafe` with
+Contents read-only permission. The workflow uses it only for the app checkout;
+it is never included in the website build output.
 
 For live development of Maid Cafe alone:
 
